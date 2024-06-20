@@ -1,0 +1,92 @@
+.sidebar {
+  width: 250px;
+  background-color: rgb(24, 24, 27); /* Main dark background */
+  color: #fff; /* White text */
+  transition: width 0.3s;
+  padding: 10px;
+}
+
+.collapsedSidebar {
+  width: 100px;
+  background-color: rgb(24, 24, 27); /* Main dark background */
+  color: #fff; /* White text */
+  transition: width 0.3s;
+  padding: 10px;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapseButton {
+  background: none;
+  border: none;
+  color: #fff; /* White text */
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px;
+  text-align: right;
+}
+
+.menu {
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  gap: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  color: #fff; /* White text */
+  user-select: none;
+}
+
+.menuItem:hover {
+  background-color: #333; /* Slightly lighter dark background */
+}
+
+.subMenu {
+  list-style: none;
+  padding-left: 30px;
+  overflow: hidden;
+}
+
+.subMenuOpen {
+  max-height: 500px;
+  transition: max-height 0.3s ease-in;
+}
+
+.subMenu li {
+  user-select: none;
+}
+
+
+.subMenuItem {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 5px;
+  color: #fff; /* White text */
+}
+
+.selected {
+  background-color: #444; /* Dark grey for selected item */
+}
+
+.subMenuItem.selected {
+  background-color: #444; /* Dark grey for selected item */
+}
+
+.subMenuItem:hover {
+  background-color: #333; /* Slightly lighter dark background */
+}

@@ -1,0 +1,41 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.14.5",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "solid-devtools": "^0.29.2",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.0.11",
+    "vite-plugin-solid": "^2.8.2"
+  },
+  "dependencies": {
+    "@kobalte/core": "^0.13.3",
+    "@modular-forms/solid": "^0.20.0",
+    "@rnwonder/solid-date-picker": "^1.2.7",
+    "@solid-primitives/i18n": "^2.1.1",
+    "@solid-primitives/refs": "^1.0.8",
+    "@solidjs/router": "^0.13.5",
+    "async-validator": "^4.2.5",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.10",
+    "solid-icons": "^1.1.0",
+    "solid-js": "^1.8.11",
+    "solid-motionone": "^1.0.0",
+    "solid-spinner": "^0.2.0",
+    "solid-toast": "^0.5.0",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vite-tsconfig-paths": "^4.3.2"
+  }
+}
