@@ -1,12 +1,5 @@
 import { ParentProps, Suspense, type Component } from 'solid-js'
-import { useLocation } from '@solidjs/router'
-
-import { baseRoutes } from './routes'
-
-import { AiFillSetting } from 'solid-icons/ai'
-import { IoLogOutSharp } from 'solid-icons/io'
-
-import { AuthContext, AuthProvider } from './providers/auth-provider'
+import { AuthProvider } from './providers/auth-provider'
 import { fakeLogin } from './api/mock'
 import { Toaster } from './components/ui/toast'
 import { Skeleton } from './components/ui/skeleton'

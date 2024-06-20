@@ -20,9 +20,9 @@ const AvatarDropdownMenu = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuItem>
-                    {t('setting.change_password')}
+                    {t.setting.change_password()}
                 </DropdownMenuItem>
-                <DropdownMenuItem>{t('setting.logout')}</DropdownMenuItem>
+                <DropdownMenuItem>{t.setting.logout()}</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )

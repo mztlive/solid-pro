@@ -20,14 +20,14 @@ const SettingsSheet = (props: ParentProps) => {
             <SheetTrigger>{props.children}</SheetTrigger>
             <SheetContent class="w-[400px] sm:w-[540px]" position="right">
                 <SheetHeader>
-                    <SheetTitle>{t('setting.title')}</SheetTitle>
+                    <SheetTitle>{t.setting.title()}</SheetTitle>
                     <SheetDescription>
-                        {t('setting.description')}
+                        {t.setting.description()}
                     </SheetDescription>
                 </SheetHeader>
                 <div class="mt-6">
                     <TextField>
-                        <TextFieldLabel>{t('setting.language')}</TextFieldLabel>
+                        <TextFieldLabel>{t.setting.language()}</TextFieldLabel>
                         <LocaleSelect />
                     </TextField>
                 </div>

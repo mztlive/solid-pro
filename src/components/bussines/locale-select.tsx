@@ -32,7 +32,7 @@ const LocaleSelect = () => {
                     setLocale(localeItem.value)
                 }
             }}
-            placeholder={t('common.language_select_placeholder')}
+            placeholder={t.common.language_select_placeholder()}
             itemComponent={(props) => (
                 <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
             )}

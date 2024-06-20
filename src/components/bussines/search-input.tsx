@@ -11,7 +11,7 @@ const SearchInput = () => {
             <input
                 class="h-8 border-none px-4 bg-gray-200 rounded-none rounded-l-md focus:bg-gray-300 focus:outline-none  focus:border-transparent"
                 type="text"
-                placeholder={t('common.search_placeholder')}
+                placeholder={t.common.search_placeholder()}
             />
             <Button
                 variant="outline"

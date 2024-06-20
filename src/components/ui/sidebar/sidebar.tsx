@@ -11,10 +11,11 @@ import { Motion } from 'solid-motionone'
 
 import { SiBoxysvg } from 'solid-icons/si'
 import { useI18nContext } from '~/providers/i18n-provider'
+import { Resolver } from '@solid-primitives/i18n'
 
 export type MenuItem = {
     icon?: JSX.Element
-    text: string
+    text: string | Resolver<string, string>
     children?: MenuItem[]
 }
 
@@ -65,7 +66,11 @@ export const Sidebar = (props: SidebarProps) => {
                                 }
                             }}
                         >
-                            <span>{t(item.text)}</span>
+                            <span>
+                                {typeof item.text === 'function'
+                                    ? item.text()
+                                    : item.text}
+                            </span>
                         </Motion.span>
                     </Show>
                     <Show when={hasChildren}>
@@ -125,7 +130,9 @@ export const Sidebar = (props: SidebarProps) => {
                             transition: { duration: 0.3, easing: 'ease-in-out' }
                         }}
                     >
-                        {t(subItem.text)}
+                        {typeof subItem.text === 'function'
+                            ? subItem.text()
+                            : subItem.text}
                     </Motion.span>
                 </Show>
             </li>

@@ -16,7 +16,7 @@ const Dashboard = () => {
                     })
                 }
             >
-                {t('menu.dashboard')}
+                {t.menu.dashboard()}
             </Button>
         </div>
     )

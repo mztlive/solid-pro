@@ -96,10 +96,10 @@ const NotificationDropdownMenu = (props: NotificationDropdownMenuProps) => {
             <DropdownMenuContent class="p-4">
                 <div class="mb-4 flex flex-col">
                     <span class="text-lg font-bold">
-                        {t('common.notification_title')}
+                        {t.common.notification_title()}
                     </span>
                     <span class="text-sm text-gray-500">
-                        {t('common.notification_description')}
+                        {t.common.notification_description()}
                     </span>
                 </div>
                 <div class="max-h-80 overflow-y-auto">
@@ -133,10 +133,10 @@ const NotificationDropdownMenu = (props: NotificationDropdownMenuProps) => {
                                 variant="outline"
                                 onClick={() => setIsOpenDialog(false)}
                             >
-                                {t('actions.later')}
+                                {t.actions.later()}
                             </Button>
                             <Button onClick={() => setIsOpenDialog(false)}>
-                                {t('actions.accept')}
+                                {t.actions.accept()}
                             </Button>
                         </DialogFooter>
                     </DialogContent>

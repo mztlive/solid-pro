@@ -57,7 +57,7 @@ const Home = (props: ParentProps) => {
 
     const menus: MenuItem[] = [
         {
-            text: 'menu.dashboard',
+            text: t.menu.dashboard,
             icon: <AiOutlineDashboard size={20} />,
             children: [
                 {
@@ -67,7 +67,7 @@ const Home = (props: ParentProps) => {
             ]
         },
         {
-            text: 'menu.dashboard',
+            text: t.menu.dashboard,
             icon: <AiOutlineDashboard size={20} />,
             children: [
                 {
@@ -77,7 +77,7 @@ const Home = (props: ParentProps) => {
             ]
         },
         {
-            text: 'menu.dashboard',
+            text: t.menu.dashboard,
             icon: <AiOutlineDashboard size={20} />
         }
     ]

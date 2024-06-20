@@ -5,7 +5,13 @@ export const zh = {
         password: '密码',
         please_input_account: '请输入账号',
         please_input_password: '请输入密码',
-        confirm: '确认'
+        confirm: '确认',
+        error: {
+            account_required: '账号是必需的',
+            password_required: '密码是必需的',
+            failed: '登录失败'
+        },
+        success: '登录成功'
     },
     menu: {
         dashboard: '仪表板',

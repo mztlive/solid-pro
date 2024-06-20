@@ -5,7 +5,13 @@ export const vn = {
         password: 'Mật khẩu',
         please_input_account: 'Vui lòng nhập tài khoản',
         please_input_password: 'Vui lòng nhập mật khẩu',
-        confirm: 'Xác nhận'
+        confirm: 'Xác nhận',
+        error: {
+            account_required: 'Tài khoản là bắt buộc',
+            password_required: 'Mật khẩu là bắt buộc',
+            failed: 'Đăng nhập thất bại'
+        },
+        success: 'Đăng nhập thành công'
     },
     menu: {
         dashboard: 'Bảng điều khiển',

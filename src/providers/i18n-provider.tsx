@@ -13,10 +13,15 @@ import { vn } from '~/i18n/vn'
 import * as i18n from '@solid-primitives/i18n'
 
 // 这里是有问题的，不知道为什么不多写一个 '' t就会报错
-export type Locale = 'en' | 'zh' | 'vn' | ''
+export type Locale = 'en' | 'zh' | 'vn'
 
+export type I18nDictionaries = {
+    en: typeof en
+    zh: typeof zh
+    vn: typeof vn
+}
 interface I18nContextProps {
-    t: (key: string) => string
+    t: i18n.ChainedTranslator<I18nDictionaries[Locale], string>
     locale: Accessor<Locale>
     setLocale: Setter<Locale>
     localeOptions: LocaleOption[]
@@ -31,7 +36,7 @@ export interface LocaleOption {
 export const i18nContext = createContext<I18nContextProps>()
 
 export const I18nProvider = (props: ParentProps) => {
-    const dictionaries = {
+    const dictionaries: I18nDictionaries = {
         zh: zh,
         en: en,
         vn: vn
@@ -46,10 +51,17 @@ export const I18nProvider = (props: ParentProps) => {
     const [locale, setLocale] = createSignal<Locale>('en')
     const dict = createMemo(() => i18n.flatten(dictionaries[locale()]))
 
-    const t = i18n.translator(dict)
+    const t = i18n.translator(() => dict(), i18n.resolveTemplate)
+
+    const chained = i18n.chainedTranslator<I18nDictionaries[Locale], string>(
+        dict(),
+        t
+    )
 
     return (
-        <i18nContext.Provider value={{ t, locale, setLocale, localeOptions }}>
+        <i18nContext.Provider
+            value={{ t: chained, locale, setLocale, localeOptions }}
+        >
             {props.children}
         </i18nContext.Provider>
     )

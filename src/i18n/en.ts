@@ -5,7 +5,13 @@ export const en = {
         password: 'Password',
         please_input_account: 'Please input account',
         please_input_password: 'Please input password',
-        confirm: 'Confirm'
+        confirm: 'Confirm',
+        error: {
+            account_required: 'Account is required',
+            password_required: 'Password is required',
+            failed: 'Login failed'
+        },
+        success: 'Login success'
     },
     menu: {
         dashboard: 'Dashboard',
