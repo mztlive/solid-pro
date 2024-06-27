@@ -3,17 +3,22 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "vite dev",
+    "dev": "vite dev",
     "build": "vite build",
     "serve": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
+    "@farmfe/cli": "^1.0.2",
+    "@farmfe/core": "^1.2.1",
+    "@farmfe/js-plugin-postcss": "^1.7.0",
+    "@farmfe/plugin-sass": "^1.0.5",
     "@types/node": "^20.14.5",
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.33",
     "solid-devtools": "^0.29.2",
+    "solid-refresh": "^0.7.5",
     "tailwindcss": "^3.4.4",
     "vite": "^5.0.11",
     "vite-plugin-solid": "^2.8.2"
@@ -26,6 +31,7 @@
     "@solid-primitives/refs": "^1.0.8",
     "@solidjs/router": "^0.13.5",
     "async-validator": "^4.2.5",
+    "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.10",

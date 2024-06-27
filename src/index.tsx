@@ -6,6 +6,8 @@ import { Router } from '@solidjs/router'
 import App from './app'
 import { baseRoutes } from './routes'
 
+
+
 const root = document.getElementById('root')
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {

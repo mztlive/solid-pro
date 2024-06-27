@@ -18,7 +18,7 @@ export const en = {
         setting: 'Setting'
     },
     common: {
-        search_placeholder: 'Search...',
+        search_placeholder: '🔍 Search...',
         language_select_placeholder: 'Select language...',
         notification_title: 'Notification',
         notification_description: 'This is the first event of the timeline.'
@@ -30,7 +30,10 @@ export const en = {
         notification: 'Notification',
         logout: 'Logout',
         description: 'Manage your preferences and account settings',
-        change_password: 'Change password'
+        change_password: 'Change password',
+        color_mode_light: 'light',
+        color_mode_dark: 'dark',
+        color_mode_system: 'system'
     },
     actions: {
         later: 'Later',

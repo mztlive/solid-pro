@@ -60,7 +60,9 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
-        }
+        },
+        'selected-background': "hsl(var(--selected-background))",
+        'hover-muted': "hsl(var(--hover-muted))"
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

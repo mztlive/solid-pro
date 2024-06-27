@@ -12,7 +12,6 @@ import { zh } from '~/i18n/zh'
 import { vn } from '~/i18n/vn'
 import * as i18n from '@solid-primitives/i18n'
 
-// 这里是有问题的，不知道为什么不多写一个 '' t就会报错
 export type Locale = 'en' | 'zh' | 'vn'
 
 export type I18nDictionaries = {
@@ -26,6 +25,7 @@ interface I18nContextProps {
     setLocale: Setter<Locale>
     localeOptions: LocaleOption[]
 }
+4
 
 export interface LocaleOption {
     label: string

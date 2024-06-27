@@ -1,12 +1,6 @@
 import { JSX, Match, Show, Switch, createSignal } from 'solid-js'
 import { For } from 'solid-js/web'
-import styles from './style.module.css'
-import {
-    AiOutlineAlignLeft,
-    AiOutlineAlignRight,
-    AiOutlineDown,
-    AiOutlineRight
-} from 'solid-icons/ai'
+import { AiOutlineDown, AiOutlineRight } from 'solid-icons/ai'
 import { Motion } from 'solid-motionone'
 
 import { SiBoxysvg } from 'solid-icons/si'
@@ -17,20 +11,20 @@ export type MenuItem = {
     icon?: JSX.Element
     text: string | Resolver<string, string>
     children?: MenuItem[]
+    description?: string | Resolver<string, string>
 }
 
 export type SidebarProps = {
     menuItems: MenuItem[]
+    collapsed?: boolean
 }
 
 export const Sidebar = (props: SidebarProps) => {
     const { t } = useI18nContext()
 
-    const [collapsed, setCollapsed] = createSignal(false)
     const [openItems, setOpenItems] = createSignal<Record<string, boolean>>({})
     const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
 
-    const toggleCollapse = () => setCollapsed(!collapsed())
     const toggleItem = (index: string) =>
         setOpenItems({ ...openItems(), [index]: !openItems()[index] })
 
@@ -45,9 +39,9 @@ export const Sidebar = (props: SidebarProps) => {
         return (
             <li>
                 <div
-                    class={`${styles.menuItem} ${
+                    class={`flex items-center p-2 cursor-pointer gap-2 text-base rounded-md text-foreground user-select-none hover:bg-hover-muted ${
                         selectedItem() === itemIndex && !hasChildren
-                            ? styles.selected
+                            ? 'bg-selected-background'
                             : ''
                     }`}
                     onClick={() => {
@@ -56,7 +50,7 @@ export const Sidebar = (props: SidebarProps) => {
                     }}
                 >
                     {item.icon}
-                    <Show when={!collapsed()}>
+                    <Show when={!props.collapsed}>
                         <Motion.span
                             animate={{
                                 opacity: [0, 1],
@@ -74,7 +68,7 @@ export const Sidebar = (props: SidebarProps) => {
                         </Motion.span>
                     </Show>
                     <Show when={hasChildren}>
-                        <span class="ml-auto">
+                        <span class="ml-auto pr-4">
                             <Switch>
                                 <Match when={openItems()[itemIndex]}>
                                     <AiOutlineDown size={12} />
@@ -96,7 +90,7 @@ export const Sidebar = (props: SidebarProps) => {
                             duration: 0.3,
                             easing: 'ease-in-out'
                         }}
-                        class={styles.subMenu}
+                        class="pl-8 overflow-hidden"
                     >
                         <For each={item.children}>
                             {(subItem, subIndex) =>
@@ -117,13 +111,15 @@ export const Sidebar = (props: SidebarProps) => {
         const subItemIndex = `${parentIndex}-${subIndex()}`
         return (
             <li
-                class={`${styles.subMenuItem} ${
-                    selectedItem() === subItemIndex ? styles.selected : ''
+                class={`flex items-center cursor-pointer gap-2 text-base p-1.5 rounded-md text-foreground hover:bg-hover-muted ${
+                    selectedItem() === subItemIndex
+                        ? 'bg-selected-background'
+                        : ''
                 }`}
                 onClick={() => selectItem(subItemIndex, false)}
             >
                 {subItem.icon}
-                <Show when={!collapsed()}>
+                <Show when={!props.collapsed}>
                     <Motion.span
                         animate={{
                             opacity: [0, 1],
@@ -140,25 +136,21 @@ export const Sidebar = (props: SidebarProps) => {
     }
 
     return (
-        <div class={collapsed() ? styles.collapsedSidebar : styles.sidebar}>
-            <div class={styles.sidebarHeader}>
-                {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
-                <SiBoxysvg />
-                <Show when={!collapsed()}>
-                    <span>SolidJS</span>
-                </Show>
-                <button class={styles.collapseButton} onClick={toggleCollapse}>
-                    <Switch>
-                        <Match when={collapsed()}>
-                            <AiOutlineAlignRight />
-                        </Match>
-                        <Match when={!collapsed()}>
-                            <AiOutlineAlignLeft />
-                        </Match>
-                    </Switch>
-                </button>
-            </div>
-            <ul class={styles.menu}>
+        <div
+            classList={{
+                'w-24': props.collapsed,
+                'w-64': !props.collapsed,
+                'bg-background': true,
+                'text-foreground': true,
+                'transition-width': true,
+                'duration-300': true,
+                'p-2.5': true,
+                'border-r': true,
+                'border-border': true,
+                'overflow-y-auto': true
+            }}
+        >
+            <ul class="list-none p-0">
                 <For each={props.menuItems}>{renderMenuItem}</For>
             </ul>
         </div>

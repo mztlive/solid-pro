@@ -18,7 +18,7 @@ export const vn = {
         setting: 'Cài đặt'
     },
     common: {
-        search_placeholder: 'Tìm kiếm...',
+        search_placeholder: '🔍 Tìm kiếm...',
         language_select_placeholder: 'Chọn ngôn ngữ...',
         notification_title: 'Thông báo',
         notification_description: 'Đây là sự kiện đầu tiên của dòng thời gian.'
@@ -30,7 +30,10 @@ export const vn = {
         notification: 'Thông báo',
         logout: 'Đăng xuất',
         description: 'Quản lý các tùy chọn và cài đặt tài khoản của bạn',
-        change_password: 'Đổi mật khẩu'
+        change_password: 'Đổi mật khẩu',
+        color_mode_light: 'sáng',
+        color_mode_dark: 'tối',
+        color_mode_system: 'hệ thống'
     },
     actions: {
         later: 'Để sau',

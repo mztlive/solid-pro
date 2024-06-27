@@ -18,6 +18,7 @@ import {
     DialogTrigger
 } from '../ui/dialog'
 import { Button } from '../ui/button'
+import { useColorMode } from '@kobalte/core/color-mode'
 
 interface MessageItemProps {
     id: string
@@ -72,13 +73,18 @@ const NotificationDropdownMenu = (props: NotificationDropdownMenuProps) => {
     const [selectedMessage, setSelectdMessage] =
         createSignal<MessageItemProps | null>(null)
 
+    const { colorMode } = useColorMode()
+
     const [isOpenDialog, setIsOpenDialog] = createSignal(false)
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <div class="relative">
-                    <AiTwotoneNotification size={22} />
+                    <AiTwotoneNotification
+                        size={22}
+                        color={colorMode() == 'light' ? 'black' : 'white'}
+                    />
                     <Badge
                         variant="destructive"
                         round

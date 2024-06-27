@@ -18,7 +18,7 @@ export const zh = {
         setting: '设置'
     },
     common: {
-        search_placeholder: '搜索...',
+        search_placeholder: '🔍 搜索...',
         language_select_placeholder: '选择语言...',
         notification_title: '通知',
         notification_description: '这是时间线的第一个事件。'
@@ -30,7 +30,10 @@ export const zh = {
         notification: '通知',
         logout: '退出登录',
         description: '管理您的偏好和账户设置',
-        change_password: '更改密码'
+        change_password: '更改密码',
+        color_mode_light: '浅色',
+        color_mode_dark: '深色',
+        color_mode_system: '系统'
     },
     actions: {
         later: '稍后',
