@@ -1,11 +1,17 @@
 import { JSX, Match, Show, Switch, createSignal } from 'solid-js'
 import { For } from 'solid-js/web'
-import { AiOutlineDown, AiOutlineRight } from 'solid-icons/ai'
+import {
+    AiOutlineAlignLeft,
+    AiOutlineAlignRight,
+    AiOutlineDown,
+    AiOutlineRight
+} from 'solid-icons/ai'
 import { Motion } from 'solid-motionone'
 
 import { SiBoxysvg } from 'solid-icons/si'
 import { useI18nContext } from '~/providers/i18n-provider'
 import { Resolver } from '@solid-primitives/i18n'
+import { useColorMode } from '@kobalte/core/color-mode'
 
 export type MenuItem = {
     icon?: JSX.Element
@@ -16,20 +22,32 @@ export type MenuItem = {
 
 export type SidebarProps = {
     menuItems: MenuItem[]
-    collapsed?: boolean
 }
 
 export const Sidebar = (props: SidebarProps) => {
-    const { t } = useI18nContext()
+    const { colorMode } = useColorMode()
 
     const [openItems, setOpenItems] = createSignal<Record<string, boolean>>({})
     const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
+
+    const [collapsed, setCollapsed] = createSignal(false)
+    const [isManualCollapse, setIsManualCollapse] = createSignal(false)
 
     const toggleItem = (index: string) =>
         setOpenItems({ ...openItems(), [index]: !openItems()[index] })
 
     const selectItem = (index: string, hasChildren: boolean) => {
         if (!hasChildren) setSelectedItem(index)
+    }
+
+    const handleCollapseToggle = () => {
+        if (collapsed()) {
+            setIsManualCollapse(false)
+        } else {
+            setIsManualCollapse(true)
+        }
+
+        setCollapsed(!collapsed())
     }
 
     const renderMenuItem = (item: MenuItem, index: () => number) => {
@@ -50,7 +68,7 @@ export const Sidebar = (props: SidebarProps) => {
                     }}
                 >
                     {item.icon}
-                    <Show when={!props.collapsed}>
+                    <Show when={!collapsed()}>
                         <Motion.span
                             animate={{
                                 opacity: [0, 1],
@@ -119,7 +137,7 @@ export const Sidebar = (props: SidebarProps) => {
                 onClick={() => selectItem(subItemIndex, false)}
             >
                 {subItem.icon}
-                <Show when={!props.collapsed}>
+                <Show when={!collapsed()}>
                     <Motion.span
                         animate={{
                             opacity: [0, 1],
@@ -138,19 +156,52 @@ export const Sidebar = (props: SidebarProps) => {
     return (
         <div
             classList={{
-                'w-24': props.collapsed,
-                'w-64': !props.collapsed,
+                'w-24': collapsed(),
+                'w-64': !collapsed(),
                 'bg-background': true,
                 'text-foreground': true,
                 'transition-width': true,
                 'duration-300': true,
-                'p-2.5': true,
+                'overflow-y-auto': true,
                 'border-r': true,
-                'border-border': true,
-                'overflow-y-auto': true
+                'border-muted': true
             }}
         >
-            <ul class="list-none p-0">
+            <div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4 border-b border-muted">
+                {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
+                <SiBoxysvg />
+                <Show when={!collapsed()}>
+                    <span class="text-foreground text-lg">{colorMode()}</span>
+                </Show>
+                <button
+                    onClick={handleCollapseToggle}
+                    class={`transition-transform duration-300 ${
+                        collapsed() ? 'rotate-180' : ''
+                    }`}
+                >
+                    <Switch>
+                        <Match when={collapsed()}>
+                            <AiOutlineAlignRight />
+                        </Match>
+                        <Match when={!collapsed()}>
+                            <AiOutlineAlignLeft />
+                        </Match>
+                    </Switch>
+                </button>
+            </div>
+            <ul
+                class="list-none mt-4 p-2.5"
+                onMouseEnter={() => {
+                    if (isManualCollapse()) {
+                        setCollapsed(false)
+                    }
+                }}
+                onMouseLeave={() => {
+                    if (isManualCollapse()) {
+                        setCollapsed(true)
+                    }
+                }}
+            >
                 <For each={props.menuItems}>{renderMenuItem}</For>
             </ul>
         </div>

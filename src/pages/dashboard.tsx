@@ -69,6 +69,21 @@ const Dashboard = () => {
             name: 'Youtube',
             value: 91,
             href: 'https://www.youtube.com/@tremorlabs3079'
+        },
+        {
+            name: 'Youtube',
+            value: 91,
+            href: 'https://www.youtube.com/@tremorlabs3079'
+        },
+        {
+            name: 'Youtube',
+            value: 91,
+            href: 'https://www.youtube.com/@tremorlabs3079'
+        },
+        {
+            name: 'Youtube',
+            value: 91,
+            href: 'https://www.youtube.com/@tremorlabs3079'
         }
     ]
 
@@ -118,7 +133,7 @@ const Dashboard = () => {
                 <CardHeader>
                     <CardTitle>Website Analytics</CardTitle>
                 </CardHeader>
-                <Grid cols={3} class="w-full">
+                <Grid cols={3} class="w-full p-4">
                     <Col span={1}>
                         <PieChart data={chartData} height={200} />
                     </Col>
@@ -131,7 +146,10 @@ const Dashboard = () => {
                             <span>Source</span>
                             <span>Views</span>
                         </p>
-                        <BarList data={barListDemo} />
+                        <BarList
+                            data={barListDemo}
+                            class="overflow-y-auto h-40"
+                        />
                     </Col>
                 </Grid>
             </Card>

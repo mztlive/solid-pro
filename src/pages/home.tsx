@@ -104,78 +104,83 @@ const Home = (props: ParentProps) => {
         }
     ]
 
-    const [collapsed, setCollapsed] = createSignal(false)
 
     return (
-        <div class="h-screen w-full flex flex-col bg-background">
-            <nav class="w-full fixed flex justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
-                <div class="flex flex-row items-center gap-8">
-                    {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
-                    <SiBoxysvg />
-                    <span class="text-foreground">{colorMode()}</span>
-                </div>
-                <div class="flex flex-row items-center gap-8">
-                    <SearchInput />
-                    <ColorModeDropdownmenu />
-                    <SettingsSheet>
-                        <AiTwotoneSetting
-                            size={22}
-                            color={colorMode() == 'light' ? 'black' : 'white'}
-                        />
-                    </SettingsSheet>
+        <div class="flex flex-row">
+            <Sidebar menuItems={menus} />
+            <div class="h-screen w-full flex flex-col bg-background">
+                <nav class="w-full fixed flex justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
+                    <div></div>
+                    <div class="flex flex-row items-center gap-8">
+                        <SearchInput />
+                        <ColorModeDropdownmenu />
+                        <SettingsSheet>
+                            <AiTwotoneSetting
+                                size={22}
+                                color={
+                                    colorMode() == 'light' ? 'black' : 'white'
+                                }
+                            />
+                        </SettingsSheet>
 
-                    <NotificationDropdownMenu
-                        messages={[
-                            {
-                                id: '123123123',
-                                title: 'Wrong!',
-                                description:
-                                    'Password Changed. if you are not you, please change it immediately.',
-                                link: '/'
+                        <NotificationDropdownMenu
+                            messages={[
+                                {
+                                    id: '123123123',
+                                    title: 'Wrong!',
+                                    description:
+                                        'Password Changed. if you are not you, please change it immediately.',
+                                    link: '/'
+                                }
+                            ]}
+                        />
+                        <AvatarDropdownMenu />
+                    </div>
+                </nav>
+                <main class="overflow-hidden w-full flex flex-row">
+                    {/* Sidebar */}
+                    <div class="w-full px-10 py-2 flex flex-col">
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink href="/">
+                                        Home
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                                <BreadcrumbItem>
+                                    <BreadcrumbEllipsis />
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink href="/components">
+                                        Components
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator />
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink current>
+                                        Breadcrumbs
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                        <Suspense
+                            fallback={
+                                <Skeleton
+                                    width={100}
+                                    height={100}
+                                    radius={10}
+                                />
                             }
-                        ]}
-                    />
-                    <AvatarDropdownMenu />
-                </div>
-            </nav>
-            <main class="overflow-hidden w-full flex flex-row">
-                {/* Sidebar */}
-                <Sidebar menuItems={menus} />
-                <div class="w-full px-10 py-2 flex flex-col">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbEllipsis />
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/components">
-                                    Components
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbLink current>
-                                    Breadcrumbs
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                    <Suspense
-                        fallback={
-                            <Skeleton width={100} height={100} radius={10} />
-                        }
-                    >
-                        <div class="mt-4 pb-10 overflow-y-auto">
-                            {props.children}
-                        </div>
-                    </Suspense>
-                </div>
-            </main>
+                        >
+                            <div class="mt-4 pb-10 overflow-y-auto">
+                                {props.children}
+                            </div>
+                        </Suspense>
+                    </div>
+                </main>
+            </div>
         </div>
     )
 }
