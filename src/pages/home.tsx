@@ -71,6 +71,7 @@ import {
     BreadcrumbSeparator,
     BreadcrumbEllipsis
 } from '~/components/ui/breadcrumb'
+import PageSkeleton from '~/components/framework/page-skeleton'
 
 const Home = (props: ParentProps) => {
     const { t } = useI18nContext()
@@ -110,55 +111,43 @@ const Home = (props: ParentProps) => {
                                     title: 'Wrong!',
                                     description:
                                         'Password Changed. if you are not you, please change it immediately.',
-                                    link: '/'
+                                    link: '/',
+                                    type: 'error'
                                 }
                             ]}
                         />
                         <AvatarDropdownMenu />
                     </div>
                 </nav>
-                <main class="overflow-hidden w-full flex flex-row">
-                    {/* Sidebar */}
-                    <div class="w-full px-10 py-2 flex flex-col">
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink href="/">
-                                        Home
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbEllipsis />
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink href="/components">
-                                        Components
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink current>
-                                        Breadcrumbs
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
-                        <Suspense
-                            fallback={
-                                <Skeleton
-                                    width={100}
-                                    height={100}
-                                    radius={10}
-                                />
-                            }
-                        >
-                            <div class="mt-4 pb-10 overflow-y-auto">
-                                {props.children}
-                            </div>
-                        </Suspense>
-                    </div>
+                <main class="overflow-hidden w-full px-10 py-2 flex flex-col">
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            <BreadcrumbItem>
+                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbEllipsis />
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbLink href="/components">
+                                    Components
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator />
+                            <BreadcrumbItem>
+                                <BreadcrumbLink current>
+                                    Breadcrumbs
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                    <Suspense fallback={<PageSkeleton />}>
+                        <div class="mt-4 pb-10 overflow-y-auto">
+                            {props.children}
+                        </div>
+                    </Suspense>
                 </main>
             </div>
         </div>

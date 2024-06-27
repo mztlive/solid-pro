@@ -33,7 +33,7 @@ const MessageItem = (props: MessageItemProps) => {
     const titleColor = createMemo(() => {
         switch (props.type) {
             case 'error':
-                return 'text-red-500'
+                return 'text-destructive'
             case 'warning':
                 return 'text-yellow-500'
             case 'info':
@@ -41,13 +41,13 @@ const MessageItem = (props: MessageItemProps) => {
             case 'read':
                 return 'text-gray-500'
             default:
-                return 'text-black'
+                return 'text-foreground'
         }
     })
 
     return (
         <div
-            class="flex flex-row items-center justify-between hover:bg-gray-200 p-2 rounded-md cursor-pointer"
+            class="flex flex-row items-center justify-between hover:bg-muted p-2 rounded-md cursor-pointer"
             onClick={() => {
                 props.onClick?.(props.id)
             }}
