@@ -81,34 +81,14 @@ const Home = (props: ParentProps) => {
         {
             text: t.menu.dashboard,
             icon: <AiOutlineDashboard size={20} />,
-            children: [
-                {
-                    icon: <AiOutlineDashboard size={20} />,
-                    text: 'test'
-                }
-            ]
-        },
-        {
-            text: t.menu.dashboard,
-            icon: <AiOutlineDashboard size={20} />,
-            children: [
-                {
-                    icon: <AiOutlineDashboard size={20} />,
-                    text: 'test'
-                }
-            ]
-        },
-        {
-            text: t.menu.dashboard,
-            icon: <AiOutlineDashboard size={20} />
+            href: '/'
         }
     ]
 
-
     return (
-        <div class="flex flex-row">
+        <div class="flex flex-row h-screen w-full">
             <Sidebar menuItems={menus} />
-            <div class="h-screen w-full flex flex-col bg-background">
+            <div class="w-full flex flex-col bg-background">
                 <nav class="w-full fixed flex justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
                     <div></div>
                     <div class="flex flex-row items-center gap-8">

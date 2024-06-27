@@ -1,4 +1,4 @@
-import { JSX, Match, Show, Switch, createSignal } from 'solid-js'
+import { JSX, Match, Show, Switch, createEffect, createSignal } from 'solid-js'
 import { For } from 'solid-js/web'
 import {
     AiOutlineAlignLeft,
@@ -12,12 +12,14 @@ import { SiBoxysvg } from 'solid-icons/si'
 import { useI18nContext } from '~/providers/i18n-provider'
 import { Resolver } from '@solid-primitives/i18n'
 import { useColorMode } from '@kobalte/core/color-mode'
+import { useLocation, useNavigate } from '@solidjs/router'
 
 export type MenuItem = {
     icon?: JSX.Element
     text: string | Resolver<string, string>
     children?: MenuItem[]
     description?: string | Resolver<string, string>
+    href?: string
 }
 
 export type SidebarProps = {
@@ -26,6 +28,9 @@ export type SidebarProps = {
 
 export const Sidebar = (props: SidebarProps) => {
     const { colorMode } = useColorMode()
+
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const [openItems, setOpenItems] = createSignal<Record<string, boolean>>({})
     const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
@@ -50,6 +55,23 @@ export const Sidebar = (props: SidebarProps) => {
         setCollapsed(!collapsed())
     }
 
+    // 根据当前路径设置选中的菜单项
+    createEffect(() => {
+        const currentPath = location.pathname
+        props.menuItems.forEach((item, index) => {
+            if (item.href === currentPath) {
+                setSelectedItem(index.toString())
+            }
+
+            item.children?.forEach((subItem, subIndex) => {
+                if (subItem.href === currentPath) {
+                    setSelectedItem(`${index}-${subIndex}`)
+                    setOpenItems({ ...openItems(), [index]: true })
+                }
+            })
+        })
+    })
+
     const renderMenuItem = (item: MenuItem, index: () => number) => {
         const itemIndex = index().toString()
         const hasChildren = !!item.children
@@ -57,14 +79,16 @@ export const Sidebar = (props: SidebarProps) => {
         return (
             <li>
                 <div
-                    class={`flex items-center p-2 cursor-pointer gap-2 text-base rounded-md text-foreground user-select-none hover:bg-hover-muted ${
+                    class={`flex items-center p-2 mb-2 cursor-pointer gap-2 text-base rounded-md text-foreground user-select-none hover:bg-hover-muted ${
                         selectedItem() === itemIndex && !hasChildren
                             ? 'bg-selected-background'
                             : ''
                     }`}
                     onClick={() => {
                         selectItem(itemIndex, hasChildren)
-                        hasChildren && toggleItem(itemIndex)
+                        hasChildren
+                            ? toggleItem(itemIndex)
+                            : navigate(item.href || '/')
                     }}
                 >
                     {item.icon}
@@ -129,12 +153,15 @@ export const Sidebar = (props: SidebarProps) => {
         const subItemIndex = `${parentIndex}-${subIndex()}`
         return (
             <li
-                class={`flex items-center cursor-pointer gap-2 text-base p-1.5 rounded-md text-foreground hover:bg-hover-muted ${
+                class={`flex items-center mb-2 cursor-pointer gap-2 text-base p-1.5 rounded-md text-foreground hover:bg-hover-muted ${
                     selectedItem() === subItemIndex
                         ? 'bg-selected-background'
                         : ''
                 }`}
-                onClick={() => selectItem(subItemIndex, false)}
+                onClick={() => {
+                    selectItem(subItemIndex, false)
+                    navigate(subItem.href || '/')
+                }}
             >
                 {subItem.icon}
                 <Show when={!collapsed()}>
@@ -190,7 +217,7 @@ export const Sidebar = (props: SidebarProps) => {
                 </button>
             </div>
             <ul
-                class="list-none mt-4 p-2.5"
+                class="list-none mt-2 p-2.5"
                 onMouseEnter={() => {
                     if (isManualCollapse()) {
                         setCollapsed(false)
