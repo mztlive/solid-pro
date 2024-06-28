@@ -4,7 +4,6 @@ import {
     DropdownMenuContent,
     DropdownMenu
 } from '../ui/dropdown-menu'
-import { useI18nContext } from '~/providers/i18n-provider'
 import { useNavigate } from '@solidjs/router'
 import { For, createMemo, createSignal } from 'solid-js'
 import { Badge } from '../ui/badge'
@@ -19,6 +18,7 @@ import {
 } from '../ui/dialog'
 import { Button } from '../ui/button'
 import { useColorMode } from '@kobalte/core/color-mode'
+import { useLocale } from '~/i18n/lib'
 
 interface MessageItemProps {
     id: string
@@ -68,7 +68,7 @@ interface NotificationDropdownMenuProps {
 }
 
 const NotificationDropdownMenu = (props: NotificationDropdownMenuProps) => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const [selectedMessage, setSelectdMessage] =
         createSignal<MessageItemProps | null>(null)

@@ -5,12 +5,12 @@ import {
     DropdownMenuTrigger
 } from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { useI18nContext } from '~/providers/i18n-provider'
 import { VsColorMode } from 'solid-icons/vs'
 import { useColorMode } from '@kobalte/core/color-mode'
+import { useLocale } from '~/i18n/lib'
 
 const ColorModeDropdownmenu = () => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const { setColorMode, colorMode } = useColorMode()
 

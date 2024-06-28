@@ -9,11 +9,11 @@ import {
 } from '../ui/sheet'
 import { TextField, TextFieldLabel } from '../ui/text-field'
 import LocaleSelect from './locale-select'
-import { useI18nContext } from '~/providers/i18n-provider'
 import { ParentProps, ValidComponent } from 'solid-js'
+import { useLocale } from '~/i18n/lib'
 
 const SettingsSheet = (props: ParentProps) => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     return (
         <Sheet>

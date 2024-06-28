@@ -1,68 +1,12 @@
-import {
-    AiFillNotification,
-    AiFillSetting,
-    AiOutlineAlignLeft,
-    AiOutlineAlignRight,
-    AiOutlineDashboard,
-    AiOutlineLeft,
-    AiOutlineNotification,
-    AiOutlineRight,
-    AiOutlineSearch,
-    AiTwotoneNotification,
-    AiTwotoneSetting
-} from 'solid-icons/ai'
-import { IoLogOutSharp } from 'solid-icons/io'
-import {
-    Match,
-    ParentProps,
-    Show,
-    Suspense,
-    Switch,
-    createSignal
-} from 'solid-js'
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
-import { Button } from '~/components/ui/button'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger
-} from '~/components/ui/dropdown-menu'
+import { AiOutlineDashboard, AiTwotoneSetting } from 'solid-icons/ai'
+import { ParentProps, Suspense } from 'solid-js'
 import { MenuItem, Sidebar } from '~/components/ui/sidebar/sidebar'
-import { Skeleton } from '~/components/ui/skeleton'
-import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
-import {
-    TextField,
-    TextFieldInput,
-    TextFieldLabel
-} from '~/components/ui/text-field'
-import { LocaleOption, useI18nContext } from '~/providers/i18n-provider'
-import { VsColorMode } from 'solid-icons/vs'
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger
-} from '~/components/ui/sheet'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue
-} from '~/components/ui/select'
-import LocaleSelect from '~/components/framework/locale-select'
 import AvatarDropdownMenu from '~/components/framework/avatar-dropdownmenu'
 import SettingsSheet from '~/components/framework/settings-sheet'
 import SearchInput from '~/components/framework/search-input'
-import { Card } from '~/components/ui/card'
-import { Timeline } from '~/components/ui/timeline'
 import NotificationDropdownMenu from '~/components/framework/notification-dropdownmenu'
 import ColorModeDropdownmenu from '~/components/framework/color-model-dropdownment'
 import { useColorMode } from '@kobalte/core/color-mode'
-import { SiBoxysvg } from 'solid-icons/si'
 import {
     Breadcrumb,
     BreadcrumbList,
@@ -72,9 +16,10 @@ import {
     BreadcrumbEllipsis
 } from '~/components/ui/breadcrumb'
 import PageSkeleton from '~/components/framework/page-skeleton'
+import { useLocale } from '~/i18n/lib'
 
 const Home = (props: ParentProps) => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const { colorMode } = useColorMode()
 

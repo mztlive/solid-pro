@@ -6,9 +6,10 @@ import {
     SelectTrigger,
     SelectValue
 } from '../ui/select'
+import { useLocale } from '~/i18n/lib'
 
 const LocaleSelect = () => {
-    const { t, locale, setLocale, localeOptions } = useI18nContext()
+    const { t, locale, setLocale, localeOptions } = useLocale()
 
     const options = localeOptions.map((option) => option.label)
 

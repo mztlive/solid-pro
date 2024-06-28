@@ -5,13 +5,13 @@ import {
     TextFieldInput,
     TextFieldLabel
 } from '~/components/ui/text-field'
-import { useI18nContext } from '~/providers/i18n-provider'
 import LoadingButton from '~/components/ui/loading-button'
+import { useLocale } from '~/i18n/lib'
 
 const Login = () => {
     const { signIn, setRequest, isLoging } = useAuthContext()
 
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     return (
         <div class="flex w-full h-screen justify-center items-center">

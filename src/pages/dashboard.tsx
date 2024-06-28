@@ -4,10 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { LineChart, PieChart } from '~/components/ui/charts'
 import { Col, Grid } from '~/components/ui/grid'
 import { showToast } from '~/components/ui/toast'
-import { useI18nContext } from '~/providers/i18n-provider'
+import { useLocale } from '~/i18n/lib'
 
 const Dashboard = () => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const chartData = {
         labels: [

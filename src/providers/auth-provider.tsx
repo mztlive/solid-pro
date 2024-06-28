@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from '@solidjs/router'
 import { LoginFunction } from '~/api/contract'
 import { SetStoreFunction, createStore } from 'solid-js/store'
 import { showToast } from '~/components/ui/toast'
-import { useI18nContext } from './i18n-provider'
+import { useLocale } from '~/i18n/lib'
 
 interface AuthContextProps {
     isLogined: Accessor<boolean>
@@ -35,7 +35,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
         password: ''
     })
 
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const [isLogined, setIsLogined] = createSignal<boolean>(false)
     const [isLoging, setIsLoging] = createSignal<boolean>(false)

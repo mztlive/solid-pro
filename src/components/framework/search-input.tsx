@@ -1,32 +1,13 @@
-import { AiOutlineSearch } from 'solid-icons/ai'
 import { TextField, TextFieldInput } from '../ui/text-field'
 import { Button } from '../ui/button'
-import { useI18nContext } from '~/providers/i18n-provider'
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuGroupLabel,
-    DropdownMenuItem,
-    DropdownMenuPortal,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger
-} from '../ui/dropdown-menu'
 import {
     AlertDialog,
     AlertDialogContent,
     AlertDialogDescription,
-    AlertDialogTitle,
-    AlertDialogTrigger
+    AlertDialogTitle
 } from '../ui/alert-dialog'
 import { createEffect, createSignal, onCleanup } from 'solid-js'
+import { useLocale } from '~/i18n/lib'
 
 interface SearchItemProps {
     title: string
@@ -48,7 +29,7 @@ const SearchItem = (props: SearchItemProps) => {
 }
 
 const SearchInput = () => {
-    const { t } = useI18nContext()
+    const { t } = useLocale()
 
     const inputClass = `h-8 border-none px-4 bg-muted rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer`
 
