@@ -9,7 +9,6 @@ import {
 import { Motion } from 'solid-motionone'
 
 import { SiBoxysvg } from 'solid-icons/si'
-import { useI18nContext } from '~/providers/i18n-provider'
 import { Resolver } from '@solid-primitives/i18n'
 import { useColorMode } from '@kobalte/core/color-mode'
 import { useLocation, useNavigate } from '@solidjs/router'

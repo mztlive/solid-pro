@@ -16,20 +16,10 @@ import {
     BreadcrumbEllipsis
 } from '~/components/ui/breadcrumb'
 import PageSkeleton from '~/components/framework/page-skeleton'
-import { useLocale } from '~/i18n/lib'
+import { menus } from '~/menus'
 
 const Home = (props: ParentProps) => {
-    const { t } = useLocale()
-
     const { colorMode } = useColorMode()
-
-    const menus: MenuItem[] = [
-        {
-            text: t.menu.dashboard,
-            icon: <AiOutlineDashboard size={20} />,
-            href: '/'
-        }
-    ]
 
     return (
         <div class="flex flex-row h-screen w-full">

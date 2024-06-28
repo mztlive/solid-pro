@@ -30,26 +30,26 @@ const localeOptions: LocaleOption[] = [
     { label: 'Tiếng Việt', value: 'vn' }
 ]
 
-let t: i18n.ChainedTranslator<I18nDictionaries[Locale], string>
-
 const i18nStore = createRoot(() => {
+    console.log('i18n init.')
     const [locale, setLocale] = createSignal<Locale>('en')
 
     const dict = createMemo(() => i18n.flatten(dictionaries[locale()]))
 
     const translator = i18n.translator(() => dict(), i18n.resolveTemplate)
 
-    t = i18n.chainedTranslator<I18nDictionaries[Locale], string>(
-        dict(),
-        translator
-    )
+    const t: i18n.ChainedTranslator<I18nDictionaries[Locale], string> =
+        i18n.chainedTranslator<I18nDictionaries[Locale], string>(
+            dict(),
+            translator
+        )
 
-    return { locale, setLocale }
+    return { locale, setLocale, t }
 })
 
 export const useLocale = () => {
     return {
-        t,
+        t: i18nStore.t,
         locale: i18nStore.locale,
         setLocale: i18nStore.setLocale,
         localeOptions
