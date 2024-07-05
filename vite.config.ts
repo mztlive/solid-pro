@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import path from 'path'
+import eslint from 'vite-plugin-eslint'
 
 export default defineConfig({
     plugins: [
@@ -11,7 +12,8 @@ export default defineConfig({
     */
         // devtools(),
         solidPlugin(),
-        tsconfigPaths({ root: './' })
+        tsconfigPaths({ root: './' }),
+        eslint()
     ],
     server: {
         port: 3000
