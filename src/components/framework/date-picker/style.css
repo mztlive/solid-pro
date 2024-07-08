@@ -1,0 +1,154 @@
+.date-picker-main-btn {
+    height: 2rem;
+    min-width: 2rem;
+    text-transform: capitalize;
+    color: hsl(var(--popover-foreground))
+}
+
+.date-picker-main-btn:disabled,
+.date-picker-main-btn:disabled:hover {
+    background-color: transparent;
+    color: hsl(var(--muted-foreground))
+}
+
+.date-picker-main-btn:hover {
+    background-color: hsl(var(--accent))
+}
+
+.date-prev-next-btn,
+.selector-prev-next-btn {
+    min-width: 1.75rem;
+    height: 1.75rem;
+    background-color: transparent;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid hsl(var(--input))
+}
+
+.date-prev-next-btn:hover,
+.selector-prev-next-btn:hover {
+    border: 1px solid hsl(var(--input));
+    background-color: hsl(var(--accent))
+}
+
+.date-prev-next-btn>svg,
+.selector-prev-next-btn>svg {
+    width: 1em;
+    height: 1em;
+    fill: hsl(var(--popover-foreground));
+    opacity: .7
+}
+
+.date-prev-next-btn:hover>svg {
+    opacity: 1
+}
+
+.date-selector-trigger {
+    font-size: 0.875rem;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: hsl(var(--popover-foreground))
+}
+
+.date-selector-option {
+    min-height: 2.5rem;
+    font-weight: 400;
+    color: hsl(var(--popover-foreground))
+}
+
+[date-selector-option-selected=true],
+[date-selector-option-selected=true]:hover {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground))
+}
+
+.date-picker-calendar-days-area {
+    row-gap: .2rem;
+    display: flex;
+    flex-direction: column
+}
+
+.date-picker-weekday-name {
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
+    text-transform: capitalize
+}
+
+.date-picker-calendar-row {
+    grid-template-columns: repeat(7, minmax(0, 2rem))
+}
+
+.date-picker-day-number-area::before {
+    background-color: hsl(var(--accent))
+}
+
+.date-picker-day-number-area {
+    height: 2rem;
+    width: 2rem
+}
+
+.date-picker-day-number-area:empty {
+    width: 0;
+    height: 0
+}
+
+.date-picker-day-number {
+    min-height: 2rem;
+    min-width: 2rem;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: hsl(var(--popover-foreground))
+}
+
+[data-day-number-current-day=true],
+[data-day-number-current-day=true]:hover {
+    border: none;
+    background-color: hsl(var(--accent))
+}
+
+.day-number-not-current-month {
+    color: hsl(var(--muted-foreground));
+    opacity: .5
+}
+
+.day-number-not-current-month:hover {
+    opacity: .7
+}
+
+[data-day-number-area-range-between=true] {
+    background-color: hsl(var(--accent));
+    color: hsl(var(--muted-foreground))
+}
+
+[data-highlight-weekend=true][data-day-number-is-weekend=true] {
+    color: hsl(var(--destructive))
+}
+
+[data-day-number-selected=true],
+[data-day-number-selected=true]:hover,
+[data-day-number-selected=true][data-highlight-weekend=true] {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground))
+}
+
+[data-day-number-range-end-selected=false][data-day-number-selected=true] {
+    background-color: hsl(var(--accent));
+    font-weight: 500;
+    color: hsl(var(--popover-foreground))
+}
+
+[data-day-number-range-end-selected=true][data-day-number-selected=true][data-day-number-current-day=true]::before {
+    color: hsl(var(--primary-foreground))
+}
+
+@media (max-width:620px) {
+    .date-picker-calendar-wrapper {
+        flex-direction: column
+    }
+}

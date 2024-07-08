@@ -48,6 +48,10 @@
     --ring: 240 5.9% 10%;
 
     --radius: 0.5rem;
+
+    /* 新增 sidebar 背景色 */
+    --sidebar-background: 0 0% 98%; /* 比背景稍暗 */
+
   }
 
   .dark,
@@ -96,6 +100,9 @@
     --ring: 240 4.9% 83.9%;
 
     --radius: 0.5rem;
+
+    /* 新增 sidebar 背景色 */
+    --sidebar-background: 240 10% 10%; /* 比背景稍亮 */
   }
 }
 

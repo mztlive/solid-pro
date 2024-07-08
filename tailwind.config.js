@@ -62,7 +62,8 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))"
         },
         'selected-background': "hsl(var(--selected-background))",
-        'hover-muted': "hsl(var(--hover-muted))"
+        'hover-muted': "hsl(var(--hover-muted))",
+        'sidebar-background': "hsl(var(--sidebar-background))"
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",

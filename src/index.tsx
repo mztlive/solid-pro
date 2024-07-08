@@ -1,12 +1,10 @@
 /* @refresh reload */
 import './app.css'
 
-import { Suspense, render } from 'solid-js/web'
+import { render } from 'solid-js/web'
 import { Router } from '@solidjs/router'
 import App from './app'
 import { baseRoutes } from './routes'
-
-
 
 const root = document.getElementById('root')
 

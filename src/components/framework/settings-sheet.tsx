@@ -1,4 +1,3 @@
-import { AiTwotoneSetting } from 'solid-icons/ai'
 import {
     Sheet,
     SheetContent,
@@ -9,7 +8,7 @@ import {
 } from '../ui/sheet'
 import { TextField, TextFieldLabel } from '../ui/text-field'
 import LocaleSelect from './locale-select'
-import { ParentProps, ValidComponent } from 'solid-js'
+import { ParentProps } from 'solid-js'
 import { useLocale } from '~/i18n/lib'
 
 const SettingsSheet = (props: ParentProps) => {

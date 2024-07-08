@@ -1,5 +1,13 @@
-import { JSX, Match, Show, Switch, createEffect, createSignal } from 'solid-js'
-import { For } from 'solid-js/web'
+import {
+    JSX,
+    Match,
+    Show,
+    Switch,
+    createEffect,
+    createSignal,
+    For
+} from 'solid-js'
+
 import {
     AiOutlineAlignLeft,
     AiOutlineAlignRight,
@@ -34,24 +42,33 @@ export const Sidebar = (props: SidebarProps) => {
     const [openItems, setOpenItems] = createSignal<Record<string, boolean>>({})
     const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
 
+    // 是否折叠的
     const [collapsed, setCollapsed] = createSignal(false)
+
+    // 是否手动折叠的
     const [isManualCollapse, setIsManualCollapse] = createSignal(false)
+
+    // 鼠标是否在侧边栏内部的
+    const [isMouseInside, setIsMouseInside] = createSignal(false)
+
+    const handleCollapseToggle = () => {
+        // 如果当前是手动折叠状态
+        if (isManualCollapse()) {
+            // 取消手动折叠状态并展开侧边栏
+            setIsManualCollapse(false)
+            setCollapsed(false)
+        } else {
+            // 否则，设置为手动折叠状态并切换侧边栏的折叠状态
+            setIsManualCollapse(true)
+            setCollapsed(!collapsed())
+        }
+    }
 
     const toggleItem = (index: string) =>
         setOpenItems({ ...openItems(), [index]: !openItems()[index] })
 
     const selectItem = (index: string, hasChildren: boolean) => {
         if (!hasChildren) setSelectedItem(index)
-    }
-
-    const handleCollapseToggle = () => {
-        if (collapsed()) {
-            setIsManualCollapse(false)
-        } else {
-            setIsManualCollapse(true)
-        }
-
-        setCollapsed(!collapsed())
     }
 
     // 根据当前路径设置选中的菜单项
@@ -182,21 +199,34 @@ export const Sidebar = (props: SidebarProps) => {
     return (
         <div
             classList={{
-                'w-24': collapsed(),
+                'w-2': collapsed(),
                 'w-64': !collapsed(),
-                'bg-background': true,
+                'h-full': true,
+                'bg-sidebar-background': true,
                 'text-foreground': true,
                 'transition-width': true,
-                'duration-300': true,
-                'overflow-y-auto': true,
-                'border-r': true,
-                'border-muted': true
+                'duration-200': true,
+                'overflow-y-auto': true
+            }}
+            onMouseEnter={() => {
+                setIsMouseInside(true)
+                setTimeout(() => {
+                    if (isManualCollapse() && isMouseInside()) {
+                        setCollapsed(false)
+                    }
+                }, 100)
+            }}
+            onMouseLeave={() => {
+                setIsMouseInside(false)
+                if (isManualCollapse()) {
+                    setCollapsed(true)
+                }
             }}
         >
-            <div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4 border-b border-muted">
+            <div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4">
                 {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
-                <SiBoxysvg />
                 <Show when={!collapsed()}>
+                    <SiBoxysvg />
                     <span class="text-foreground text-lg">{colorMode()}</span>
                 </Show>
                 <button
@@ -215,19 +245,7 @@ export const Sidebar = (props: SidebarProps) => {
                     </Switch>
                 </button>
             </div>
-            <ul
-                class="list-none mt-2 p-2.5"
-                onMouseEnter={() => {
-                    if (isManualCollapse()) {
-                        setCollapsed(false)
-                    }
-                }}
-                onMouseLeave={() => {
-                    if (isManualCollapse()) {
-                        setCollapsed(true)
-                    }
-                }}
-            >
+            <ul class="list-none mt-2 p-2.5">
                 <For each={props.menuItems}>{renderMenuItem}</For>
             </ul>
         </div>

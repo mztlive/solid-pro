@@ -1,6 +1,6 @@
-import { AiOutlineDashboard, AiTwotoneSetting } from 'solid-icons/ai'
+import { AiTwotoneSetting } from 'solid-icons/ai'
 import { ParentProps, Suspense } from 'solid-js'
-import { MenuItem, Sidebar } from '~/components/ui/sidebar/sidebar'
+import { Sidebar } from '~/components/ui/sidebar/sidebar'
 import AvatarDropdownMenu from '~/components/framework/avatar-dropdownmenu'
 import SettingsSheet from '~/components/framework/settings-sheet'
 import SearchInput from '~/components/framework/search-input'
@@ -24,9 +24,9 @@ const Home = (props: ParentProps) => {
     return (
         <div class="flex flex-row h-screen w-full">
             <Sidebar menuItems={menus} />
-            <div class="w-full flex flex-col bg-background">
-                <nav class="w-full fixed flex justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
-                    <div></div>
+            <div class="w-full bg-background flex flex-col bg-background">
+                <nav class="w-full fixed flex  justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
+                    <div />
                     <div class="flex flex-row items-center gap-8">
                         <SearchInput />
                         <ColorModeDropdownmenu />
@@ -78,7 +78,7 @@ const Home = (props: ParentProps) => {
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
-                    <Suspense fallback={<PageSkeleton />}>
+                    <Suspense fallback={<PageSkeleton class="mt-4" />}>
                         <div class="mt-4 pb-10 overflow-y-auto">
                             {props.children}
                         </div>

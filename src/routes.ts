@@ -15,6 +15,10 @@ const baseRoutes: RouteDefinition[] = [
             {
                 path: '/',
                 component: lazy(() => import('./pages/dashboard'))
+            },
+            {
+                path: '/table-test',
+                component: lazy(() => import('./pages/table-test'))
             }
         ]
     },

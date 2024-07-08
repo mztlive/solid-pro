@@ -1,13 +1,8 @@
-import { Skeleton } from '~/components/ui/skeleton'
-import { cn } from '~/lib/utils'
+import { Skeleton } from '../ui/skeleton'
 
-interface PageSkeletonProps {
-    class?: string
-}
-
-const PageSkeleton = (props: PageSkeletonProps) => {
+const TableSkeleton = () => {
     return (
-        <div class={cn('h-full w-full', props.class)}>
+        <div class="h-full w-full">
             <div class="flex flex-row w-full gap-4">
                 <div class="h-40 w-1/3">
                     <Skeleton radius={10} height={150} animate />
@@ -54,4 +49,4 @@ const PageSkeleton = (props: PageSkeletonProps) => {
     )
 }
 
-export default PageSkeleton
+export default TableSkeleton
