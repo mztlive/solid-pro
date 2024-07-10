@@ -31,7 +31,7 @@ const SearchItem = (props: SearchItemProps) => {
 const SearchInput = () => {
     const { t } = useLocale()
 
-    const inputClass = `h-8 border-none px-4 bg-muted rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer`
+    const inputClass = `h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer`
 
     const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
 
@@ -53,7 +53,10 @@ const SearchInput = () => {
 
     return (
         <>
-            <div class="flex flex-row" onClick={() => setDialogIsOpen(true)}>
+            <div
+                class="flex flex-row border rounded-md"
+                onClick={() => setDialogIsOpen(true)}
+            >
                 <input
                     class={inputClass}
                     type="text"
@@ -62,7 +65,7 @@ const SearchInput = () => {
                 />
                 <Button
                     variant="outline"
-                    class="h-8 w-12 border-none bg-muted rounded-none rounded-r-md"
+                    class="h-8 w-12 border-none bg-background rounded-none rounded-r-md"
                 >
                     ⌘+K
                 </Button>

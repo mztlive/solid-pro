@@ -1,4 +1,5 @@
 export const vn = {
+    prject_name: 'Dự án Việt Nam',
     login: {
         title: 'Đăng nhập',
         account: 'Tài khoản',
@@ -15,7 +16,8 @@ export const vn = {
     },
     menu: {
         dashboard: 'Bảng điều khiển',
-        setting: 'Cài đặt'
+        setting: 'Cài đặt',
+        table: 'Bảng'
     },
     common: {
         search_placeholder: '🔍 Tìm kiếm...',

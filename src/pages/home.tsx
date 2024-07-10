@@ -7,26 +7,22 @@ import SearchInput from '~/components/framework/search-input'
 import NotificationDropdownMenu from '~/components/framework/notification-dropdownmenu'
 import ColorModeDropdownmenu from '~/components/framework/color-model-dropdownment'
 import { useColorMode } from '@kobalte/core/color-mode'
-import {
-    Breadcrumb,
-    BreadcrumbList,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbSeparator,
-    BreadcrumbEllipsis
-} from '~/components/ui/breadcrumb'
 import PageSkeleton from '~/components/framework/page-skeleton'
 import { menus } from '~/menus'
+import { useLocale } from '~/i18n/lib'
 
 const Home = (props: ParentProps) => {
     const { colorMode } = useColorMode()
+    const { t } = useLocale()
 
     return (
         <div class="flex flex-row h-screen w-full">
             <Sidebar menuItems={menus} />
-            <div class="w-full bg-background flex flex-col bg-background">
-                <nav class="w-full fixed flex  justify-between flex-row items-center pl-8 pr-16 py-8 h-14 sticky top-0 border-b border-muted">
-                    <div />
+            <div class="w-full bg-muted flex flex-col">
+                <nav class="w-full fixed flex  justify-between  flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border">
+                    <div>
+                        <span class="text-xl font-bold">{t.prject_name()}</span>
+                    </div>
                     <div class="flex flex-row items-center gap-8">
                         <SearchInput />
                         <ColorModeDropdownmenu />
@@ -54,30 +50,7 @@ const Home = (props: ParentProps) => {
                         <AvatarDropdownMenu />
                     </div>
                 </nav>
-                <main class="overflow-hidden w-full px-10 py-2 flex flex-col">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbEllipsis />
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/components">
-                                    Components
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbLink current>
-                                    Breadcrumbs
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+                <main class="overflow-hidden  w-full px-10 py-2 flex flex-col">
                     <Suspense fallback={<PageSkeleton class="mt-4" />}>
                         <div class="mt-4 pb-10 overflow-y-auto">
                             {props.children}

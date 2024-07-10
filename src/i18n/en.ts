@@ -1,4 +1,5 @@
 export const en = {
+    prject_name: 'Vietnam Project',
     login: {
         title: 'Login',
         account: 'Account',
@@ -15,7 +16,8 @@ export const en = {
     },
     menu: {
         dashboard: 'Dashboard',
-        setting: 'Setting'
+        setting: 'Setting',
+        table: 'Table'
     },
     common: {
         search_placeholder: '🔍 Search...',

@@ -11,7 +11,7 @@ const DatePickerRange = (props: DatePickerRangeProps) => {
     const [local, other] = splitProps(props, ['inputClass'])
 
     const standardInputClass =
-        'h-8 border text-md px-4 rounded-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer'
+        'h-8 border text-md px-4 rounded-md  focus:outline-none focus:border-transparent hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer'
 
     return (
         <div>

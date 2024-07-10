@@ -9,8 +9,9 @@
 
     --muted: 240 4.8% 95.9%;
     --muted-foreground: 240 3.8% 46.1%;
-    --hover-muted: 240 4.8% 90%; /* 悬停状态的浅色背景 */
-    --selected-background: 240 4.8% 80%; /* 选中状态的背景 */
+
+    --hover-muted: 240 3.7% 20%; /* 悬停状态的浅色背景 */
+    --selected-background: 240 3.7% 25%; /* 选中状态的背景 */
 
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
@@ -50,7 +51,7 @@
     --radius: 0.5rem;
 
     /* 新增 sidebar 背景色 */
-    --sidebar-background: 0 0% 98%; /* 比背景稍暗 */
+    --sidebar-background: 240 10% 3.9%; /* 比背景稍亮 */
 
   }
 
@@ -61,6 +62,7 @@
 
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
+
     --hover-muted: 240 3.7% 20%; /* 悬停状态的深色背景 */
     --selected-background: 240 3.7% 25%; /* 选中状态的背景 */
 
@@ -102,7 +104,7 @@
     --radius: 0.5rem;
 
     /* 新增 sidebar 背景色 */
-    --sidebar-background: 240 10% 10%; /* 比背景稍亮 */
+    --sidebar-background: 240 10% 3.9%; /* 比背景稍亮 */
   }
 }
 

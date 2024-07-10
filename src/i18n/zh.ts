@@ -1,4 +1,5 @@
 export const zh = {
+    prject_name: '越南项目',
     login: {
         title: '登录',
         account: '账号',
@@ -15,7 +16,8 @@ export const zh = {
     },
     menu: {
         dashboard: '仪表板',
-        setting: '设置'
+        setting: '设置',
+        table: '表格'
     },
     common: {
         search_placeholder: '🔍 搜索...',
