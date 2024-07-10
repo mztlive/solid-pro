@@ -2,6 +2,8 @@ import { Accessor, createMemo } from 'solid-js'
 import { MenuItem, useSidebarContext } from './sidebar'
 import { Motion } from 'solid-motionone'
 import { useNavigate } from '@solidjs/router'
+import I18nText from '~/components/framework/i18n-text'
+import { Dynamic } from 'solid-js/web'
 
 interface SubmenuItemProps {
     subItem: MenuItem
@@ -20,24 +22,22 @@ const SubmenuItem = (props: SubmenuItemProps) => {
 
     return (
         <li
-            class={`flex items-center mb-2 cursor-pointer gap-2 text-base p-1.5 rounded-md text-white hover:bg-hover-muted ${
-                isSelected() ? 'bg-selected-background' : ''
+            class={`user-select-none flex items-center mb-2 cursor-pointer gap-2 p-1.5 rounded-md text-white hover:bg-hover-muted ${
+                isSelected() ? 'bg-hover-muted' : ''
             }`}
             onClick={() => {
                 selectItem(subItemIndex(), false)
                 navigate(props.subItem.href || '/')
             }}
         >
-            {props.subItem.icon}
+            <Dynamic component={props.subItem.icon} />
             <Motion.span
                 animate={{
                     opacity: [0, 1],
                     transition: { duration: 0.3, easing: 'ease-in-out' }
                 }}
             >
-                {typeof props.subItem.text === 'function'
-                    ? props.subItem.text()
-                    : props.subItem.text}
+                <I18nText class="text-sm p-2" text={props.subItem.text} />
             </Motion.span>
         </li>
     )

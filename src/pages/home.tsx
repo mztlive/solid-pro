@@ -8,12 +8,13 @@ import NotificationDropdownMenu from '~/components/framework/notification-dropdo
 import ColorModeDropdownmenu from '~/components/framework/color-model-dropdownment'
 import { useColorMode } from '@kobalte/core/color-mode'
 import PageSkeleton from '~/components/framework/page-skeleton'
-import { menus } from '~/menus'
 import { useLocale } from '~/i18n/lib'
+import { createMenus } from '~/menus'
 
 const Home = (props: ParentProps) => {
     const { colorMode } = useColorMode()
     const { t } = useLocale()
+    const menus = createMenus()
 
     return (
         <div class="flex flex-row h-screen w-full">

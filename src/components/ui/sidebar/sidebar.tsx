@@ -1,5 +1,4 @@
 import {
-    JSX,
     Show,
     createEffect,
     createSignal,
@@ -7,7 +6,9 @@ import {
     createContext,
     ParentProps,
     Accessor,
-    useContext
+    useContext,
+    createMemo,
+    Component
 } from 'solid-js'
 
 import { AiOutlineAlignLeft, AiOutlineAlignRight } from 'solid-icons/ai'
@@ -19,7 +20,7 @@ import { Dynamic } from 'solid-js/web'
 import MenuItem from './menu-item'
 
 export type MenuItem = {
-    icon?: JSX.Element
+    icon?: Component
     text: string | Resolver<string, string>
     children?: MenuItem[]
     description?: string | Resolver<string, string>
@@ -46,29 +47,47 @@ const SidebarProvider = (props: SidebarProps) => {
     const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
 
     // 切换菜单项折叠状态
-    const toggleItem = (index: string) =>
+    const toggleItem = (index: string) => {
         setOpenItems({ ...openItems(), [index]: !openItems()[index] })
+    }
 
     // 选中菜单项
     const selectItem = (index: string, hasChildren: boolean) => {
         if (!hasChildren) setSelectedItem(index)
     }
 
-    // 根据当前路径设置选中的菜单项
-    createEffect(() => {
+    // 使用 createMemo 来缓存计算结果
+    const currentPathInfo = createMemo(() => {
         const currentPath = location.pathname
+        let selectedIndex: string | null = null
+        let openIndex: string | null = null
+
         props.menuItems.forEach((item, index) => {
             if (item.href === currentPath) {
-                setSelectedItem(index.toString())
+                selectedIndex = index.toString()
+            } else {
+                item.children?.forEach((subItem, subIndex) => {
+                    if (subItem.href === currentPath) {
+                        selectedIndex = `${index}-${subIndex}`
+                        openIndex = index.toString()
+                    }
+                })
             }
-
-            item.children?.forEach((subItem, subIndex) => {
-                if (subItem.href === currentPath) {
-                    setSelectedItem(`${index}-${subIndex}`)
-                    setOpenItems({ ...openItems(), [index]: true })
-                }
-            })
         })
+
+        return { selectedIndex, openIndex }
+    })
+
+    // 根据当前路径设置选中的菜单项
+    createEffect(() => {
+        const { selectedIndex, openIndex } = currentPathInfo()
+        if (selectedIndex !== null) {
+            setSelectedItem(selectedIndex)
+        }
+
+        if (openIndex !== null) {
+            setOpenItems((prev) => ({ ...prev, [openIndex]: true }))
+        }
     })
 
     return (

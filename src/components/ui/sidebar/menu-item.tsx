@@ -26,9 +26,7 @@ const Menu = (props: MenuItemProps) => {
         <li>
             <div
                 class={`flex items-center p-2 mb-2 cursor-pointer gap-2 text-base rounded-md text-white user-select-none hover:bg-hover-muted ${
-                    isSelected() && !hasChildren()
-                        ? 'bg-selected-background'
-                        : ''
+                    isSelected() && !hasChildren() ? 'bg-hover-muted' : ''
                 }`}
                 onClick={() => {
                     selectItem(itemIndex(), hasChildren())
@@ -37,7 +35,7 @@ const Menu = (props: MenuItemProps) => {
                         : navigate(props.item.href || '/')
                 }}
             >
-                {props.item.icon}
+                <Dynamic component={props.item.icon} />
                 <Motion.span
                     animate={{
                         opacity: [0, 1],
