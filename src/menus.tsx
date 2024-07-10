@@ -1,6 +1,6 @@
 import { AiOutlineDashboard, AiOutlineTable } from 'solid-icons/ai'
 import { useLocale } from './i18n/lib'
-import { MenuItem } from './components/ui/sidebar/types'
+import { MenuItem } from './components/ui/sidebar/sidebar'
 
 const { t } = useLocale()
 
@@ -13,11 +13,10 @@ export const menus: MenuItem[] = [
     {
         text: t.menu.table,
         icon: <AiOutlineTable size={20} />,
-        href: '/table-test',
         children: [
             {
-                text: 'Table 1',
-                href: '/table-test/table1'
+                text: 'Standard Table',
+                href: '/table-test'
             }
         ]
     }
