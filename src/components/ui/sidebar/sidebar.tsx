@@ -135,16 +135,7 @@ export const Sidebar = (props: SidebarProps) => {
     return (
         <SidebarProvider menuItems={props.menuItems}>
             <div
-                classList={{
-                    'w-2': collapsed(),
-                    'w-64': !collapsed(),
-                    'h-full': true,
-                    'bg-sidebar-background': true,
-                    'text-foreground': true,
-                    'transition-width': true,
-                    'duration-200': true,
-                    'overflow-y-auto': true
-                }}
+                class="relative h-full"
                 onMouseEnter={() => {
                     setIsMouseInside(true)
                     setTimeout(() => {
@@ -160,36 +151,54 @@ export const Sidebar = (props: SidebarProps) => {
                     }
                 }}
             >
-                <div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4">
-                    {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
-                    <Show when={!collapsed()}>
-                        <SiBoxysvg />
-                        <span class="text-white text-lg">XXXXXX</span>
-                    </Show>
+                <div
+                    classList={{
+                        'w-0': collapsed(),
+                        'w-60': !collapsed(),
+                        'h-full': true,
+                        'bg-sidebar-background': true,
+                        'text-foreground': true,
+                        'transition-width': true,
+                        'duration-200': true,
+                        'overflow-y-auto': true
+                    }}
+                >
+                    <div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4">
+                        {/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
+                        <Show when={!collapsed()}>
+                            <SiBoxysvg />
+                            <span class="text-white text-lg">XXXXXX</span>
+                        </Show>
 
-                    <button
-                        onClick={handleCollapseToggle}
-                        class={`transition-transform duration-300 ${
-                            collapsed() ? 'rotate-180' : ''
-                        }`}
-                    >
-                        <Dynamic
-                            component={
-                                collapsed()
-                                    ? AiOutlineAlignRight
-                                    : AiOutlineAlignLeft
-                            }
-                            class="text-white"
-                        />
-                    </button>
+                        <button
+                            onClick={handleCollapseToggle}
+                            class={`transition-transform duration-300 ${
+                                collapsed() ? 'rotate-180' : ''
+                            }`}
+                        >
+                            <Dynamic
+                                component={
+                                    collapsed()
+                                        ? AiOutlineAlignRight
+                                        : AiOutlineAlignLeft
+                                }
+                                class="text-white"
+                            />
+                        </button>
+                    </div>
+                    <ul class="list-none mt-2 p-2.5">
+                        <For each={props.menuItems}>
+                            {(item, index) => (
+                                <MenuItem item={item} index={index} />
+                            )}
+                        </For>
+                    </ul>
                 </div>
-                <ul class="list-none mt-2 p-2.5">
-                    <For each={props.menuItems}>
-                        {(item, index) => (
-                            <MenuItem item={item} index={index} />
-                        )}
-                    </For>
-                </ul>
+
+                {/* 一个透明的遮罩层，用于鼠标进入/离开时，自动展开侧边栏 */}
+                <Show when={collapsed()}>
+                    <div class="absolute top-0 left-0 w-8 h-full bg-transparent z-0" />
+                </Show>
             </div>
         </SidebarProvider>
     )
