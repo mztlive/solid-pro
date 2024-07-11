@@ -19,7 +19,7 @@ const Home = (props: ParentProps) => {
     return (
         <div class="flex flex-row h-screen w-full">
             <Sidebar menuItems={menus} />
-            <div class="w-full bg-muted flex flex-col">
+            <div class="w-full bg-page-bg flex flex-col">
                 <nav class="w-full fixed flex  justify-between  flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border">
                     <div>
                         <span class="text-xl font-bold">{t.prject_name()}</span>

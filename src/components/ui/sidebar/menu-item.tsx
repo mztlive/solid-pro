@@ -22,12 +22,16 @@ const Menu = (props: MenuItemProps) => {
     const hasChildren = createMemo(() => props.item.children?.length > 0)
     const isSelected = createMemo(() => selectedItem() === itemIndex())
 
+    const itemBaseClass =
+        'flex items-center p-2 mb-2 cursor-pointer gap-2 text-base rounded-md text-white user-select-none hover:bg-selected-background'
+
     return (
         <li>
             <div
-                class={`flex items-center p-2 mb-2 cursor-pointer gap-2 text-base rounded-md text-white user-select-none hover:bg-hover-muted ${
-                    isSelected() && !hasChildren() ? 'bg-hover-muted' : ''
-                }`}
+                classList={{
+                    [itemBaseClass]: true,
+                    'bg-selected-background': isSelected() && !hasChildren()
+                }}
                 onClick={() => {
                     selectItem(itemIndex(), hasChildren())
                     hasChildren()

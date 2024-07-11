@@ -20,11 +20,15 @@ const SubmenuItem = (props: SubmenuItemProps) => {
 
     const isSelected = createMemo(() => selectedItem() === subItemIndex())
 
+    const itemBaseClass =
+        'user-select-none flex items-center mb-2 cursor-pointer gap-2 p-1.5 rounded-md text-white hover:bg-selected-background'
+
     return (
         <li
-            class={`user-select-none flex items-center mb-2 cursor-pointer gap-2 p-1.5 rounded-md text-white hover:bg-hover-muted ${
-                isSelected() ? 'bg-hover-muted' : ''
-            }`}
+            classList={{
+                [itemBaseClass]: true,
+                'bg-selected-background': isSelected()
+            }}
             onClick={() => {
                 selectItem(subItemIndex(), false)
                 navigate(props.subItem.href || '/')

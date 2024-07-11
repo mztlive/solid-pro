@@ -6,22 +6,38 @@ import {
     AlertDialogDescription,
     AlertDialogTitle
 } from '../ui/alert-dialog'
-import { createEffect, createSignal, onCleanup } from 'solid-js'
+import {
+    For,
+    JSX,
+    createEffect,
+    createMemo,
+    createSignal,
+    onCleanup,
+    splitProps
+} from 'solid-js'
 import { useLocale } from '~/i18n/lib'
+import { createMenus } from '~/menus'
+import { MenuItem } from '../ui/sidebar/sidebar'
+import { useNavigate } from '@solidjs/router'
 
-interface SearchItemProps {
+interface SearchItemProps extends JSX.HTMLAttributes<HTMLDivElement> {
     title: string
     description: string
 }
 
 const SearchItem = (props: SearchItemProps) => {
+    const [local, other] = splitProps(props, ['title', 'description'])
+
     return (
-        <div class="flex flex-row gap-4 rounded-md p-4 hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer">
+        <div
+            class="flex flex-row gap-4 rounded-md p-4 hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer"
+            {...other}
+        >
             <span class="text-2xl text-muted-foreground">#</span>
             <div class="flex flex-col">
-                <span class="text-lg text-foreground">{props.title}</span>
+                <span class="text-lg text-foreground">{local.title}</span>
                 <span class="text-muted-foreground text-md">
-                    {props.description}
+                    {local.description}
                 </span>
             </div>
         </div>
@@ -30,8 +46,9 @@ const SearchItem = (props: SearchItemProps) => {
 
 const SearchInput = () => {
     const { t } = useLocale()
+    const navigate = useNavigate()
 
-    const inputClass = `h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer`
+    const inputClass = `h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer`
 
     const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
 
@@ -41,6 +58,36 @@ const SearchInput = () => {
             setDialogIsOpen(true)
         }
     }
+
+    const flattenMenus = (arr: MenuItem[]): MenuItem[] => {
+        const result = []
+
+        function recurse(items: MenuItem[]) {
+            for (const item of items) {
+                if (item.children) {
+                    recurse(item.children)
+                } else {
+                    result.push(item)
+                }
+            }
+        }
+
+        recurse(arr)
+        return result
+    }
+
+    const [inputValue, setInputValue] = createSignal('')
+
+    const flattendMenus = flattenMenus(createMenus())
+
+    const searchMenus = createMemo(() => {
+        return flattendMenus.filter((menu) => {
+            const text =
+                typeof menu.text === 'function' ? menu.text() : menu.text
+
+            return text.toLowerCase().includes(inputValue().toLowerCase())
+        })
+    })
 
     // 注册和清理快捷键事件
     createEffect(() => {
@@ -78,14 +125,33 @@ const SearchInput = () => {
                             <TextFieldInput
                                 type="text"
                                 placeholder={t.common.search_placeholder()}
+                                onInput={(e) =>
+                                    setInputValue(e.currentTarget.value)
+                                }
                             />
                         </TextField>
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        <SearchItem
-                            title="Dashboard"
-                            description="adfjaljlfjalksjflajlfjlqweouqo"
-                        />
+                        <For each={searchMenus()}>
+                            {(menu) => (
+                                <SearchItem
+                                    title={
+                                        typeof menu.text === 'function'
+                                            ? menu.text()
+                                            : menu.text
+                                    }
+                                    description={
+                                        typeof menu.description === 'function'
+                                            ? menu.description()
+                                            : menu.description
+                                    }
+                                    onClick={() => {
+                                        navigate(menu.href)
+                                        setDialogIsOpen(false)
+                                    }}
+                                />
+                            )}
+                        </For>
                     </AlertDialogDescription>
                 </AlertDialogContent>
             </AlertDialog>

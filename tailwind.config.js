@@ -63,7 +63,8 @@ module.exports = {
         },
         'selected-background': "hsl(var(--selected-background))",
         'hover-muted': "hsl(var(--hover-muted))",
-        'sidebar-background': "hsl(var(--sidebar-background))"
+        'sidebar-background': "hsl(var(--sidebar-background))",
+        'page-bg': "hsl(var(--page-bg))"
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
