@@ -139,19 +139,22 @@ const TableTest = () => {
                         </Button>
                     </div>
                 </CardHeader>
-                <CardContent class=" h-[400px] overflow-y-auto">
+                <CardContent>
                     <ProTable
+                        class="h-[400px]"
                         data={data()}
                         columns={[
                             {
                                 accessorKey: 'name',
                                 header: '姓名',
-                                cell: ({ row }) => row.original.name
+                                cell: ({ row }) => row.original.name,
+                                width: '200px'
                             },
                             {
                                 accessorKey: 'age',
                                 header: '年龄',
-                                cell: ({ row }) => row.original.age
+                                cell: ({ row }) => row.original.age,
+                                width: '100px'
                             },
                             {
                                 accessorKey: 'email',

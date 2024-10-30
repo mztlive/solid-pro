@@ -18,7 +18,7 @@ import { cn } from '~/lib/utils'
 
 interface ProTableProps<T> {
     data: T[]
-    columns: ColumnDef<T>[]
+    columns: (ColumnDef<T> & { width?: string })[]
     class?: string
 }
 
@@ -34,47 +34,69 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 
     return (
         <Suspense fallback={<TableSkeleton />}>
-            <Table>
-                <TableHeader>
-                    <For each={tableInstance.getHeaderGroups()}>
-                        {(headerGroup) => (
-                            <TableRow>
-                                <For each={headerGroup.headers}>
-                                    {(header) => (
-                                        <TableHead class="bg-accent font-bold">
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
-                                        </TableHead>
-                                    )}
-                                </For>
-                            </TableRow>
-                        )}
-                    </For>
-                </TableHeader>
-                <TableBody class={cn(props.class)}>
-                    <For each={tableInstance.getRowModel().rows}>
-                        {(row) => (
-                            <TableRow>
-                                <For each={row.getVisibleCells()}>
-                                    {(cell) => (
-                                        <TableCell>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
+            <div class={cn('relative h-[500px]', props.class)}>
+                <Table class="table-fixed w-full">
+                    <TableHeader class="sticky top-0 z-10 bg-background">
+                        <For each={tableInstance.getHeaderGroups()}>
+                            {(headerGroup) => (
+                                <TableRow>
+                                    <For each={headerGroup.headers}>
+                                        {(header) => (
+                                            <TableHead
+                                                class="bg-accent font-bold"
+                                                style={{
+                                                    width:
+                                                        props.columns[
+                                                            header.index
+                                                        ]?.width ?? 'auto'
+                                                }}
+                                            >
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column
+                                                              .columnDef.header,
+                                                          header.getContext()
+                                                      )}
+                                            </TableHead>
+                                        )}
+                                    </For>
+                                </TableRow>
+                            )}
+                        </For>
+                    </TableHeader>
+                </Table>
+                <div class="overflow-auto h-[calc(100%-48px)]">
+                    <Table class="table-fixed w-full">
+                        <TableBody>
+                            <For each={tableInstance.getRowModel().rows}>
+                                {(row) => (
+                                    <TableRow>
+                                        <For each={row.getVisibleCells()}>
+                                            {(cell) => (
+                                                <TableCell
+                                                    style={{
+                                                        width:
+                                                            props.columns[
+                                                                cell.column.getIndex()
+                                                            ]?.width ?? 'auto'
+                                                    }}
+                                                >
+                                                    {flexRender(
+                                                        cell.column.columnDef
+                                                            .cell,
+                                                        cell.getContext()
+                                                    )}
+                                                </TableCell>
                                             )}
-                                        </TableCell>
-                                    )}
-                                </For>
-                            </TableRow>
-                        )}
-                    </For>
-                </TableBody>
-            </Table>
+                                        </For>
+                                    </TableRow>
+                                )}
+                            </For>
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
         </Suspense>
     )
 }
