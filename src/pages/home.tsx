@@ -1,5 +1,5 @@
 import { AiTwotoneSetting } from 'solid-icons/ai'
-import { ParentProps, Suspense } from 'solid-js'
+import { createEffect, createSignal, ParentProps, Suspense } from 'solid-js'
 import { Sidebar } from '~/components/ui/sidebar/sidebar'
 import AvatarDropdownMenu from '~/components/framework/avatar-dropdownmenu'
 import SettingsSheet from '~/components/framework/settings-sheet'
@@ -10,16 +10,42 @@ import { useColorMode } from '@kobalte/core/color-mode'
 import PageSkeleton from '~/components/framework/page-skeleton'
 import { useLocale } from '~/i18n/lib'
 import { createMenus } from '~/menus'
+import { Button } from '~/components/ui/button'
+import { useIsRouting, useLocation } from '@solidjs/router'
+import { Progress } from '~/components/ui/progress'
 
 const Home = (props: ParentProps) => {
     const { colorMode } = useColorMode()
     const { t } = useLocale()
     const menus = createMenus()
 
+    const location = useLocation()
+    const [isNavigating, setIsNavigating] = createSignal(false)
+
+    const isRouteing = useIsRouting()
+    const [progress, setProgress] = createSignal(0)
+
+    createEffect(() => {
+        if (isRouteing()) {
+            setProgress(0)
+            const interval = setInterval(() => {
+                setProgress((p) => Math.min(p + 10, 100))
+            }, 200)
+            return () => clearInterval(interval)
+        } else {
+            setProgress(100)
+        }
+    })
+
     return (
         <div class="flex flex-row h-screen w-full">
             <Sidebar menuItems={menus} />
             <div class="w-full bg-page-bg flex flex-col">
+                <Progress
+                    class="h-1 rounded-none"
+                    maxValue={100}
+                    value={progress()}
+                />
                 <nav class="w-full fixed flex  justify-between  flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border">
                     <div>
                         <span class="text-xl font-bold">{t.prject_name()}</span>

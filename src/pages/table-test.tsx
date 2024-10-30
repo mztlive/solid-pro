@@ -129,7 +129,7 @@ const TableTest = () => {
             <Card hover="none" class=" border-none">
                 <CardHeader>
                     <div class="flex flex-row items-center gap-4">
-                        <Button variant="warning" size="xs">
+                        <Button variant="primary" size="xs">
                             添加
                             <AiOutlineFileAdd size={20} class="ml-2" />
                         </Button>

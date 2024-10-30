@@ -10,6 +10,7 @@ import {
     ColorModeScript,
     createLocalStorageManager
 } from '@kobalte/core'
+import { Button } from './components/ui/button'
 
 const App: Component = (props: ParentProps) => {
     const storageManager = createLocalStorageManager('vite-ui-theme')
@@ -18,7 +19,6 @@ const App: Component = (props: ParentProps) => {
         <>
             <ColorModeScript storageType={storageManager.type} />
             <ColorModeProvider storageManager={storageManager}>
-                {/* <I18nProvider> */}
                 <div class="w-full flex flex-row">
                     <Toaster />
                     <AuthProvider loginCall={fakeLogin}>
@@ -31,7 +31,6 @@ const App: Component = (props: ParentProps) => {
                         </Suspense>
                     </AuthProvider>
                 </div>
-                {/* </I18nProvider> */}
             </ColorModeProvider>
         </>
     )

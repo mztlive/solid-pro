@@ -24,7 +24,9 @@ const buttonVariants = cva(
                 link: 'text-primary underline-offset-4 hover:underline',
                 info: 'bg-info text-info-foreground hover:bg-info/90',
                 warning:
-                    'bg-warning text-warning-foreground hover:bg-warning/90'
+                    'bg-warning text-warning-foreground hover:bg-warning/90',
+                primary: 'bg-blue-600 text-white hover:bg-blue-700',
+                success: 'bg-green-600 text-white hover:bg-green-700'
             },
             size: {
                 default: 'h-10 px-4 py-2',
