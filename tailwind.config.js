@@ -70,7 +70,7 @@ export default {
       borderRadius: {
         xl: "calc(var(--radius) + 2px)",
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 6px)",
+        md: "calc(var(--radius) - 5px)",
         sm: "calc(var(--radius) - 7px)"
       },
       keyframes: {
