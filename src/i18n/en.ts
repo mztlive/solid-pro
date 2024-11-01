@@ -1,45 +1,45 @@
 export const en = {
-    prject_name: 'Vietnam Project',
-    login: {
-        title: 'Login',
-        account: 'Account',
-        password: 'Password',
-        please_input_account: 'Please input account',
-        please_input_password: 'Please input password',
-        confirm: 'Confirm',
-        error: {
-            account_required: 'Account is required',
-            password_required: 'Password is required',
-            failed: 'Login failed'
-        },
-        success: 'Login success'
-    },
-    menu: {
-        dashboard: 'Dashboard',
-        setting: 'Setting',
-        table: 'Table'
-    },
-    common: {
-        search_placeholder: '🔍 Search...',
-        language_select_placeholder: 'Select language...',
-        notification_title: 'Notification',
-        notification_description: 'This is the first event of the timeline.'
-    },
-    setting: {
-        title: 'Setting',
-        language: 'Language',
-        theme: 'Theme',
-        notification: 'Notification',
-        logout: 'Logout',
-        description: 'Manage your preferences and account settings',
-        change_password: 'Change password',
-        color_mode_light: 'light',
-        color_mode_dark: 'dark',
-        color_mode_system: 'system'
-    },
-    actions: {
-        later: 'Later',
-        accept: 'Accept',
-        confirm: 'Confirm'
-    }
+	prject_name: "Vietnam Project",
+	login: {
+		title: "Login",
+		account: "Account",
+		password: "Password",
+		please_input_account: "Please input account",
+		please_input_password: "Please input password",
+		confirm: "Confirm",
+		error: {
+			account_required: "Account is required",
+			password_required: "Password is required",
+			failed: "Login failed",
+		},
+		success: "Login success",
+	},
+	menu: {
+		dashboard: "Dashboard",
+		setting: "Setting",
+		table: "Table",
+	},
+	common: {
+		search_placeholder: "🔍 Search...",
+		language_select_placeholder: "Select language...",
+		notification_title: "Notification",
+		notification_description: "This is the first event of the timeline.",
+	},
+	setting: {
+		title: "Setting",
+		language: "Language",
+		theme: "Theme",
+		notification: "Notification",
+		logout: "Logout",
+		description: "Manage your preferences and account settings",
+		change_password: "Change password",
+		color_mode_light: "light",
+		color_mode_dark: "dark",
+		color_mode_system: "system",
+	},
+	actions: {
+		later: "Later",
+		accept: "Accept",
+		confirm: "Confirm",
+	},
 }

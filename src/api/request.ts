@@ -1,101 +1,101 @@
 // import toast from 'solid-toast'
 
-import { showToast } from '~/components/ui/toast'
+import { showToast } from "~/components/ui/toast"
 
 export const defaultRequestInit = (): RequestInit => {
-    return {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-    }
+	return {
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		},
+	}
 }
 
 const convertResponse = async <T>(response: Response): Promise<T> => {
-    switch (response.status) {
-        case 200: {
-            const result: API.BaseResponse<T> = await response.json()
+	switch (response.status) {
+		case 200: {
+			const result: API.BaseResponse<T> = await response.json()
 
-            if (result.meta.code === 401) {
-                window.localStorage.removeItem('token')
-                window.location.href = '/login'
-                return
-            }
+			if (result.meta.code === 401) {
+				window.localStorage.removeItem("token")
+				window.location.href = "/login"
+				return
+			}
 
-            if (result.meta.code !== 200) {
-                // toast.error(result.meta.msg)
-                showToast({
-                    title: '错误',
-                    description: result.meta.msg,
-                    variant: 'destructive'
-                })
-                throw new Error(result.meta.msg)
-            }
+			if (result.meta.code !== 200) {
+				// toast.error(result.meta.msg)
+				showToast({
+					title: "错误",
+					description: result.meta.msg,
+					variant: "destructive",
+				})
+				throw new Error(result.meta.msg)
+			}
 
-            return result.data
-        }
-        case 401: {
-            window.localStorage.removeItem('token')
-            window.location.href = '/login'
-            return
-        }
-        case 403: {
-            throw new Error('Permission denied')
-        }
-        case 404: {
-            throw new Error('Api Not Found')
-        }
-        case 500: {
-            const result: API.BaseResponse<T> = await response.json()
-            // toast.error(result.meta.msg)
-            showToast({
-                title: '错误',
-                description: result.meta.msg,
-                variant: 'destructive'
-            })
+			return result.data
+		}
+		case 401: {
+			window.localStorage.removeItem("token")
+			window.location.href = "/login"
+			return
+		}
+		case 403: {
+			throw new Error("Permission denied")
+		}
+		case 404: {
+			throw new Error("Api Not Found")
+		}
+		case 500: {
+			const result: API.BaseResponse<T> = await response.json()
+			// toast.error(result.meta.msg)
+			showToast({
+				title: "错误",
+				description: result.meta.msg,
+				variant: "destructive",
+			})
 
-            throw new Error(result.meta.msg)
-        }
-        default: {
-            const body: string = await response.text()
-            throw new Error(body)
-        }
-    }
+			throw new Error(result.meta.msg)
+		}
+		default: {
+			const body: string = await response.text()
+			throw new Error(body)
+		}
+	}
 }
 
 export const request = async <T>(
-    url: string,
-    method: string,
-    body?: unknown
+	url: string,
+	method: string,
+	body?: unknown,
 ): Promise<T> => {
-    const requestInit = defaultRequestInit()
-    requestInit.method = method
-    if (body) {
-        requestInit.body = JSON.stringify(body)
-    }
+	const requestInit = defaultRequestInit()
+	requestInit.method = method
+	if (body) {
+		requestInit.body = JSON.stringify(body)
+	}
 
-    const response = await fetch(url, requestInit)
+	const response = await fetch(url, requestInit)
 
-    return convertResponse<T>(response)
+	return convertResponse<T>(response)
 }
 
 export const upload = async (file: File[], url: string) => {
-    const formData = new FormData()
-    for (let i = 0; i < file.length; i++) {
-        formData.append(`file${i}`, file[i])
-    }
+	const formData = new FormData()
+	for (let i = 0; i < file.length; i++) {
+		formData.append(`file${i}`, file[i])
+	}
 
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('token')
-            }
-        })
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			body: formData,
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+		})
 
-        return convertResponse<string[]>(response)
-    } catch (error) {
-        throw Error('Connection Reset')
-    }
+		return convertResponse<string[]>(response)
+	} catch (error) {
+		throw Error("Connection Reset")
+	}
 }

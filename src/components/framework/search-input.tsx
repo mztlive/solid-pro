@@ -1,162 +1,163 @@
-import { TextField, TextFieldInput } from '../ui/text-field'
-import { Button } from '../ui/button'
+import { useNavigate } from "@solidjs/router"
 import {
-    AlertDialog,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogTitle
-} from '../ui/alert-dialog'
+	For,
+	type JSX,
+	createEffect,
+	createMemo,
+	createSignal,
+	onCleanup,
+	splitProps,
+} from "solid-js"
+import { useLocale } from "~/i18n/lib"
+import { createMenus } from "~/menus"
 import {
-    For,
-    JSX,
-    createEffect,
-    createMemo,
-    createSignal,
-    onCleanup,
-    splitProps
-} from 'solid-js'
-import { useLocale } from '~/i18n/lib'
-import { createMenus } from '~/menus'
-import { MenuItem } from '../ui/sidebar/sidebar'
-import { useNavigate } from '@solidjs/router'
+	AlertDialog,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogTitle,
+} from "../ui/alert-dialog"
+import { Button } from "../ui/button"
+import type { MenuItemType } from "../ui/sidebar/sidebar"
+import { TextField, TextFieldInput } from "../ui/text-field"
 
 interface SearchItemProps extends JSX.HTMLAttributes<HTMLDivElement> {
-    title: string
-    description: string
+	title: string
+	description: string
 }
 
 const SearchItem = (props: SearchItemProps) => {
-    const [local, other] = splitProps(props, ['title', 'description'])
+	const [local, other] = splitProps(props, ["title", "description"])
 
-    return (
-        <div
-            class="flex flex-row gap-4 rounded-md p-4 hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer"
-            {...other}
-        >
-            <span class="text-2xl text-muted-foreground">#</span>
-            <div class="flex flex-col">
-                <span class="text-lg text-foreground">{local.title}</span>
-                <span class="text-muted-foreground text-md">
-                    {local.description}
-                </span>
-            </div>
-        </div>
-    )
+	return (
+		<div
+			class="flex flex-row gap-4 rounded-md p-4 hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer"
+			{...other}
+		>
+			<span class="text-2xl text-muted-foreground">#</span>
+			<div class="flex flex-col">
+				<span class="text-lg text-foreground">{local.title}</span>
+				<span class="text-muted-foreground text-md">
+					{local.description}
+				</span>
+			</div>
+		</div>
+	)
 }
 
 const SearchInput = () => {
-    const { t } = useLocale()
-    const navigate = useNavigate()
+	const { t } = useLocale()
+	const navigate = useNavigate()
 
-    const inputClass = `h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer`
+	const inputClass =
+		"h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer"
 
-    const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
+	const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.ctrlKey && event.key === 'k') {
-            event.preventDefault()
-            setDialogIsOpen(true)
-        }
-    }
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (event.ctrlKey && event.key === "k") {
+			event.preventDefault()
+			setDialogIsOpen(true)
+		}
+	}
 
-    const flattenMenus = (arr: MenuItem[]): MenuItem[] => {
-        const result = []
+	const flattenMenus = (arr: MenuItemType[]): MenuItemType[] => {
+		const result = []
 
-        function recurse(items: MenuItem[]) {
-            for (const item of items) {
-                if (item.children) {
-                    recurse(item.children)
-                } else {
-                    result.push(item)
-                }
-            }
-        }
+		function recurse(items: MenuItemType[]) {
+			for (const item of items) {
+				if (item.children) {
+					recurse(item.children)
+				} else {
+					result.push(item)
+				}
+			}
+		}
 
-        recurse(arr)
-        return result
-    }
+		recurse(arr)
+		return result
+	}
 
-    const [inputValue, setInputValue] = createSignal('')
+	const [inputValue, setInputValue] = createSignal("")
 
-    const flattendMenus = flattenMenus(createMenus())
+	const flattendMenus = flattenMenus(createMenus())
 
-    const searchMenus = createMemo(() => {
-        return flattendMenus.filter((menu) => {
-            const text =
-                typeof menu.text === 'function' ? menu.text() : menu.text
+	const searchMenus = createMemo(() => {
+		return flattendMenus.filter((menu) => {
+			const text =
+				typeof menu.text === "function" ? menu.text() : menu.text
 
-            return text.toLowerCase().includes(inputValue().toLowerCase())
-        })
-    })
+			return text.toLowerCase().includes(inputValue().toLowerCase())
+		})
+	})
 
-    // 注册和清理快捷键事件
-    createEffect(() => {
-        window.addEventListener('keydown', handleKeyDown)
-    })
+	// 注册和清理快捷键事件
+	createEffect(() => {
+		window.addEventListener("keydown", handleKeyDown)
+	})
 
-    onCleanup(() => {
-        window.removeEventListener('keydown', handleKeyDown)
-    })
+	onCleanup(() => {
+		window.removeEventListener("keydown", handleKeyDown)
+	})
 
-    return (
-        <>
-            <div
-                class="flex flex-row border rounded-md"
-                onClick={() => setDialogIsOpen(true)}
-            >
-                <input
-                    class={inputClass}
-                    type="text"
-                    placeholder={t.common.search_placeholder()}
-                    readOnly
-                />
-                <Button
-                    variant="outline"
-                    class="h-8 w-12 border-none bg-background rounded-none rounded-r-md"
-                >
-                    ⌘+K
-                </Button>
-            </div>
+	return (
+		<>
+			<div
+				class="flex flex-row border rounded-md"
+				onClick={() => setDialogIsOpen(true)}
+			>
+				<input
+					class={inputClass}
+					type="text"
+					placeholder={t.common.search_placeholder()}
+					readOnly
+				/>
+				<Button
+					variant="outline"
+					class="h-8 w-12 border-none bg-background rounded-none rounded-r-md"
+				>
+					⌘+K
+				</Button>
+			</div>
 
-            <AlertDialog open={dialogIsOpen()} onOpenChange={setDialogIsOpen}>
-                <AlertDialogContent>
-                    <AlertDialogTitle class="mt-4">
-                        <TextField>
-                            <TextFieldInput
-                                type="text"
-                                placeholder={t.common.search_placeholder()}
-                                onInput={(e) =>
-                                    setInputValue(e.currentTarget.value)
-                                }
-                            />
-                        </TextField>
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                        <For each={searchMenus()}>
-                            {(menu) => (
-                                <SearchItem
-                                    title={
-                                        typeof menu.text === 'function'
-                                            ? menu.text()
-                                            : menu.text
-                                    }
-                                    description={
-                                        typeof menu.description === 'function'
-                                            ? menu.description()
-                                            : menu.description
-                                    }
-                                    onClick={() => {
-                                        navigate(menu.href)
-                                        setDialogIsOpen(false)
-                                    }}
-                                />
-                            )}
-                        </For>
-                    </AlertDialogDescription>
-                </AlertDialogContent>
-            </AlertDialog>
-        </>
-    )
+			<AlertDialog open={dialogIsOpen()} onOpenChange={setDialogIsOpen}>
+				<AlertDialogContent>
+					<AlertDialogTitle class="mt-4">
+						<TextField>
+							<TextFieldInput
+								type="text"
+								placeholder={t.common.search_placeholder()}
+								onInput={(e) =>
+									setInputValue(e.currentTarget.value)
+								}
+							/>
+						</TextField>
+					</AlertDialogTitle>
+					<AlertDialogDescription>
+						<For each={searchMenus()}>
+							{(menu) => (
+								<SearchItem
+									title={
+										typeof menu.text === "function"
+											? menu.text()
+											: menu.text
+									}
+									description={
+										typeof menu.description === "function"
+											? menu.description()
+											: menu.description
+									}
+									onClick={() => {
+										navigate(menu.href)
+										setDialogIsOpen(false)
+									}}
+								/>
+							)}
+						</For>
+					</AlertDialogDescription>
+				</AlertDialogContent>
+			</AlertDialog>
+		</>
+	)
 }
 
 export default SearchInput

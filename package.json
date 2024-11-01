@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.6.0",
     "@farmfe/cli": "^1.0.2",
     "@farmfe/core": "^1.2.1",
