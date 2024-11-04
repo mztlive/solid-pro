@@ -1,45 +1,27 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-	"vcs": {
-		"enabled": false,
-		"clientKind": "git",
-		"useIgnoreFile": false
-	},
-	"files": {
-		"ignoreUnknown": false,
-		"ignore": []
-	},
-	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab",
-		"indentWidth": 4
-	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
+	"files": { "ignoreUnknown": false, "ignore": [] },
+	"formatter": { "enabled": true, "indentStyle": "tab", "indentWidth": 4 },
+	"organizeImports": { "enabled": true },
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"recommended": false,
 			"a11y": {
-				"useKeyWithClickEvents": "off",
-				"useKeyWithMouseEvents": "off",
+				"noLabelWithoutControl": "off",
 				"noSvgWithoutTitle": "off",
-				"noLabelWithoutControl": "off"
+				"useKeyWithClickEvents": "off",
+				"useKeyWithMouseEvents": "off"
 			},
+			"complexity": { "noForEach": "off" },
 			"style": {
-				"noUnusedTemplateLiteral": "off",
-				"noNonNullAssertion": "off"
-			},
-			"complexity": {
-				"noForEach": "off"
+				"noNonNullAssertion": "off",
+				"noUnusedTemplateLiteral": "off"
 			}
 		}
 	},
 	"javascript": {
-		"formatter": {
-			"quoteStyle": "double",
-			"semicolons": "asNeeded"
-		}
+		"formatter": { "semicolons": "asNeeded", "quoteStyle": "double" }
 	}
 }

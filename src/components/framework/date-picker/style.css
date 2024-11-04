@@ -45,13 +45,11 @@
 .date-selector-trigger {
 	font-size: 0.875rem;
 	text-transform: capitalize;
-	font-weight: 500;
 	color: hsl(var(--popover-foreground));
 }
 
 .date-selector-option {
 	min-height: 2.5rem;
-	font-weight: 400;
 	color: hsl(var(--popover-foreground));
 }
 
@@ -74,7 +72,6 @@
 	align-items: center;
 	justify-content: center;
 	font-size: .8rem;
-	font-weight: 400;
 	color: hsl(var(--muted-foreground));
 	text-transform: capitalize;
 }
@@ -102,7 +99,6 @@
 	min-width: 2rem;
 	border-radius: calc(var(--radius) - 2px);
 	font-size: 0.875rem;
-	font-weight: 400;
 	color: hsl(var(--popover-foreground));
 }
 
@@ -139,7 +135,6 @@
 
 [data-day-number-range-end-selected="false"][data-day-number-selected="true"] {
 	background-color: hsl(var(--accent));
-	font-weight: 500;
 	color: hsl(var(--popover-foreground));
 }
 

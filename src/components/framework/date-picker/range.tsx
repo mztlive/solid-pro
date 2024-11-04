@@ -1,6 +1,8 @@
 import DatePicker from "@rnwonder/solid-date-picker"
-import "./style.css"
+// import "./style.css"
 import "@rnwonder/solid-date-picker/dist/style.css"
+import "@rnwonder/solid-date-picker/themes/shad-cn-ui"
+
 import type { DatePickerInputSJProps } from "@rnwonder/solid-date-picker/dist/components/DatePickerGroup"
 import dayjs from "dayjs"
 import { splitProps } from "solid-js"

@@ -1,5 +1,5 @@
 import { useColorMode } from "@kobalte/core/color-mode"
-import { useIsRouting, useLocation } from "@solidjs/router"
+import { useIsRouting } from "@solidjs/router"
 import { AiTwotoneSetting } from "solid-icons/ai"
 import {
 	type ParentProps,
@@ -13,7 +13,6 @@ import NotificationDropdownMenu from "~/components/framework/notification-dropdo
 import PageSkeleton from "~/components/framework/page-skeleton"
 import SearchInput from "~/components/framework/search-input"
 import SettingsSheet from "~/components/framework/settings-sheet"
-import { Button } from "~/components/ui/button"
 import { Progress } from "~/components/ui/progress"
 import { Sidebar } from "~/components/ui/sidebar/sidebar"
 import { useLocale } from "~/i18n/lib"
@@ -23,9 +22,6 @@ const Home = (props: ParentProps) => {
 	const { colorMode } = useColorMode()
 	const { t } = useLocale()
 	const menus = createMenus()
-
-	const location = useLocation()
-	const [isNavigating, setIsNavigating] = createSignal(false)
 
 	const isRouteing = useIsRouting()
 	const [progress, setProgress] = createSignal(0)
