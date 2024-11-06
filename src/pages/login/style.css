@@ -1,0 +1,35 @@
+/* Background wave animation */
+.wave {
+	position: absolute;
+	width: 200%;
+	height: 100%;
+	background: rgba(58, 123, 213, 0.2);
+	top: 0;
+	left: 0;
+	transform: translate(-50%, 0);
+	animation: waveAnimation 10s infinite linear;
+}
+
+.wave1 {
+	background: rgba(58, 123, 213, 0.3);
+	animation-duration: 8s;
+}
+
+.wave2 {
+	background: rgba(58, 123, 213, 0.2);
+	animation-duration: 10s;
+}
+
+.wave3 {
+	background: rgba(58, 123, 213, 0.1);
+	animation-duration: 12s;
+}
+
+@keyframes waveAnimation {
+	from {
+		transform: translate(-50%, 0) translateX(-100%);
+	}
+	to {
+		transform: translate(-50%, 0) translateX(100%);
+	}
+}

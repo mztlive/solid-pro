@@ -1,7 +1,7 @@
 import type { RouteDefinition } from "@solidjs/router"
 import { lazy } from "solid-js"
 import Home from "./pages/home"
-import Login from "./pages/login"
+import Login from "./pages/login/login"
 
 const baseRoutes: RouteDefinition[] = [
 	{

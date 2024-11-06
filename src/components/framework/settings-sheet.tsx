@@ -27,7 +27,7 @@ const SettingsSheet = (props: ParentProps) => {
 				<div class="mt-6">
 					<TextField>
 						<TextFieldLabel>{t.setting.language()}</TextFieldLabel>
-						<LocaleSelect />
+						<LocaleSelect class="mt-2" />
 					</TextField>
 				</div>
 			</SheetContent>

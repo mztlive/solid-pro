@@ -46,6 +46,7 @@
     "dayjs": "^1.11.10",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.11",
+    "solid-keep-alive": "^0.2.3",
     "solid-motionone": "^1.0.0",
     "solid-spinner": "^0.2.0",
     "solid-toast": "^0.5.0",

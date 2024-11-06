@@ -11,6 +11,9 @@ import {
 	createLocalStorageManager,
 } from "@kobalte/core"
 import { Button } from "./components/ui/button"
+import { NavigateTabs, TabItem } from "./components/framework/navigate-tabs"
+import { useNavigate } from "@solidjs/router"
+import { KeepAliveProvider } from "solid-keep-alive"
 
 const App: Component = (props: ParentProps) => {
 	const storageManager = createLocalStorageManager("vite-ui-theme")
@@ -19,18 +22,23 @@ const App: Component = (props: ParentProps) => {
 		<>
 			<ColorModeScript storageType={storageManager.type} />
 			<ColorModeProvider storageManager={storageManager}>
-				<div class="w-full flex flex-row">
-					<Toaster />
-					<AuthProvider loginCall={fakeLogin}>
-						<Suspense
-							fallback={
-								<Skeleton class="w-full h-screen" radius={10} />
-							}
-						>
-							{props.children}
-						</Suspense>
-					</AuthProvider>
-				</div>
+				<KeepAliveProvider>
+					<div class="w-full flex flex-row">
+						<Toaster />
+						<AuthProvider loginCall={fakeLogin}>
+							<Suspense
+								fallback={
+									<Skeleton
+										class="w-full h-screen"
+										radius={10}
+									/>
+								}
+							>
+								{props.children}
+							</Suspense>
+						</AuthProvider>
+					</div>
+				</KeepAliveProvider>
 			</ColorModeProvider>
 		</>
 	)

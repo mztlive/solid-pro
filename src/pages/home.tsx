@@ -1,30 +1,29 @@
-import { useColorMode } from "@kobalte/core/color-mode"
-import { useIsRouting } from "@solidjs/router"
-import { AiTwotoneSetting } from "solid-icons/ai"
+import { useIsRouting, useNavigate } from "@solidjs/router"
 import {
 	type ParentProps,
 	Suspense,
 	createEffect,
+	createMemo,
 	createSignal,
+	on,
 } from "solid-js"
-import AvatarDropdownMenu from "~/components/framework/avatar-dropdownmenu"
-import ColorModeDropdownmenu from "~/components/framework/color-model-dropdownment"
-import NotificationDropdownMenu from "~/components/framework/notification-dropdownmenu"
+import Navbar from "~/components/framework/navbar"
 import PageSkeleton from "~/components/framework/page-skeleton"
-import SearchInput from "~/components/framework/search-input"
-import SettingsSheet from "~/components/framework/settings-sheet"
+import { NavigateTabs, TabItem } from "~/components/framework/navigate-tabs"
 import { Progress } from "~/components/ui/progress"
-import { Sidebar } from "~/components/ui/sidebar/sidebar"
-import { useLocale } from "~/i18n/lib"
+import { MenuItemType, Sidebar } from "~/components/ui/sidebar/sidebar"
 import { createMenus } from "~/menus"
+import useNavigateTab from "~/hooks/navigate-tab"
+import { KeepAlive } from "solid-keep-alive"
 
 const Home = (props: ParentProps) => {
-	const { colorMode } = useColorMode()
-	const { t } = useLocale()
-	const menus = createMenus()
+	const { items, currentPath, handleTabClick, handleTabClose } =
+		useNavigateTab()
 
 	const isRouteing = useIsRouting()
 	const [progress, setProgress] = createSignal(0)
+
+	const menus = createMenus()
 
 	createEffect(() => {
 		if (isRouteing()) {
@@ -32,6 +31,7 @@ const Home = (props: ParentProps) => {
 			const interval = setInterval(() => {
 				setProgress((p) => Math.min(p + 10, 100))
 			}, 200)
+
 			return () => clearInterval(interval)
 		}
 
@@ -47,43 +47,20 @@ const Home = (props: ParentProps) => {
 					maxValue={100}
 					value={progress()}
 				/>
-				<nav class="w-full fixed flex  justify-between  flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border">
-					<div>
-						<span class="text-xl font-bold">{t.prject_name()}</span>
-					</div>
-					<div class="flex flex-row items-center gap-8">
-						<SearchInput />
-						<ColorModeDropdownmenu />
-						<SettingsSheet>
-							<AiTwotoneSetting
-								size={22}
-								color={
-									colorMode() === "light" ? "black" : "white"
-								}
-							/>
-						</SettingsSheet>
-
-						<NotificationDropdownMenu
-							messages={[
-								{
-									id: "123123123",
-									title: "Wrong!",
-									description:
-										"Password Changed. if you are not you, please change it immediately.",
-									link: "/",
-									type: "error",
-								},
-							]}
-						/>
-						<AvatarDropdownMenu />
-					</div>
-				</nav>
+				<Navbar />
 				<main class="overflow-hidden  w-full px-10 py-2 flex flex-col">
-					<Suspense fallback={<PageSkeleton class="mt-4" />}>
-						<div class="mt-4 pb-10 overflow-y-auto">
+					<div class="mt-4 pb-10 overflow-y-auto relative">
+						<NavigateTabs
+							items={items()}
+							activeKey={currentPath()}
+							onClick={handleTabClick}
+							onClose={handleTabClose}
+							class="sticky top-0 left-0 right-0 bg-page-bg z-10 mb-2"
+						/>
+						<Suspense fallback={<PageSkeleton class="mt-4" />}>
 							{props.children}
-						</div>
-					</Suspense>
+						</Suspense>
+					</div>
 				</main>
 			</div>
 		</div>
