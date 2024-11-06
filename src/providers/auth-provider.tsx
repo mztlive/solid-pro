@@ -83,11 +83,11 @@ export const AuthProvider = (props: AuthProviderProps) => {
 	})
 
 	createEffect(() => {
-		if (location.pathname === "/login" && isLogined()) {
-			navigate("/")
-		} else if (location.pathname !== "/login" && !isLogined()) {
-			navigate("/login")
-		}
+		// if (location.pathname === "/login" && isLogined()) {
+		// 	navigate("/")
+		// } else if (location.pathname !== "/login" && !isLogined()) {
+		// 	navigate("/login")
+		// }
 	})
 
 	return (

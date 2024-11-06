@@ -27,7 +27,6 @@ const DatePickerRange = (props: DatePickerRangeProps) => {
 						class={cn(standardInputClass, local.inputClass)}
 						value={`${dayjs(value().value.start).format("YYYY-MM-DD")} ~ ${dayjs(value().value.end).format("YYYY-MM-DD")}`}
 						onClick={() => showDate()}
-						placeholder="Select a date"
 					/>
 				)}
 			/>

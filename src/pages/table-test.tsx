@@ -2,7 +2,6 @@ import { AiOutlineCloudDownload, AiOutlineFileAdd } from "solid-icons/ai"
 import { createSignal } from "solid-js"
 import DatePickerRange from "~/components/framework/date-picker/range"
 import RadioGroup from "~/components/framework/radio-group"
-import RangeDatePicker from "~/components/framework/range-date-picker"
 import ProTable from "~/components/framework/table"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
@@ -53,10 +52,6 @@ const TableTest = () => {
 
 	return (
 		<>
-			{/* <div class="my-4 flex flex-col gap-4 px-2 bg-background rounded-md p-4">
-                
-            </div> */}
-
 			<Card hover="none" class="mb-4">
 				<CardHeader />
 				<CardContent class="flex flex-col gap-4">

@@ -1,9 +1,10 @@
-import { useNavigate } from "@solidjs/router"
-import { type Accessor, createMemo } from "solid-js"
+import { useIsRouting, useNavigate } from "@solidjs/router"
+import { type Accessor, createMemo, Show } from "solid-js"
 import { Dynamic } from "solid-js/web"
 import { Motion } from "solid-motionone"
 import I18nText from "~/components/framework/i18n-text"
 import { type MenuItemType, useSidebarContext } from "./sidebar"
+import { Progress } from "../progress"
 
 interface SubmenuItemProps {
 	subItem: MenuItemType
@@ -21,7 +22,7 @@ const SubmenuItem = (props: SubmenuItemProps) => {
 	const isSelected = createMemo(() => selectedItem() === subItemIndex())
 
 	const itemBaseClass =
-		"user-select-none flex items-center mb-2 cursor-pointer gap-2 p-1.5 rounded-md text-white hover:bg-selected-background"
+		"user-select-none flex flex-col mb-2 cursor-pointer gap-2 p-1.5 rounded-md text-white hover:bg-selected-background relative"
 
 	return (
 		<li
@@ -34,15 +35,26 @@ const SubmenuItem = (props: SubmenuItemProps) => {
 				navigate(props.subItem.href || "/")
 			}}
 		>
-			<Dynamic component={props.subItem.icon} />
-			<Motion.span
-				animate={{
-					opacity: [0, 1],
-					transition: { duration: 0.3, easing: "ease-in-out" },
-				}}
-			>
-				<I18nText class="text-sm p-2" text={props.subItem.text} />
-			</Motion.span>
+			<div class="">
+				<Dynamic component={props.subItem.icon} />
+				<Motion.span
+					animate={{
+						opacity: [0, 1],
+						transition: {
+							duration: 0.3,
+							easing: "ease-in-out",
+						},
+					}}
+				>
+					<I18nText
+						class="text-sm p-2 user-select-none"
+						text={props.subItem.text}
+					/>
+				</Motion.span>
+			</div>
+			<Show when={isSelected()}>
+				<div class="absolute bottom-0 left-0 w-full h-[1px] bg-red-300" />
+			</Show>
 		</li>
 	)
 }

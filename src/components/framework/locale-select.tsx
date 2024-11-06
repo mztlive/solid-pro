@@ -7,8 +7,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select"
+import { cn } from "~/libs/cn"
 
-const LocaleSelect = () => {
+interface LocaleSelectProps {
+	class?: string
+}
+
+const LocaleSelect = (props: LocaleSelectProps) => {
 	const { t, locale, setLocale, localeOptions } = useLocale()
 
 	const options = localeOptions.map((option) => option.label)
@@ -22,6 +27,7 @@ const LocaleSelect = () => {
 
 	return (
 		<Select
+			class={cn(props.class)}
 			value={translateLocaleValue(locale())}
 			options={options}
 			onChange={(e) => {
@@ -38,7 +44,7 @@ const LocaleSelect = () => {
 				<SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
 			)}
 		>
-			<SelectTrigger aria-label="Fruit" class="w-[180px] h-8 mt-2">
+			<SelectTrigger aria-label="Fruit" class="w-[180px] h-8 ">
 				<SelectValue<string>>
 					{(state) => state.selectedOption()}
 				</SelectValue>

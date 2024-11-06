@@ -20,6 +20,23 @@ import { Button } from "../ui/button"
 import type { MenuItemType } from "../ui/sidebar/sidebar"
 import { TextField, TextFieldInput } from "../ui/text-field"
 
+const flattenMenus = (arr: MenuItemType[]): MenuItemType[] => {
+	const result = []
+
+	function recurse(items: MenuItemType[]) {
+		for (const item of items) {
+			if (item.children) {
+				recurse(item.children)
+			} else {
+				result.push(item)
+			}
+		}
+	}
+
+	recurse(arr)
+	return result
+}
+
 interface SearchItemProps extends JSX.HTMLAttributes<HTMLDivElement> {
 	title: string
 	description: string
@@ -53,28 +70,21 @@ const SearchInput = () => {
 
 	const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
 
+	const openDialog = () => {
+		setDialogIsOpen(true)
+		setInputValue("")
+	}
+
 	const handleKeyDown = (event: KeyboardEvent) => {
 		if (event.ctrlKey && event.key === "k") {
 			event.preventDefault()
-			setDialogIsOpen(true)
+			openDialog()
 		}
 	}
 
-	const flattenMenus = (arr: MenuItemType[]): MenuItemType[] => {
-		const result = []
-
-		function recurse(items: MenuItemType[]) {
-			for (const item of items) {
-				if (item.children) {
-					recurse(item.children)
-				} else {
-					result.push(item)
-				}
-			}
-		}
-
-		recurse(arr)
-		return result
+	const handleNavigate = (href: string) => {
+		navigate(href)
+		setDialogIsOpen(false)
 	}
 
 	const [inputValue, setInputValue] = createSignal("")
@@ -101,10 +111,7 @@ const SearchInput = () => {
 
 	return (
 		<>
-			<div
-				class="flex flex-row border rounded-md"
-				onClick={() => setDialogIsOpen(true)}
-			>
+			<div class="flex flex-row border rounded-md" onClick={openDialog}>
 				<input
 					class={inputClass}
 					type="text"
@@ -129,6 +136,14 @@ const SearchInput = () => {
 								onInput={(e) =>
 									setInputValue(e.currentTarget.value)
 								}
+								onKeyDown={(e) => {
+									if (
+										e.key === "Enter" &&
+										searchMenus().length === 1
+									) {
+										handleNavigate(searchMenus()[0].href)
+									}
+								}}
 							/>
 						</TextField>
 					</AlertDialogTitle>
@@ -147,8 +162,7 @@ const SearchInput = () => {
 											: menu.description
 									}
 									onClick={() => {
-										navigate(menu.href)
-										setDialogIsOpen(false)
+										handleNavigate(menu.href)
 									}}
 								/>
 							)}
