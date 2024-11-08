@@ -10,7 +10,7 @@ import {
 import type { PolymorphicProps } from "@kobalte/core"
 import * as BreadcrumbPrimitive from "@kobalte/core/breadcrumbs"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 const Breadcrumb = BreadcrumbPrimitive.Root
 

@@ -4,7 +4,7 @@ import { splitProps } from "solid-js"
 import type { PolymorphicProps } from "@kobalte/core/polymorphic"
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 type RadioGroupRootProps<T extends ValidComponent = "div"> =
 	RadioGroupPrimitive.RadioGroupRootProps<T> & { class?: string | undefined }

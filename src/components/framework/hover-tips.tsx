@@ -1,5 +1,5 @@
 import type { JSX } from "solid-js"
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 interface HoverTipsProps extends JSX.HTMLAttributes<HTMLDivElement> {
 	children: JSX.Element

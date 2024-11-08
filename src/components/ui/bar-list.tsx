@@ -8,7 +8,7 @@ import {
 } from "solid-js"
 import { Dynamic } from "solid-js/web"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 type Bar<T> = T & {
 	value: number

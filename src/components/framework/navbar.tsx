@@ -1,11 +1,11 @@
 import { useColorMode } from "@kobalte/core/color-mode"
 import { AiTwotoneSetting } from "solid-icons/ai"
 import AvatarDropdownMenu from "./avatar-dropdownmenu"
-import ColorModeDropdownmenu from "./color-model-dropdownment"
 import NotificationDropdownMenu from "./notification-dropdownmenu"
 import SearchInput from "./search-input"
 import SettingsSheet from "./settings-sheet"
 import { useLocale } from "~/i18n/lib"
+import ColorModeDropdownmenu from "./color-model-dropdownment"
 
 const Navbar = () => {
 	const { colorMode } = useColorMode()

@@ -5,7 +5,7 @@ import type { PolymorphicProps } from "@kobalte/core/polymorphic"
 import * as ProgressPrimitive from "@kobalte/core/progress"
 
 import { Label } from "~/components/ui/label"
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 type ProgressRootProps<T extends ValidComponent = "div"> =
 	ProgressPrimitive.ProgressRootProps<T> & {

@@ -8,7 +8,7 @@ import {
 	splitProps,
 } from "solid-js"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 export type TimelinePropsItem = Omit<
 	TimelineItemProps,

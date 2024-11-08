@@ -1,6 +1,6 @@
 import type * as RadioGroupPrimitive from "@kobalte/core/radio-group"
 import { For, splitProps } from "solid-js"
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 import {
 	RadioGroup as SolidRadioGroup,
 	RadioGroupItem as SolidRadioGroupItem,

@@ -33,9 +33,9 @@ export const en = {
 		logout: "Logout",
 		description: "Manage your preferences and account settings",
 		change_password: "Change password",
-		color_mode_light: "light",
-		color_mode_dark: "dark",
-		color_mode_system: "system",
+		color_mode_light: "Light",
+		color_mode_dark: "Dark",
+		color_mode_system: "System",
 	},
 	actions: {
 		later: "Later",

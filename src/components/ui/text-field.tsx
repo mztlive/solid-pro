@@ -5,7 +5,7 @@ import type { PolymorphicProps } from "@kobalte/core"
 import * as TextFieldPrimitive from "@kobalte/core/text-field"
 import { cva } from "class-variance-authority"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 const TextField = TextFieldPrimitive.Root
 

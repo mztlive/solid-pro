@@ -2,7 +2,7 @@ import { type VariantProps, cva } from "class-variance-authority"
 import type { Component, ComponentProps } from "solid-js"
 import { splitProps } from "solid-js"
 
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 const cardVariants = cva(
 	"rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow duration-300",

@@ -5,7 +5,7 @@ import {
 	getCoreRowModel,
 } from "@tanstack/solid-table"
 import { For, Suspense } from "solid-js"
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 import {
 	Table,
 	TableBody,

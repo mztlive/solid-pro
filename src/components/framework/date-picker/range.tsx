@@ -6,7 +6,7 @@ import "@rnwonder/solid-date-picker/themes/shad-cn-ui"
 import type { DatePickerInputSJProps } from "@rnwonder/solid-date-picker/dist/components/DatePickerGroup"
 import dayjs from "dayjs"
 import { splitProps } from "solid-js"
-import { cn } from "~/lib/utils"
+import { cn } from "~/libs/cn"
 
 interface DatePickerRangeProps extends DatePickerInputSJProps {}
 
