@@ -1,169 +1,194 @@
-import type { ValidComponent } from "solid-js"
-import { splitProps } from "solid-js"
+import { cn } from "~/libs/cn";
+import type {
+	PaginationEllipsisProps,
+	PaginationItemProps,
+	PaginationPreviousProps,
+	PaginationRootProps,
+} from "@kobalte/core/pagination";
+import { Pagination as PaginationPrimitive } from "@kobalte/core/pagination";
+import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import type { VariantProps } from "class-variance-authority";
+import type { ValidComponent, VoidProps } from "solid-js";
+import { mergeProps, splitProps } from "solid-js";
+import { buttonVariants } from "./button";
 
-import * as PaginationPrimitive from "@kobalte/core/pagination"
-import type { PolymorphicProps } from "@kobalte/core/polymorphic"
+export const PaginationItems = PaginationPrimitive.Items;
 
-import { buttonVariants } from "~/components/ui/button"
-import { cn } from "~/libs/cn"
+type paginationProps<T extends ValidComponent = "nav"> =
+	PaginationRootProps<T> & {
+		class?: string;
+	};
 
-const PaginationItems = PaginationPrimitive.Items
-
-type PaginationRootProps<T extends ValidComponent = "nav"> =
-	PaginationPrimitive.PaginationRootProps<T> & { class?: string | undefined }
-
-const Pagination = <T extends ValidComponent = "nav">(
-	props: PolymorphicProps<T, PaginationRootProps<T>>,
+export const Pagination = <T extends ValidComponent = "nav">(
+	props: PolymorphicProps<T, paginationProps<T>>,
 ) => {
-	const [local, others] = splitProps(props as PaginationRootProps, ["class"])
+	const [local, rest] = splitProps(props as paginationProps, ["class"]);
+
 	return (
-		<PaginationPrimitive.Root
+		<PaginationPrimitive
 			class={cn(
-				"[&>*]:flex [&>*]:flex-row [&>*]:items-center [&>*]:gap-1",
+				"mx-auto flex w-full justify-center [&>ul]:flex [&>ul]:flex-row [&>ul]:items-center [&>ul]:gap-1",
 				local.class,
 			)}
-			{...others}
+			{...rest}
 		/>
-	)
-}
+	);
+};
 
-type PaginationItemProps<T extends ValidComponent = "button"> =
-	PaginationPrimitive.PaginationItemProps<T> & { class?: string | undefined }
+type paginationItemProps<T extends ValidComponent = "button"> =
+	PaginationItemProps<T> &
+		Pick<VariantProps<typeof buttonVariants>, "size"> & {
+			class?: string;
+		};
 
-const PaginationItem = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, PaginationItemProps<T>>,
+export const PaginationItem = <T extends ValidComponent = "button">(
+	props: PolymorphicProps<T, paginationItemProps<T>>,
 ) => {
-	const [local, others] = splitProps(props as PaginationItemProps, ["class"])
+	// @ts-expect-error - required `page`
+	const merge = mergeProps<paginationItemProps[]>({ size: "icon" }, props);
+	const [local, rest] = splitProps(merge as paginationItemProps, [
+		"class",
+		"size",
+	]);
+
 	return (
 		<PaginationPrimitive.Item
 			class={cn(
 				buttonVariants({
 					variant: "ghost",
+					size: local.size,
 				}),
-				"size-10 data-[current]:border",
+				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
 				local.class,
 			)}
-			{...others}
+			{...rest}
 		/>
-	)
-}
+	);
+};
 
-type PaginationEllipsisProps<T extends ValidComponent = "div"> =
-	PaginationPrimitive.PaginationEllipsisProps<T> & {
-		class?: string | undefined
+type paginationEllipsisProps<T extends ValidComponent = "div"> = VoidProps<
+	PaginationEllipsisProps<T> & {
+		class?: string;
 	}
+>;
 
-const PaginationEllipsis = <T extends ValidComponent = "div">(
-	props: PolymorphicProps<T, PaginationEllipsisProps<T>>,
+export const PaginationEllipsis = <T extends ValidComponent = "div">(
+	props: PolymorphicProps<T, paginationEllipsisProps<T>>,
 ) => {
-	const [local, others] = splitProps(props as PaginationEllipsisProps, [
-		"class",
-	])
+	const [local, rest] = splitProps(props as paginationEllipsisProps, ["class"]);
+
 	return (
 		<PaginationPrimitive.Ellipsis
-			class={cn("flex size-10 items-center justify-center", local.class)}
-			{...others}
+			class={cn("flex h-9 w-9 items-center justify-center", local.class)}
+			{...rest}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="size-4"
+				class="h-4 w-4"
 			>
-				<circle cx="12" cy="12" r="1" />
-				<circle cx="19" cy="12" r="1" />
-				<circle cx="5" cy="12" r="1" />
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0m7 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0"
+				/>
+				<title>More pages</title>
 			</svg>
-			<span class="sr-only">More pages</span>
 		</PaginationPrimitive.Ellipsis>
-	)
-}
+	);
+};
 
-type PaginationPreviousProps<T extends ValidComponent = "button"> =
-	PaginationPrimitive.PaginationPreviousProps<T> & {
-		class?: string | undefined
-	}
+type paginationPreviousProps<T extends ValidComponent = "button"> =
+	PaginationPreviousProps<T> &
+		Pick<VariantProps<typeof buttonVariants>, "size"> & {
+			class?: string;
+		};
 
-const PaginationPrevious = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, PaginationPreviousProps<T>>,
+export const PaginationPrevious = <T extends ValidComponent = "button">(
+	props: PolymorphicProps<T, paginationPreviousProps<T>>,
 ) => {
-	const [local, others] = splitProps(props as PaginationPreviousProps, [
+	const merge = mergeProps<paginationPreviousProps<T>[]>(
+		{ size: "icon" },
+		props,
+	);
+	const [local, rest] = splitProps(merge as paginationPreviousProps, [
 		"class",
-	])
+		"size",
+	]);
+
 	return (
 		<PaginationPrimitive.Previous
 			class={cn(
 				buttonVariants({
 					variant: "ghost",
+					size: local.size,
 				}),
-				"gap-1 pl-2.5",
+				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
 				local.class,
 			)}
-			{...others}
+			{...rest}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="size-4"
+				class="h-4 w-4"
 			>
-				<path d="M15 6l-6 6l6 6" />
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="m15 6l-6 6l6 6"
+				/>
+				<title>Previous page</title>
 			</svg>
-			<span>Previous</span>
 		</PaginationPrimitive.Previous>
-	)
-}
+	);
+};
 
-type PaginationNextProps<T extends ValidComponent = "button"> =
-	PaginationPrimitive.PaginationNextProps<T> & {
-		class?: string | undefined
-	}
+type paginationNextProps<T extends ValidComponent = "button"> =
+	paginationPreviousProps<T>;
 
-const PaginationNext = <T extends ValidComponent = "button">(
-	props: PolymorphicProps<T, PaginationNextProps<T>>,
+export const PaginationNext = <T extends ValidComponent = "button">(
+	props: PolymorphicProps<T, paginationNextProps<T>>,
 ) => {
-	const [local, others] = splitProps(props as PaginationNextProps, ["class"])
+	const merge = mergeProps<paginationNextProps<T>[]>({ size: "icon" }, props);
+	const [local, rest] = splitProps(merge as paginationNextProps, [
+		"class",
+		"size",
+	]);
+
 	return (
 		<PaginationPrimitive.Next
 			class={cn(
 				buttonVariants({
 					variant: "ghost",
+					size: local.size,
 				}),
-				"gap-1 pl-2.5",
+				"aria-[current=page]:border aria-[current=page]:border-input aria-[current=page]:bg-background aria-[current=page]:shadow-sm aria-[current=page]:hover:bg-accent aria-[current=page]:hover:text-accent-foreground",
 				local.class,
 			)}
-			{...others}
+			{...rest}
 		>
-			<span>Next</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
+				class="h-4 w-4"
 				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="size-4"
 			>
-				<path d="M9 6l6 6l-6 6" />
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="m9 6l6 6l-6 6"
+				/>
+				<title>Next page</title>
 			</svg>
 		</PaginationPrimitive.Next>
-	)
-}
-
-export {
-	Pagination,
-	PaginationItems,
-	PaginationItem,
-	PaginationEllipsis,
-	PaginationPrevious,
-	PaginationNext,
-}
+	);
+};

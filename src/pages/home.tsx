@@ -16,11 +16,9 @@ import { MenuItemType, Sidebar } from "~/components/ui/sidebar/sidebar"
 import { createMenus } from "~/menus"
 import useNavigateTab from "~/hooks/navigate-tab"
 import { KeepAlive } from "solid-keep-alive"
+import { showToast } from "~/hooks/toast"
 
 const Home = (props: ParentProps) => {
-	const { items, currentPath, handleTabClick, handleTabClose } =
-		useNavigateTab()
-
 	const isRouteing = useIsRouting()
 	const [progress, setProgress] = createSignal(0)
 
@@ -28,6 +26,12 @@ const Home = (props: ParentProps) => {
 
 	createEffect(() => {
 		if (isRouteing()) {
+			showToast({
+				title: "Loading",
+				description: "Please wait while we are loading the page",
+				variant: "success",
+			})
+
 			setProgress(0)
 			const interval = setInterval(() => {
 				setProgress((p) => Math.min(p + 10, 100))

@@ -52,7 +52,7 @@ const TableTest = () => {
 
 	return (
 		<>
-			<Card hover="none" class="mb-4">
+			<Card class="mb-4">
 				<CardHeader />
 				<CardContent class="flex flex-col gap-4">
 					<Grid cols={4} class="gap-4">
@@ -122,14 +122,14 @@ const TableTest = () => {
 				</CardContent>
 			</Card>
 
-			<Card hover="none" class=" border-none">
+			<Card class=" border-none">
 				<CardHeader>
 					<div class="flex flex-row items-center gap-4">
-						<Button variant="primary" size="xs">
+						<Button variant="blue" size="xs" class="p-4">
 							添加
 							<AiOutlineFileAdd size={20} class="ml-2" />
 						</Button>
-						<Button variant="outline" size="xs">
+						<Button variant="outline" size="xs" class="p-4">
 							导出
 							<AiOutlineCloudDownload size={20} class="ml-2" />
 						</Button>

@@ -1,6 +1,5 @@
 // import toast from 'solid-toast'
 
-import { showToast } from "~/components/ui/toast"
 
 export const defaultRequestInit = (): RequestInit => {
 	return {
@@ -23,12 +22,6 @@ const convertResponse = async <T>(response: Response): Promise<T> => {
 			}
 
 			if (result.meta.code !== 200) {
-				// toast.error(result.meta.msg)
-				showToast({
-					title: "错误",
-					description: result.meta.msg,
-					variant: "destructive",
-				})
 				throw new Error(result.meta.msg)
 			}
 
@@ -47,12 +40,6 @@ const convertResponse = async <T>(response: Response): Promise<T> => {
 		}
 		case 500: {
 			const result: API.BaseResponse<T> = await response.json()
-			// toast.error(result.meta.msg)
-			showToast({
-				title: "错误",
-				description: result.meta.msg,
-				variant: "destructive",
-			})
 
 			throw new Error(result.meta.msg)
 		}

@@ -10,7 +10,7 @@ import {
 } from "solid-js"
 import { type SetStoreFunction, createStore } from "solid-js/store"
 import type { LoginFunction } from "~/api/contract"
-import { showToast } from "~/components/ui/toast"
+import { showToast } from "~/hooks/toast"
 import { useLocale } from "~/i18n/lib"
 
 interface AuthContextProps {
@@ -53,6 +53,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
 					? t.login.error.account_required()
 					: t.login.error.password_required(),
 				variant: "destructive",
+				description: "",
 			})
 			return
 		}
@@ -67,11 +68,13 @@ export const AuthProvider = (props: AuthProviderProps) => {
 			showToast({
 				title: t.login.success(),
 				variant: "success",
+				description: "",
 			})
 		} catch (e) {
 			showToast({
 				title: t.login.error.failed({ message: e.message }),
 				variant: "destructive",
+				description: "",
 			})
 		} finally {
 			setIsLoging(false)
