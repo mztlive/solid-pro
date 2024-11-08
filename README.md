@@ -1,8 +1,32 @@
-## Usage
+# SolidUI Pro
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+A professional UI template built with SolidJS, featuring a modern design system, internationalization, and comprehensive components.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+## Features
+
+- 🎨 Modern UI Design with Tailwind CSS
+- 🌍 Internationalization (i18n) support for:
+  - English
+  - Simplified Chinese
+  - Vietnamese
+- 🎯 Key Components:
+  - Responsive Layout with Sidebar
+  - Data Tables with sorting and pagination
+  - Charts and Analytics Dashboard
+  - Form Components
+  - Toast Notifications
+  - Modal Dialogs
+  - Loading Skeletons
+- 🛠 Developer Tools:
+  - TypeScript support
+  - ESLint + Biome configuration
+  - Hot Module Replacement (HMR)
+  - Path aliases
+
+## Quick Start
+
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
 $ npm install # or pnpm install or yarn install
