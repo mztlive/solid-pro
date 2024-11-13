@@ -11,13 +11,21 @@ import {
 	useContext,
 } from "solid-js"
 
-import { AiOutlineAlignLeft, AiOutlineAlignRight } from "solid-icons/ai"
+import {
+	AiOutlineAlignLeft,
+	AiOutlineAlignRight,
+	AiFillPushpin,
+	AiOutlineMenu,
+} from "solid-icons/ai"
+
+import { BsLayoutSidebar, BsLayoutSidebarReverse } from "solid-icons/bs"
 
 import type { Resolver } from "@solid-primitives/i18n"
 import { useLocation } from "@solidjs/router"
 import { SiBoxysvg } from "solid-icons/si"
 import { Dynamic } from "solid-js/web"
 import MenuItem from "./menu-item"
+import { Button } from "../button"
 
 export type MenuItemType = {
 	icon?: Component
@@ -131,23 +139,23 @@ export const useSidebarContext = () => {
 export const Sidebar = () => {
 	const { isCollapsed, toggleCollapse, menuItems } = useSidebarContext()
 
+	const sidebarClasses = createMemo(() => ({
+		"w-0": isCollapsed(),
+		"w-60": !isCollapsed(),
+		"h-full": true,
+		"bg-sidebar-background": true,
+		"text-foreground": true,
+		"transition-width": true,
+		"duration-200": true,
+		"overflow-y-auto": true,
+		"opacity-0": isCollapsed(),
+		"group-hover:w-60": isCollapsed(),
+		"group-hover:opacity-100": isCollapsed(),
+	}))
+
 	return (
 		<div class="relative h-full group">
-			<div
-				classList={{
-					"w-0": isCollapsed(),
-					"w-60": !isCollapsed(),
-					"h-full": true,
-					"bg-sidebar-background": true,
-					"text-foreground": true,
-					"transition-width": true,
-					"duration-200": true,
-					"overflow-y-auto": true,
-					"opacity-0": isCollapsed(),
-					"group-hover:w-60": isCollapsed(),
-					"group-hover:opacity-100": isCollapsed(),
-				}}
-			>
+			<div classList={sidebarClasses()}>
 				<div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4 whitespace-nowrap">
 					{/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
 					<Show when={!isCollapsed() || true}>
@@ -155,22 +163,20 @@ export const Sidebar = () => {
 						<span class="text-white text-lg">XXXXXX</span>
 					</Show>
 
-					<button
-						type="button"
+					<Button
 						onClick={toggleCollapse}
-						class={`transition-transform duration-300 ${
-							isCollapsed() ? "rotate-180" : ""
-						}`}
+						size="icon"
+						class="transition-transform duration-300 bg-transparent dark:hover:bg-transparent"
 					>
 						<Dynamic
 							component={
 								isCollapsed()
-									? AiOutlineAlignRight
-									: AiOutlineAlignLeft
+									? BsLayoutSidebarReverse
+									: BsLayoutSidebar
 							}
 							class="text-white"
 						/>
-					</button>
+					</Button>
 				</div>
 				<ul class="list-none mt-2 p-2.5 whitespace-nowrap">
 					<For each={menuItems}>
@@ -180,6 +186,15 @@ export const Sidebar = () => {
 					</For>
 				</ul>
 			</div>
+			<Show when={isCollapsed()}>
+				<Button
+					onClick={toggleCollapse}
+					size="icon"
+					class="fixed bottom-4 left-4 z-50  rounded-full  hover:bg-opacity-80 transition-colors"
+				>
+					<AiOutlineMenu size={24} />
+				</Button>
+			</Show>
 			<div
 				class="absolute top-0 left-0 w-4 h-full cursor-pointer"
 				classList={{

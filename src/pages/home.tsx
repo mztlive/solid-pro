@@ -22,8 +22,6 @@ const Home = (props: ParentProps) => {
 	const isRouteing = useIsRouting()
 	const [progress, setProgress] = createSignal(0)
 
-	const menus = createMenus()
-
 	createEffect(() => {
 		if (isRouteing()) {
 			showToast({
@@ -46,24 +44,17 @@ const Home = (props: ParentProps) => {
 	return (
 		<div class="flex flex-row h-screen w-full">
 			<Sidebar />
-			<div class="w-full bg-page-bg flex flex-col">
+			<div class="w-full bg-page-bg overflow-y-auto">
 				<Show when={isRouteing()}>
 					<Progress
-						class="h-[2px] rounded-none"
-						maxValue={100}
+						class="h-[2px] rounded-none sticky top-0 z-50"
 						value={progress()}
+						maxValue={100}
 					/>
 				</Show>
-				<Navbar />
-				<main class="overflow-hidden  w-full px-10 py-2 flex flex-col">
-					<div class="mt-4 pb-10 overflow-y-auto relative">
-						{/* <NavigateTabs
-							items={items()}
-							activeKey={currentPath()}
-							onClick={handleTabClick}
-							onClose={handleTabClose}
-							class="sticky top-0 left-0 right-0 bg-page-bg z-10 mb-2"
-						/> */}
+				<Navbar class="sticky top-0 z-40" />
+				<main class="w-full px-10 py-2">
+					<div class="mt-4 pb-10">
 						<Suspense fallback={<PageSkeleton class="mt-4" />}>
 							{props.children}
 						</Suspense>
