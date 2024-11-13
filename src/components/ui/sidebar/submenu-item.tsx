@@ -12,7 +12,7 @@ interface SubmenuItemProps {
 	parentIndex: string
 }
 const SubmenuItem = (props: SubmenuItemProps) => {
-	const { selectedItem, selectItem } = useSidebarContext()
+	const { selectedItem, setSelectItem: selectItem } = useSidebarContext()
 	const navigate = useNavigate()
 
 	const subItemIndex = createMemo(

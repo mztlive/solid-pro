@@ -15,9 +15,12 @@ import { useNavigate } from "@solidjs/router"
 import { KeepAliveProvider } from "solid-keep-alive"
 import { ToastRegion } from "./components/ui/toast"
 import { ToastList } from "./components/ui/toast"
+import { SidebarProvider } from "./components/ui/sidebar/sidebar"
+import { createMenus } from "./menus"
 
 const App: Component = (props: ParentProps) => {
 	const storageManager = createLocalStorageManager("vite-ui-theme")
+	const menus = createMenus()
 
 	return (
 		<>
@@ -26,14 +29,18 @@ const App: Component = (props: ParentProps) => {
 				<KeepAliveProvider>
 					<div class="w-full flex flex-row">
 						<AuthProvider loginCall={fakeLogin}>
-							<Suspense
-								fallback={<Skeleton class="w-full h-screen" />}
-							>
-								{props.children}
-								<ToastRegion>
-									<ToastList />
-								</ToastRegion>
-							</Suspense>
+							<SidebarProvider menuItems={menus}>
+								<Suspense
+									fallback={
+										<Skeleton class="w-full h-screen" />
+									}
+								>
+									{props.children}
+									<ToastRegion>
+										<ToastList />
+									</ToastRegion>
+								</Suspense>
+							</SidebarProvider>
 						</AuthProvider>
 					</div>
 				</KeepAliveProvider>

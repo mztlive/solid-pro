@@ -13,8 +13,12 @@ interface MenuItemProps {
 }
 
 const Menu = (props: MenuItemProps) => {
-	const { openItems, selectedItem, toggleItem, selectItem } =
-		useSidebarContext()
+	const {
+		openItems,
+		selectedItem,
+		toggleItem,
+		setSelectItem: selectItem,
+	} = useSidebarContext()
 
 	const navigate = useNavigate()
 

@@ -28,10 +28,20 @@ export type MenuItemType = {
 }
 
 interface SidebarContextProps {
+	// 展开的菜单项
 	openItems: Accessor<Record<string, boolean>>
+	// 选中的菜单项
 	selectedItem: Accessor<string | null>
+	// 切换菜单项折叠状态
 	toggleItem: (index: string) => void
-	selectItem: (index: string, hasChildren: boolean) => void
+	// 选中菜单项
+	setSelectItem: (index: string, hasChildren: boolean) => void
+	// 是否折叠
+	isCollapsed: Accessor<boolean>
+	// 切换折叠状态
+	toggleCollapse: () => void
+
+	menuItems: MenuItemType[]
 }
 
 interface SidebarProps extends ParentProps {
@@ -40,11 +50,12 @@ interface SidebarProps extends ParentProps {
 
 const SidebarContext = createContext<SidebarContextProps>()
 
-const SidebarProvider = (props: SidebarProps) => {
+export const SidebarProvider = (props: SidebarProps) => {
 	const location = useLocation()
 
 	const [openItems, setOpenItems] = createSignal<Record<string, boolean>>({})
 	const [selectedItem, setSelectedItem] = createSignal<string | null>(null)
+	const [isCollapsed, setIsCollapsed] = createSignal(false)
 
 	// 切换菜单项折叠状态
 	const toggleItem = (index: string) => {
@@ -52,7 +63,7 @@ const SidebarProvider = (props: SidebarProps) => {
 	}
 
 	// 选中菜单项
-	const selectItem = (index: string, hasChildren: boolean) => {
+	const setSelectItem = (index: string, hasChildren: boolean) => {
 		if (!hasChildren) setSelectedItem(index)
 	}
 
@@ -92,7 +103,15 @@ const SidebarProvider = (props: SidebarProps) => {
 
 	return (
 		<SidebarContext.Provider
-			value={{ openItems, selectedItem, toggleItem, selectItem }}
+			value={{
+				openItems,
+				selectedItem,
+				toggleItem,
+				setSelectItem,
+				isCollapsed,
+				toggleCollapse: () => setIsCollapsed(!isCollapsed()),
+				menuItems: props.menuItems,
+			}}
 		>
 			{props.children}
 		</SidebarContext.Provider>
@@ -109,98 +128,64 @@ export const useSidebarContext = () => {
 	return context
 }
 
-export const Sidebar = (props: SidebarProps) => {
-	// 是否折叠的
-	const [collapsed, setCollapsed] = createSignal(false)
-
-	// 是否手动折叠的
-	const [isManualCollapse, setIsManualCollapse] = createSignal(false)
-
-	// 鼠标是否在侧边栏内部的
-	const [isMouseInside, setIsMouseInside] = createSignal(false)
-
-	const handleCollapseToggle = () => {
-		// 如果当前是手动折叠状态
-		if (isManualCollapse()) {
-			// 取消手动折叠状态并展开侧边栏
-			setIsManualCollapse(false)
-			setCollapsed(false)
-		} else {
-			// 否则，设置为手动折叠状态并切换侧边栏的折叠状态
-			setIsManualCollapse(true)
-			setCollapsed(!collapsed())
-		}
-	}
+export const Sidebar = () => {
+	const { isCollapsed, toggleCollapse, menuItems } = useSidebarContext()
 
 	return (
-		<SidebarProvider menuItems={props.menuItems}>
+		<div class="relative h-full group">
 			<div
-				class="relative h-full"
-				onMouseEnter={() => {
-					setIsMouseInside(true)
-					setTimeout(() => {
-						if (isManualCollapse() && isMouseInside()) {
-							setCollapsed(false)
-						}
-					}, 100)
-				}}
-				onMouseLeave={() => {
-					setIsMouseInside(false)
-					if (isManualCollapse()) {
-						setCollapsed(true)
-					}
+				classList={{
+					"w-0": isCollapsed(),
+					"w-60": !isCollapsed(),
+					"h-full": true,
+					"bg-sidebar-background": true,
+					"text-foreground": true,
+					"transition-width": true,
+					"duration-200": true,
+					"overflow-y-auto": true,
+					"opacity-0": isCollapsed(),
+					"group-hover:w-60": isCollapsed(),
+					"group-hover:opacity-100": isCollapsed(),
 				}}
 			>
-				<div
-					classList={{
-						"w-0": collapsed(),
-						"w-60": !collapsed(),
-						"h-full": true,
-						"bg-sidebar-background": true,
-						"text-foreground": true,
-						"transition-width": true,
-						"duration-200": true,
-						"overflow-y-auto": true,
-					}}
-				>
-					<div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4">
-						{/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
-						<Show when={!collapsed()}>
-							<SiBoxysvg />
-							<span class="text-white text-lg">XXXXXX</span>
-						</Show>
+				<div class="flex flex-row items-center justify-between gap-8 h-14 py-8 px-4 whitespace-nowrap">
+					{/* <img src="/logo.png" alt="logo" class="w-8 h-8" /> */}
+					<Show when={!isCollapsed() || true}>
+						<SiBoxysvg />
+						<span class="text-white text-lg">XXXXXX</span>
+					</Show>
 
-						<button
-							type="button"
-							onClick={handleCollapseToggle}
-							class={`transition-transform duration-300 ${
-								collapsed() ? "rotate-180" : ""
-							}`}
-						>
-							<Dynamic
-								component={
-									collapsed()
-										? AiOutlineAlignRight
-										: AiOutlineAlignLeft
-								}
-								class="text-white"
-							/>
-						</button>
-					</div>
-					<ul class="list-none mt-2 p-2.5">
-						<For each={props.menuItems}>
-							{(item, index) => (
-								<MenuItem item={item} index={index} />
-							)}
-						</For>
-					</ul>
+					<button
+						type="button"
+						onClick={toggleCollapse}
+						class={`transition-transform duration-300 ${
+							isCollapsed() ? "rotate-180" : ""
+						}`}
+					>
+						<Dynamic
+							component={
+								isCollapsed()
+									? AiOutlineAlignRight
+									: AiOutlineAlignLeft
+							}
+							class="text-white"
+						/>
+					</button>
 				</div>
-
-				{/* 一个透明的遮罩层，用于鼠标进入/离开时，自动展开侧边栏 */}
-				<Show when={collapsed()}>
-					<div class="absolute top-0 left-0 w-8 h-full bg-transparent z-0" />
-				</Show>
+				<ul class="list-none mt-2 p-2.5 whitespace-nowrap">
+					<For each={menuItems}>
+						{(item, index) => (
+							<MenuItem item={item} index={index} />
+						)}
+					</For>
+				</ul>
 			</div>
-		</SidebarProvider>
+			<div
+				class="absolute top-0 left-0 w-4 h-full cursor-pointer"
+				classList={{
+					hidden: !isCollapsed(),
+				}}
+			/>
+		</div>
 	)
 }

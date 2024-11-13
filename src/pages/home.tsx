@@ -45,7 +45,7 @@ const Home = (props: ParentProps) => {
 
 	return (
 		<div class="flex flex-row h-screen w-full">
-			<Sidebar menuItems={menus} />
+			<Sidebar />
 			<div class="w-full bg-page-bg flex flex-col">
 				<Show when={isRouteing()}>
 					<Progress
