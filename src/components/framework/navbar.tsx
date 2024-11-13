@@ -12,7 +12,7 @@ const Navbar = () => {
 	const { t } = useLocale()
 
 	return (
-		<nav class="w-full fixed flex  justify-between  flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border">
+		<nav class="w-full fixed flex justify-between flex-row items-center px-10 py-8 h-14 sticky top-0 border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 			<div>
 				<span class="text-xl font-bold">{t.prject_name()}</span>
 			</div>

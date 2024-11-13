@@ -39,7 +39,7 @@ export function NavigateTabs(props: TabProps) {
 												"text-muted-foreground",
 												"bg-muted",
 												"border border-transparent",
-												"hover:bg-hover-muted",
+												"hover:bg-muted",
 											].join(" "),
 								)}
 								onClick={() => {

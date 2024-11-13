@@ -66,7 +66,7 @@ const SearchInput = () => {
 	const navigate = useNavigate()
 
 	const inputClass =
-		"h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-hover-muted hover:outline-none hover:border-transparent cursor-pointer"
+		"h-8 border-none px-4  rounded-none rounded-l-md  focus:outline-none focus:border-transparent hover:bg-muted hover:outline-none hover:border-transparent cursor-pointer"
 
 	const [dialogIsOpen, setDialogIsOpen] = createSignal(false)
 

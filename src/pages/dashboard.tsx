@@ -3,12 +3,9 @@ import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card"
 import { LineChart, PieChart } from "~/components/ui/charts"
 import { Col, Grid } from "~/components/ui/grid"
-import { showToast } from "~/components/ui/toast"
 import { useLocale } from "~/i18n/lib"
 
 const Dashboard = () => {
-	const { t } = useLocale()
-
 	const chartData = {
 		labels: [
 			"Jan 22",

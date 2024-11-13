@@ -10,7 +10,6 @@
 		--muted: 240 4.8% 95.9%;
 		--muted-foreground: 240 3.8% 46.1%;
 
-		--hover-muted: 240 3.7% 90%; /* 悬停状态的浅色背景 */
 		--selected-background: 240 3.7% 20%; /* 选中状态的背景 */
 
 		--popover: 0 0% 100%;
@@ -53,7 +52,7 @@
 		/* 新增 sidebar 背景色 */
 		--sidebar-background: 240 10% 3.9%; /* 比背景稍亮 */
 
-		--page-bg: 240 4.8% 95.9%;
+		--page-bg: 240 5% 97%;
 	}
 
 	.dark,
@@ -61,7 +60,6 @@
 		--background: 240 10% 3.9%;
 		--foreground: 0 0% 98%;
 
-		--hover-muted: 240 3.7% 20%; /* 悬停状态的深色背景 */
 		--selected-background: 240 3.7% 20%; /* 选中状态的背景 */
 
 		--muted: 240 3.7% 15.9%;
@@ -107,9 +105,11 @@
 		/* 新增 sidebar 背景色 */
 		--sidebar-background: 240 10% 3.9%; /* 比背景稍亮 */
 
-		--page-bg: 0, 0%, 10%;
+		--page-bg: 240 10% 7%;
 	}
 }
+
+
 
 @layer base {
 	* {

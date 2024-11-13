@@ -63,7 +63,6 @@ export default {
           foreground: "hsl(var(--card-foreground))"
         },
         'selected-background': "hsl(var(--selected-background))",
-        'hover-muted': "hsl(var(--hover-muted))",
         'sidebar-background': "hsl(var(--sidebar-background))",
         'page-bg': "hsl(var(--page-bg))"
       },
