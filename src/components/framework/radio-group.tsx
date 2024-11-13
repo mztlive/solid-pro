@@ -5,6 +5,7 @@ import {
 	RadioGroup as SolidRadioGroup,
 	RadioGroupItem as SolidRadioGroupItem,
 	RadioGroupItemLabel as SolidRadioGroupItemLabel,
+	RadioGroupItemControl as SolidRadioGroupItemControl,
 } from "../ui/radio-group"
 
 interface RadioGroupProps extends RadioGroupPrimitive.RadioGroupRootProps {
@@ -27,8 +28,12 @@ const RadioGroup = (props: RadioGroupProps) => {
 		>
 			<For each={local.items}>
 				{(item) => (
-					<SolidRadioGroupItem value={item.value}>
-						<SolidRadioGroupItemLabel>
+					<SolidRadioGroupItem
+						value={item.value}
+						class="flex flex-row items-center gap-2 ml-2"
+					>
+						<SolidRadioGroupItemControl />
+						<SolidRadioGroupItemLabel class="cursor-pointer">
 							{item.label}
 						</SolidRadioGroupItemLabel>
 					</SolidRadioGroupItem>

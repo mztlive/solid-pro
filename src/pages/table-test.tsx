@@ -1,5 +1,7 @@
 import { AiOutlineCloudDownload, AiOutlineFileAdd } from "solid-icons/ai"
 import { createSignal } from "solid-js"
+import { createStore } from "solid-js/store"
+import ButtonRadioGroup from "~/components/framework/button-radio-group"
 import DatePickerRange from "~/components/framework/date-picker/range"
 import RadioGroup from "~/components/framework/radio-group"
 import ProTable from "~/components/framework/table"
@@ -50,6 +52,14 @@ const TableTest = () => {
 		{ name: "Jane", age: 21, email: "jane@doe.com" },
 	])
 
+	const [params, setParams] = createStore({
+		name: "",
+		age: 0,
+		unit: "",
+		status: "normal",
+		time: [],
+	})
+
 	return (
 		<>
 			<Card class="mb-4">
@@ -95,13 +105,17 @@ const TableTest = () => {
 					</Grid>
 
 					<Grid>
-						<Col span={1} class="flex flex-row items-center">
+						<Col span={1} class="flex flex-row items-center gap-2">
 							<span class="text-sm">状态：</span>
-							<RadioGroup
+							<ButtonRadioGroup
 								items={[
 									{ value: "normal", label: "待支付" },
 									{ value: "disabled", label: "待发货" },
 								]}
+								value={params.status}
+								onChange={(value) => {
+									setParams("status", value)
+								}}
 							/>
 						</Col>
 					</Grid>
