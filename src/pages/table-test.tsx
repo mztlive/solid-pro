@@ -1,12 +1,8 @@
 // Start of Selection
 import { AiOutlineCloudDownload, AiOutlineFileAdd } from "solid-icons/ai"
 import { createSignal } from "solid-js"
-import { createStore } from "solid-js/store"
-import ButtonRadioGroup from "~/components/framework/button-radio-group"
 import DatePickerRange from "~/components/framework/date-picker/range"
-import RadioGroup from "~/components/framework/radio-group"
 import { Badge } from "~/components/ui/badge"
-import { Avatar } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card"
 import { Col, Grid } from "~/components/ui/grid"
@@ -25,6 +21,13 @@ import {
 	TextFieldLabel,
 } from "~/components/ui/text-field"
 import ProTable from "~/components/framework/table/pro-table"
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "~/components/ui/select"
 
 const TableTest = () => {
 	type User = {
@@ -66,14 +69,6 @@ const TableTest = () => {
 			profilePicture: "https://via.placeholder.com/40",
 		},
 	])
-
-	const [params, setParams] = createStore({
-		name: "",
-		age: 0,
-		unit: "",
-		status: "normal",
-		time: [],
-	})
 
 	const handleSelectionChange = (selectedRows: User[]) => {
 		console.log(selectedRows)
@@ -121,21 +116,26 @@ const TableTest = () => {
 								/>
 							</TextField>
 						</Col>
-					</Grid>
 
-					<Grid>
 						<Col span={1} class="flex flex-row items-center gap-2">
 							<span class="text-sm">状态：</span>
-							<ButtonRadioGroup
-								items={[
-									{ value: "normal", label: "待支付" },
-									{ value: "disabled", label: "待发货" },
-								]}
-								value={params.status}
-								onChange={(value) => {
-									setParams("status", value)
-								}}
-							/>
+							<Select
+								class="flex-1"
+								multiple
+								options={["待发货", "待支付"]}
+								itemComponent={(props) => (
+									<SelectItem item={props.item}>
+										{props.item.rawValue}
+									</SelectItem>
+								)}
+							>
+								<SelectTrigger>
+									<SelectValue<string>>
+										{(state) => state.selectedOption()}
+									</SelectValue>
+								</SelectTrigger>
+								<SelectContent />
+							</Select>
 						</Col>
 					</Grid>
 
@@ -240,7 +240,7 @@ const TableTest = () => {
 							{
 								id: "actions",
 								accessorKey: "actions",
-								header: "操作",
+								header: "",
 								cell: (props) => (
 									<div class="flex gap-2">
 										<Button variant="link" size="sm">

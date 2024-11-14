@@ -1,8 +1,8 @@
 import { For, Show } from "solid-js"
 import { TableHead, TableHeader, TableRow } from "../../ui/table"
 import { Checkbox, CheckboxControl } from "../../ui/checkbox"
-import { SortTrigger } from "./sort-trigger"
-import type { TableHeaderProps } from "./types"
+import { HeadTrigger } from "./sort-trigger"
+import { SelectAction, type TableHeaderProps } from "./types"
 
 export const TableHeaderComponent = <T,>(props: TableHeaderProps<T>) => {
 	return (
@@ -13,7 +13,7 @@ export const TableHeaderComponent = <T,>(props: TableHeaderProps<T>) => {
 						<For each={headerGroup.headers}>
 							{(header) => {
 								const width =
-									header.column.id === "select"
+									header.column.id === SelectAction
 										? "40px"
 										: (props.columns[header.index - 1]
 												?.width ?? "auto")
@@ -30,7 +30,7 @@ export const TableHeaderComponent = <T,>(props: TableHeaderProps<T>) => {
 											when={!header.isPlaceholder}
 											fallback={null}
 										>
-											<SortTrigger
+											<HeadTrigger
 												header={header}
 												onSort={(desc) =>
 													props.onSort(

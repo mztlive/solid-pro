@@ -12,7 +12,7 @@ import { Table } from "../../ui/table"
 import TableSkeleton from "../table-skeleton"
 import { TableHeaderComponent } from "./table-header"
 import { TableBodyComponent } from "./table-body"
-import type { ProTableProps } from "./types"
+import { SelectAction, type ProTableProps } from "./types"
 import {
 	Checkbox,
 	CheckboxControl,
@@ -79,7 +79,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 		},
 		columns: [
 			{
-				id: "select",
+				id: SelectAction,
 				header: () => (
 					<Checkbox
 						checked={selectedRows().length === props.data.length}
@@ -128,7 +128,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 				<div class="flex justify-end mb-2">
 					<DropdownMenu>
 						<DropdownMenuTrigger>
-							<Button variant="outline">
+							<Button variant="outline" size="sm">
 								<ViewSettingIcon size={20} />
 								View
 							</Button>

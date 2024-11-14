@@ -1,4 +1,4 @@
-import { type ColumnDef } from "@tanstack/solid-table"
+import { type ColumnDef, type Header, type HeaderGroup, type Row } from "@tanstack/solid-table"
 
 export interface ProTableProps<T> {
   data: T[]
@@ -8,7 +8,7 @@ export interface ProTableProps<T> {
 }
 
 export interface TableHeaderProps<T> {
-  headerGroups: any[]
+  headerGroups: HeaderGroup<T>[]
   columns: ProTableProps<T>["columns"]
   onSort: (columnId: string, desc: boolean) => void
   onSortClear: (columnId: string) => void
@@ -17,8 +17,11 @@ export interface TableHeaderProps<T> {
 }
 
 export interface TableBodyProps<T> {
-  rows: any[]
+  rows: Row<T>[]
   columns: ProTableProps<T>["columns"]
   selectedRows: T[]
   onRowSelect: (row: T, checked: boolean) => void
-} 
+}
+
+
+export const SelectAction = "select"
