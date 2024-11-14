@@ -1,3 +1,4 @@
+// Start of Selection
 import { AiOutlineCloudDownload, AiOutlineFileAdd } from "solid-icons/ai"
 import { createSignal } from "solid-js"
 import { createStore } from "solid-js/store"
@@ -6,6 +7,7 @@ import DatePickerRange from "~/components/framework/date-picker/range"
 import RadioGroup from "~/components/framework/radio-group"
 import ProTable from "~/components/framework/table"
 import { Badge } from "~/components/ui/badge"
+import { Avatar } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card"
 import { Col, Grid } from "~/components/ui/grid"
@@ -29,27 +31,40 @@ const TableTest = () => {
 		name: string
 		age: number
 		email: string
+		gender: "男" | "女" | "其他"
+		registrationDate: string
+		status: "活跃" | "非活跃"
+		profilePicture: string
 	}
 
 	const [data] = createSignal<User[]>([
-		{ name: "John", age: 20, email: "john@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Doe", age: 22, email: "doe@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
-		{ name: "Jane", age: 21, email: "jane@doe.com" },
+		{
+			name: "John",
+			age: 20,
+			email: "john@doe.com",
+			gender: "男",
+			registrationDate: "2023-01-15",
+			status: "活跃",
+			profilePicture: "https://via.placeholder.com/40",
+		},
+		{
+			name: "Jane",
+			age: 21,
+			email: "jane@doe.com",
+			gender: "女",
+			registrationDate: "2023-02-20",
+			status: "非活跃",
+			profilePicture: "https://via.placeholder.com/40",
+		},
+		{
+			name: "Doe",
+			age: 22,
+			email: "doe@doe.com",
+			gender: "其他",
+			registrationDate: "2023-03-10",
+			status: "活跃",
+			profilePicture: "https://via.placeholder.com/40",
+		},
 	])
 
 	const [params, setParams] = createStore({
@@ -60,9 +75,13 @@ const TableTest = () => {
 		time: [],
 	})
 
+	const handleSelectionChange = (selectedRows: User[]) => {
+		console.log(selectedRows)
+	}
+
 	return (
-		<>
-			<Card class="mb-4">
+		<div class="flex flex-col gap-4">
+			<Card>
 				<CardHeader />
 				<CardContent class="flex flex-col gap-4">
 					<Grid cols={4} class="gap-4">
@@ -136,10 +155,10 @@ const TableTest = () => {
 				</CardContent>
 			</Card>
 
-			<Card class=" border-none">
-				<CardHeader>
+			<Card>
+				<CardHeader class="flex-none">
 					<div class="flex flex-row items-center gap-4">
-						<Button variant="blue" size="xs" class="p-4">
+						<Button variant="outline" size="xs" class="p-4">
 							添加
 							<AiOutlineFileAdd size={20} class="ml-2" />
 						</Button>
@@ -151,7 +170,7 @@ const TableTest = () => {
 				</CardHeader>
 				<CardContent>
 					<ProTable
-						class="h-[400px]"
+						onSelectionChange={handleSelectionChange}
 						data={data()}
 						columns={[
 							{
@@ -170,13 +189,69 @@ const TableTest = () => {
 								accessorKey: "email",
 								header: "邮箱",
 								cell: (props) => (
-									<Badge>{props.row.original.email}</Badge>
+									<Badge variant="outline">
+										{props.row.original.email}
+									</Badge>
 								),
+							},
+							{
+								accessorKey: "gender",
+								header: "性别",
+								cell: (props) => (
+									<Badge>{props.row.original.gender}</Badge>
+								),
+								width: "80px",
+							},
+							{
+								accessorKey: "registrationDate",
+								header: "注册日期",
+								cell: ({ row }) =>
+									row.original.registrationDate,
+								width: "150px",
+							},
+							{
+								accessorKey: "status",
+								header: "状态",
+								cell: (props) => (
+									<Badge>{props.row.original.status}</Badge>
+								),
+								width: "100px",
+							},
+							{
+								accessorKey: "profilePicture",
+								header: "头像",
+								cell: (props) => (
+									<img
+										src={props.row.original.profilePicture}
+										alt={props.row.original.name}
+										class="w-10 h-10 rounded-full"
+									/>
+								),
+								width: "60px",
+							},
+							{
+								accessorKey: "actions",
+								header: "操作",
+								cell: (props) => (
+									<div class="flex gap-2">
+										<Button variant="link" size="sm">
+											编辑
+										</Button>
+										<Button
+											variant="link"
+											size="sm"
+											color="destructive"
+										>
+											删除
+										</Button>
+									</div>
+								),
+								width: "150px",
 							},
 						]}
 					/>
 				</CardContent>
-				<CardFooter class="flex justify-end">
+				<CardFooter class="flex justify-end flex-none">
 					<Pagination
 						count={10}
 						fixedItems
@@ -194,7 +269,7 @@ const TableTest = () => {
 					</Pagination>
 				</CardFooter>
 			</Card>
-		</>
+		</div>
 	)
 }
 

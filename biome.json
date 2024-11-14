@@ -7,6 +7,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"suspicious": {
+				"noReactSpecificProps": "warn"
+			},
 			"recommended": false,
 			"a11y": {
 				"noLabelWithoutControl": "off",

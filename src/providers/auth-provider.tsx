@@ -29,7 +29,7 @@ interface AuthProviderProps extends ParentProps {
 
 export const AuthProvider = (props: AuthProviderProps) => {
 	const navigate = useNavigate()
-	const location = useLocation()
+	const _location = useLocation()
 	const [request, setRequest] = createStore<API.Login.Request>({
 		account: "",
 		password: "",

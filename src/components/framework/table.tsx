@@ -3,8 +3,10 @@ import {
 	createSolidTable,
 	flexRender,
 	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
 } from "@tanstack/solid-table"
-import { For, Suspense } from "solid-js"
+import { For, Show, Suspense, createSignal } from "solid-js"
 import { cn } from "~/libs/cn"
 import {
 	Table,
@@ -15,72 +17,207 @@ import {
 	TableRow,
 } from "../ui/table"
 import TableSkeleton from "./table-skeleton"
+import { Checkbox, CheckboxControl } from "../ui/checkbox"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
+import { Button } from "../ui/button"
 
 interface ProTableProps<T> {
 	data: T[]
-	columns: (ColumnDef<T> & { width?: string })[]
+	columns: (ColumnDef<T> & { width?: string; isSortable?: boolean })[]
 	class?: string
+	onSelectionChange?: (selectedRows: T[]) => void
 }
 
 const ProTable = <T,>(props: ProTableProps<T>) => {
+	const [selectedRows, setSelectedRows] = createSignal<T[]>([])
+	const [sorting, setSorting] = createSignal<SortingState>([])
+
+	const handleSelectAll = (checked: boolean) => {
+		if (checked) {
+			setSelectedRows(props.data)
+		} else {
+			setSelectedRows([])
+		}
+		props.onSelectionChange?.(selectedRows())
+	}
+
+	const handleSelectRow = (row: T, checked: boolean) => {
+		if (checked) {
+			setSelectedRows([...selectedRows(), row])
+		} else {
+			setSelectedRows(selectedRows().filter((r) => r !== row))
+		}
+		props.onSelectionChange?.(selectedRows())
+	}
+
 	const tableInstance = createSolidTable({
 		get data() {
 			return props.data
 		},
-		// eslint-disable-next-line solid/reactivity
-		columns: props.columns,
+		columns: [
+			{
+				id: "select",
+				header: () => (
+					<Checkbox
+						checked={selectedRows().length === props.data.length}
+						onChange={(checked) => handleSelectAll(checked)}
+					>
+						<CheckboxControl />
+					</Checkbox>
+				),
+				cell: (props) => (
+					<Checkbox
+						checked={selectedRows().includes(props.row.original)}
+						onChange={(checked) =>
+							handleSelectRow(props.row.original, checked)
+						}
+					>
+						<CheckboxControl />
+					</Checkbox>
+				),
+				meta: {
+					width: "40px",
+				},
+			},
+
+			// eslint-disable-next-line solid/reactivity
+			...props.columns.map((column) => ({
+				...column,
+				enableSorting: column.isSortable,
+			})),
+		],
+		state: {
+			get sorting() {
+				return sorting()
+			},
+		},
+		onSortingChange: setSorting,
 		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 	})
 
 	return (
 		<Suspense fallback={<TableSkeleton />}>
-			<div class={cn("relative h-[500px]", props.class)}>
-				<Table class="table-fixed w-full">
-					<TableHeader class="sticky top-0 z-10 bg-background">
+			<div class={cn("relative overflow-auto", props.class)}>
+				<Table class="w-full table-fixed border rounded-xl">
+					<TableHeader class="sticky top-0 z-10">
 						<For each={tableInstance.getHeaderGroups()}>
 							{(headerGroup) => (
 								<TableRow>
 									<For each={headerGroup.headers}>
-										{(header) => (
-											<TableHead
-												class="bg-accent font-bold"
-												style={{
-													width:
-														props.columns[
-															header.index
-														]?.width ?? "auto",
-												}}
-											>
-												{header.isPlaceholder
-													? null
-													: flexRender(
-															header.column
-																.columnDef
-																.header,
-															header.getContext(),
-														)}
-											</TableHead>
-										)}
+										{(header) => {
+											const width =
+												header.column.id === "select"
+													? "40px"
+													: (props.columns[
+															header.index - 1
+														]?.width ?? "auto")
+											return (
+												<TableHead
+													class="font-bold"
+													style={{
+														width,
+														"min-width": width,
+														"max-width": width,
+													}}
+												>
+													<Show
+														when={
+															!header.isPlaceholder
+														}
+														fallback={null}
+													>
+														<DropdownMenu>
+															<DropdownMenuTrigger class="w-full text-left">
+																<Button
+																	class="flex items-center gap-2 -ml-4 h-8 data-[expanded]:bg-accent font-bold color-accent"
+																	variant="ghost"
+																>
+																	{flexRender(
+																		header
+																			.column
+																			.columnDef
+																			.header,
+																		header.getContext(),
+																	)}
+																	<Show
+																		when={header.column.getIsSorted()}
+																	>
+																		<span class="font-bold">
+																			{header.column.getIsSorted() ===
+																			"asc"
+																				? " ↑"
+																				: " ↓"}
+																		</span>
+																	</Show>
+																</Button>
+															</DropdownMenuTrigger>
+															<Show
+																when={header.column.getCanSort()}
+															>
+																<DropdownMenuContent>
+																	<DropdownMenuItem
+																		onClick={() =>
+																			header.column.toggleSorting(
+																				false,
+																			)
+																		}
+																	>
+																		Asc
+																	</DropdownMenuItem>
+																	<DropdownMenuItem
+																		onClick={() =>
+																			header.column.toggleSorting(
+																				true,
+																			)
+																		}
+																	>
+																		Desc
+																	</DropdownMenuItem>
+																	<DropdownMenuItem
+																		onClick={() =>
+																			header.column.clearSorting()
+																		}
+																	>
+																		Clear
+																		Sort
+																	</DropdownMenuItem>
+																</DropdownMenuContent>
+															</Show>
+														</DropdownMenu>
+													</Show>
+												</TableHead>
+											)
+										}}
 									</For>
 								</TableRow>
 							)}
 						</For>
 					</TableHeader>
-				</Table>
-				<div class="overflow-auto h-[calc(100%-48px)]">
-					<Table class="table-fixed w-full">
-						<TableBody>
-							<For each={tableInstance.getRowModel().rows}>
-								{(row) => (
-									<TableRow>
-										<For each={row.getVisibleCells()}>
-											{(cell) => (
+					<TableBody>
+						<For each={tableInstance.getRowModel().rows}>
+							{(row) => (
+								<TableRow>
+									<For each={row.getVisibleCells()}>
+										{(cell) => {
+											const width =
+												cell.column.id === "select"
+													? "40px"
+													: (props.columns[
+															cell.column.getIndex() -
+																1
+														]?.width ?? "auto")
+											return (
 												<TableCell
 													style={{
-														width:
-															props.columns[
-																cell.column.getIndex()
-															]?.width ?? "auto",
+														width,
+														"min-width": width,
+														"max-width": width,
 													}}
 												>
 													{flexRender(
@@ -89,14 +226,14 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 														cell.getContext(),
 													)}
 												</TableCell>
-											)}
-										</For>
-									</TableRow>
-								)}
-							</For>
-						</TableBody>
-					</Table>
-				</div>
+											)
+										}}
+									</For>
+								</TableRow>
+							)}
+						</For>
+					</TableBody>
+				</Table>
 			</div>
 		</Suspense>
 	)

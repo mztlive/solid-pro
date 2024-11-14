@@ -82,7 +82,7 @@ export const upload = async (file: File[], url: string) => {
 		})
 
 		return convertResponse<string[]>(response)
-	} catch (error) {
+	} catch (_error) {
 		throw Error("Connection Reset")
 	}
 }
