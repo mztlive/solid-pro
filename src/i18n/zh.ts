@@ -42,4 +42,13 @@ export const zh = {
 		accept: "接受",
 		confirm: "确认",
 	},
+	sort: {
+		asc: "升序",
+		desc: "降序",
+		clear: "清除",
+	},
+	view: {
+		hide: "隐藏",
+		show: "显示",
+	},
 }

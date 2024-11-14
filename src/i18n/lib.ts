@@ -1,15 +1,13 @@
 import * as i18n from "@solid-primitives/i18n"
 import { createMemo, createRoot, createSignal } from "solid-js"
 import { en } from "~/i18n/en"
-import { vn } from "~/i18n/vn"
 import { zh } from "~/i18n/zh"
 
-export type Locale = "en" | "zh" | "vn"
+export type Locale = "en" | "zh"
 
 export type I18nDictionaries = {
 	en: typeof en
 	zh: typeof zh
-	vn: typeof vn
 }
 
 export interface LocaleOption {
@@ -21,13 +19,11 @@ export interface LocaleOption {
 const dictionaries: I18nDictionaries = {
 	zh: zh,
 	en: en,
-	vn: vn,
 }
 
 const localeOptions: LocaleOption[] = [
 	{ label: "English", value: "en" },
 	{ label: "简体中文", value: "zh" },
-	{ label: "Tiếng Việt", value: "vn" },
 ]
 
 const i18nStore = createRoot(() => {

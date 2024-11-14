@@ -5,7 +5,6 @@ import { createStore } from "solid-js/store"
 import ButtonRadioGroup from "~/components/framework/button-radio-group"
 import DatePickerRange from "~/components/framework/date-picker/range"
 import RadioGroup from "~/components/framework/radio-group"
-import ProTable from "~/components/framework/table"
 import { Badge } from "~/components/ui/badge"
 import { Avatar } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
@@ -25,6 +24,7 @@ import {
 	TextFieldInput,
 	TextFieldLabel,
 } from "~/components/ui/text-field"
+import ProTable from "~/components/framework/table/pro-table"
 
 const TableTest = () => {
 	type User = {
@@ -174,18 +174,22 @@ const TableTest = () => {
 						data={data()}
 						columns={[
 							{
+								id: "name",
 								accessorKey: "name",
 								header: "姓名",
 								cell: ({ row }) => row.original.name,
 								width: "200px",
+								isSortable: false,
 							},
 							{
+								id: "age",
 								accessorKey: "age",
 								header: "年龄",
 								cell: ({ row }) => row.original.age,
 								width: "100px",
 							},
 							{
+								id: "email",
 								accessorKey: "email",
 								header: "邮箱",
 								cell: (props) => (
@@ -195,6 +199,7 @@ const TableTest = () => {
 								),
 							},
 							{
+								id: "gender",
 								accessorKey: "gender",
 								header: "性别",
 								cell: (props) => (
@@ -203,6 +208,7 @@ const TableTest = () => {
 								width: "80px",
 							},
 							{
+								id: "registrationDate",
 								accessorKey: "registrationDate",
 								header: "注册日期",
 								cell: ({ row }) =>
@@ -210,6 +216,7 @@ const TableTest = () => {
 								width: "150px",
 							},
 							{
+								id: "status",
 								accessorKey: "status",
 								header: "状态",
 								cell: (props) => (
@@ -218,6 +225,7 @@ const TableTest = () => {
 								width: "100px",
 							},
 							{
+								id: "profilePicture",
 								accessorKey: "profilePicture",
 								header: "头像",
 								cell: (props) => (
@@ -230,6 +238,7 @@ const TableTest = () => {
 								width: "60px",
 							},
 							{
+								id: "actions",
 								accessorKey: "actions",
 								header: "操作",
 								cell: (props) => (

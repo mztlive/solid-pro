@@ -25,6 +25,9 @@ import {
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { Button } from "../ui/button"
+import { AiOutlineClear } from "solid-icons/ai"
+import { AiOutlineSortDescending } from "solid-icons/ai"
+import { AiOutlineSortAscending } from "solid-icons/ai"
 
 interface ProTableProps<T> {
 	data: T[]
@@ -168,6 +171,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 																			)
 																		}
 																	>
+																		<AiOutlineSortAscending class="mr-2" />
 																		Asc
 																	</DropdownMenuItem>
 																	<DropdownMenuItem
@@ -177,6 +181,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 																			)
 																		}
 																	>
+																		<AiOutlineSortDescending class="mr-2" />
 																		Desc
 																	</DropdownMenuItem>
 																	<DropdownMenuItem
@@ -184,6 +189,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 																			header.column.clearSorting()
 																		}
 																	>
+																		<AiOutlineClear class="mr-2" />
 																		Clear
 																		Sort
 																	</DropdownMenuItem>

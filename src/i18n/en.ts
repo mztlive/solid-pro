@@ -2,7 +2,7 @@ export const en = {
 	prject_name: "Vietnam Project",
 	login: {
 		title: "Login",
-		account: "Account",
+		account: "Account", 
 		password: "Password",
 		please_input_account: "Please input account",
 		please_input_password: "Please input password",
@@ -41,5 +41,14 @@ export const en = {
 		later: "Later",
 		accept: "Accept",
 		confirm: "Confirm",
+	},
+	sort: {
+		asc: "Asc",
+		desc: "Desc", 
+		clear: "Clear",
+	},
+	view: {
+		hide: "Hide",
+		show: "Show",
 	},
 }
