@@ -2,7 +2,7 @@ import { type ColumnDef, type Header, type HeaderGroup, type Row } from "@tansta
 
 export interface ProTableProps<T> {
   data: T[]
-  columns: (ColumnDef<T> & { width?: string; isSortable?: boolean })[]
+  columns: (ColumnDef<T> & { width?: string; isSortable?: boolean; isPinned?: 'left' | 'right' })[]
   class?: string
   onSelectionChange?: (selectedRows: T[]) => void
 }
@@ -14,6 +14,7 @@ export interface TableHeaderProps<T> {
   onSortClear: (columnId: string) => void
   getIsSorted: (columnId: string) => false | "asc" | "desc"
   onColumnVisibilityChange: (columnId: string, visible: boolean) => void
+  onPin: (columnId: string) => void
 }
 
 export interface TableBodyProps<T> {

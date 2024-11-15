@@ -1,5 +1,6 @@
 import { Suspense, createSignal, For } from "solid-js"
 import {
+	ColumnPinningState,
 	createSolidTable,
 	flexRender,
 	getCoreRowModel,
@@ -45,6 +46,10 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 			),
 		})
 
+	const [columnPinning, setColumnPinning] = createSignal<ColumnPinningState>({
+		left: [SelectAction],
+	})
+
 	const handleSelectAll = (checked: boolean) => {
 		if (checked) {
 			setSelectedRows(props.data)
@@ -71,6 +76,28 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 			...prev,
 			[columnId]: visible,
 		}))
+	}
+
+	const handleColumnPin = (columnId: string) => {
+		// setColumnPinning((prev) => ({
+		// 	...prev,
+		// 	left: [...prev.left, columnId],
+		// }))
+
+		setColumnPinning((prev) => {
+			if (prev.left.includes(columnId)) {
+				// remove pin
+				return {
+					...prev,
+					left: prev.left.filter((item) => item !== columnId),
+				}
+			}
+
+			return {
+				...prev,
+				left: [...prev.left, columnId],
+			}
+		})
 	}
 
 	const tableInstance = createSolidTable({
@@ -105,6 +132,7 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 			// eslint-disable-next-line solid/reactivity
 			...props.columns.map((column) => ({
 				...column,
+
 				enableSorting: column.isSortable,
 			})),
 		],
@@ -115,16 +143,20 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 			get columnVisibility() {
 				return columnVisibility()
 			},
+			get columnPinning() {
+				return columnPinning()
+			},
 		},
 		onSortingChange: setSorting,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		onColumnVisibilityChange: setColumnVisibility,
+		onColumnPinningChange: setColumnPinning,
 	})
 
 	return (
 		<Suspense fallback={<TableSkeleton />}>
-			<div class={cn("relative overflow-auto", props.class)}>
+			<div class={cn("relative", props.class)}>
 				<div class="flex justify-end mb-2">
 					<DropdownMenu>
 						<DropdownMenuTrigger>
@@ -161,31 +193,36 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
-				<Table class="w-full table-fixed border rounded-xl">
-					<TableHeaderComponent
-						headerGroups={tableInstance.getHeaderGroups()}
-						columns={props.columns}
-						onSort={(columnId, desc) => {
-							const column = tableInstance.getColumn(columnId)
-							column?.toggleSorting(desc)
-						}}
-						onSortClear={(columnId) => {
-							const column = tableInstance.getColumn(columnId)
-							column?.clearSorting()
-						}}
-						getIsSorted={(columnId) => {
-							const column = tableInstance.getColumn(columnId)
-							return column?.getIsSorted() || false
-						}}
-						onColumnVisibilityChange={handleColumnVisibilityChange}
-					/>
-					<TableBodyComponent
-						rows={tableInstance.getRowModel().rows}
-						columns={props.columns}
-						selectedRows={selectedRows()}
-						onRowSelect={handleSelectRow}
-					/>
-				</Table>
+				<div class="relative overflow-x-auto">
+					<Table class="w-full min-w-full border rounded-xl">
+						<TableHeaderComponent
+							headerGroups={tableInstance.getHeaderGroups()}
+							columns={props.columns}
+							onSort={(columnId, desc) => {
+								const column = tableInstance.getColumn(columnId)
+								column?.toggleSorting(desc)
+							}}
+							onSortClear={(columnId) => {
+								const column = tableInstance.getColumn(columnId)
+								column?.clearSorting()
+							}}
+							getIsSorted={(columnId) => {
+								const column = tableInstance.getColumn(columnId)
+								return column?.getIsSorted() || false
+							}}
+							onColumnVisibilityChange={
+								handleColumnVisibilityChange
+							}
+							onPin={handleColumnPin}
+						/>
+						<TableBodyComponent
+							rows={tableInstance.getRowModel().rows}
+							columns={props.columns}
+							selectedRows={selectedRows()}
+							onRowSelect={handleSelectRow}
+						/>
+					</Table>
+				</div>
 			</div>
 		</Suspense>
 	)

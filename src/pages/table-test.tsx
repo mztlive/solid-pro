@@ -38,6 +38,19 @@ const TableTest = () => {
 		registrationDate: string
 		status: "活跃" | "非活跃"
 		profilePicture: string
+		phone: string
+		address: string
+		company: string
+		department: string
+		position: string
+		salary: number
+		level: string
+		skills: string[]
+		education: string
+		graduateSchool: string
+		major: string
+		entryDate: string
+		birthDate: string
 	}
 
 	const [data] = createSignal<User[]>([
@@ -49,6 +62,19 @@ const TableTest = () => {
 			registrationDate: "2023-01-15",
 			status: "活跃",
 			profilePicture: "https://via.placeholder.com/40",
+			phone: "13800138000",
+			address: "北京市朝阳区某某街道",
+			company: "某某科技有限公司",
+			department: "研发部",
+			position: "高级工程师",
+			salary: 25000,
+			level: "P6",
+			skills: ["React", "TypeScript", "Node.js"],
+			education: "硕士",
+			graduateSchool: "北京大学",
+			major: "计算机科学",
+			entryDate: "2022-06-01",
+			birthDate: "1993-01-01",
 		},
 		{
 			name: "Jane",
@@ -58,6 +84,19 @@ const TableTest = () => {
 			registrationDate: "2023-02-20",
 			status: "非活跃",
 			profilePicture: "https://via.placeholder.com/40",
+			phone: "13900139000",
+			address: "上海市浦东新区某某路",
+			company: "某某网络科技",
+			department: "产品部",
+			position: "产品经理",
+			salary: 22000,
+			level: "P5",
+			skills: ["产品设计", "用户研究", "数据分析"],
+			education: "本科",
+			graduateSchool: "复旦大学",
+			major: "工商管理",
+			entryDate: "2022-03-15",
+			birthDate: "1994-05-15",
 		},
 		{
 			name: "Doe",
@@ -67,6 +106,19 @@ const TableTest = () => {
 			registrationDate: "2023-03-10",
 			status: "活跃",
 			profilePicture: "https://via.placeholder.com/40",
+			phone: "13700137000",
+			address: "深圳市南山区某某路",
+			company: "某某信息技术",
+			department: "设计部",
+			position: "UI设计师",
+			salary: 18000,
+			level: "P4",
+			skills: ["UI设计", "交互设计", "Figma"],
+			education: "本科",
+			graduateSchool: "浙江大学",
+			major: "视觉设计",
+			entryDate: "2022-09-01",
+			birthDate: "1995-08-20",
 		},
 	])
 
@@ -187,6 +239,12 @@ const TableTest = () => {
 								cell: ({ row }) => row.original.age,
 							},
 							{
+								id: "phone",
+								accessorKey: "phone",
+								header: "电话",
+								cell: ({ row }) => row.original.phone,
+							},
+							{
 								id: "email",
 								accessorKey: "email",
 								header: "邮箱",
@@ -205,11 +263,78 @@ const TableTest = () => {
 								),
 							},
 							{
+								id: "company",
+								accessorKey: "company",
+								header: "公司",
+								cell: ({ row }) => row.original.company,
+							},
+							{
+								id: "department",
+								accessorKey: "department",
+								header: "部门",
+								cell: ({ row }) => row.original.department,
+							},
+							{
+								id: "position",
+								accessorKey: "position",
+								header: "职位",
+								cell: ({ row }) => row.original.position,
+							},
+							{
+								id: "salary",
+								accessorKey: "salary",
+								header: "薪资",
+								cell: ({ row }) => `¥${row.original.salary}`,
+							},
+							{
+								id: "level",
+								accessorKey: "level",
+								header: "职级",
+								cell: ({ row }) => row.original.level,
+							},
+							{
+								id: "skills",
+								accessorKey: "skills",
+								header: "技能",
+								cell: ({ row }) =>
+									row.original.skills.join(", "),
+							},
+							{
+								id: "education",
+								accessorKey: "education",
+								header: "学历",
+								cell: ({ row }) => row.original.education,
+							},
+							{
+								id: "graduateSchool",
+								accessorKey: "graduateSchool",
+								header: "毕业院校",
+								cell: ({ row }) => row.original.graduateSchool,
+							},
+							{
+								id: "major",
+								accessorKey: "major",
+								header: "专业",
+								cell: ({ row }) => row.original.major,
+							},
+							{
 								id: "registrationDate",
 								accessorKey: "registrationDate",
 								header: "注册日期",
 								cell: ({ row }) =>
 									row.original.registrationDate,
+							},
+							{
+								id: "entryDate",
+								accessorKey: "entryDate",
+								header: "入职日期",
+								cell: ({ row }) => row.original.entryDate,
+							},
+							{
+								id: "birthDate",
+								accessorKey: "birthDate",
+								header: "出生日期",
+								cell: ({ row }) => row.original.birthDate,
 							},
 							{
 								id: "status",
@@ -218,6 +343,12 @@ const TableTest = () => {
 								cell: (props) => (
 									<Badge>{props.row.original.status}</Badge>
 								),
+							},
+							{
+								id: "address",
+								accessorKey: "address",
+								header: "地址",
+								cell: ({ row }) => row.original.address,
 							},
 							{
 								id: "profilePicture",
