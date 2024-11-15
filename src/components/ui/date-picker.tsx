@@ -1,4 +1,4 @@
-import { cn } from "~/libs/cn";
+import { cn } from "~/libs/cn"
 import type {
 	DatePickerContentProps,
 	DatePickerControlProps,
@@ -14,45 +14,46 @@ import type {
 	DatePickerViewControlProps,
 	DatePickerViewProps,
 	DatePickerViewTriggerProps,
-} from "@ark-ui/solid/date-picker";
-import { DatePicker as DatePickerPrimitive } from "@ark-ui/solid/date-picker";
-import type { VoidProps } from "solid-js";
-import { splitProps } from "solid-js";
-import { buttonVariants } from "./button";
+} from "@ark-ui/solid/date-picker"
+import { DatePicker as DatePickerPrimitive } from "@ark-ui/solid/date-picker"
+import type { VoidProps } from "solid-js"
+import { splitProps } from "solid-js"
+import { buttonVariants } from "./button"
 
-export const DatePickerLabel = DatePickerPrimitive.Label;
-export const DatePickerTableHead = DatePickerPrimitive.TableHead;
-export const DatePickerTableBody = DatePickerPrimitive.TableBody;
-export const DatePickerClearTrigger = DatePickerPrimitive.ClearTrigger;
-export const DatePickerYearSelect = DatePickerPrimitive.YearSelect;
-export const DatePickerMonthSelect = DatePickerPrimitive.MonthSelect;
-export const DatePickerContext = DatePickerPrimitive.Context;
-export const DatePickerRootProvider = DatePickerPrimitive.RootProvider;
-export const DatePickerPositioner = DatePickerPrimitive.Positioner;
+export const DatePickerLabel = DatePickerPrimitive.Label
+export const DatePickerTableHead = DatePickerPrimitive.TableHead
+export const DatePickerTableBody = DatePickerPrimitive.TableBody
+export const DatePickerClearTrigger = DatePickerPrimitive.ClearTrigger
+export const DatePickerYearSelect = DatePickerPrimitive.YearSelect
+export const DatePickerMonthSelect = DatePickerPrimitive.MonthSelect
+export const DatePickerContext = DatePickerPrimitive.Context
+export const DatePickerRootProvider = DatePickerPrimitive.RootProvider
+export const DatePickerPositioner = DatePickerPrimitive.Positioner
 
 export const DatePicker = (props: DatePickerRootProps) => {
 	return (
 		<DatePickerPrimitive.Root
+			locale="zh-CN"
 			format={(e) => {
-				const parsedDate = new Date(Date.parse(e.toString()));
+				const parsedDate = new Date(Date.parse(e.toString()))
 
 				const normalizedDate = new Date(
 					parsedDate.getUTCFullYear(),
 					parsedDate.getUTCMonth(),
 					parsedDate.getUTCDate(),
-				);
+				)
 
-				return new Intl.DateTimeFormat("en-US", {
+				return new Intl.DateTimeFormat("zh-CN", {
 					dateStyle: "long",
-				}).format(normalizedDate);
+				}).format(normalizedDate)
 			}}
 			{...props}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerView = (props: DatePickerViewProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.View
@@ -62,11 +63,11 @@ export const DatePickerView = (props: DatePickerViewProps) => {
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerViewControl = (props: DatePickerViewControlProps) => {
-	const [local, rest] = splitProps(props, ["class", "children"]);
+	const [local, rest] = splitProps(props, ["class", "children"])
 
 	return (
 		<DatePickerPrimitive.ViewControl
@@ -123,46 +124,46 @@ export const DatePickerViewControl = (props: DatePickerViewControlProps) => {
 				</svg>
 			</DatePickerPrimitive.NextTrigger>
 		</DatePickerPrimitive.ViewControl>
-	);
-};
+	)
+}
 
 export const DatePickerRangeText = (
 	props: VoidProps<DatePickerRangeTextProps>,
 ) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.RangeText
 			class={cn("text-sm font-medium", local.class)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTable = (props: DatePickerTableProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.Table
 			class={cn("w-full border-collapse space-y-1", local.class)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTableRow = (props: DatePickerTableRowProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.TableRow
 			class={cn("mt-2 flex w-full", local.class)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTableHeader = (props: DatePickerTableHeaderProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.TableHeader
@@ -172,11 +173,11 @@ export const DatePickerTableHeader = (props: DatePickerTableHeaderProps) => {
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTableCell = (props: DatePickerTableCellProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.TableCell
@@ -189,13 +190,13 @@ export const DatePickerTableCell = (props: DatePickerTableCellProps) => {
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTableCellTrigger = (
 	props: DatePickerTableCellTriggerProps,
 ) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.TableCellTrigger
@@ -212,22 +213,26 @@ export const DatePickerTableCellTrigger = (
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerViewTrigger = (props: DatePickerViewTriggerProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.ViewTrigger
-			class={cn(buttonVariants({ variant: "ghost" }), "h-7 mx-2", local.class)}
+			class={cn(
+				buttonVariants({ variant: "ghost" }),
+				"h-7 mx-2",
+				local.class,
+			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerContent = (props: DatePickerContentProps) => {
-	const [local, rest] = splitProps(props, ["class", "children"]);
+	const [local, rest] = splitProps(props, ["class", "children"])
 
 	return (
 		<DatePickerPrimitive.Content
@@ -239,11 +244,11 @@ export const DatePickerContent = (props: DatePickerContentProps) => {
 		>
 			{local.children}
 		</DatePickerPrimitive.Content>
-	);
-};
+	)
+}
 
 export const DatePickerControl = (props: DatePickerControlProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.Control
@@ -253,11 +258,11 @@ export const DatePickerControl = (props: DatePickerControlProps) => {
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerInput = (props: DatePickerInputProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.Input
@@ -267,11 +272,11 @@ export const DatePickerInput = (props: DatePickerInputProps) => {
 			)}
 			{...rest}
 		/>
-	);
-};
+	)
+}
 
 export const DatePickerTrigger = (props: DatePickerTriggerProps) => {
-	const [local, rest] = splitProps(props, ["class"]);
+	const [local, rest] = splitProps(props, ["class"])
 
 	return (
 		<DatePickerPrimitive.Trigger
@@ -296,5 +301,5 @@ export const DatePickerTrigger = (props: DatePickerTriggerProps) => {
 				<title>Calendar</title>
 			</svg>
 		</DatePickerPrimitive.Trigger>
-	);
-};
+	)
+}
