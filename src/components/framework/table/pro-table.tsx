@@ -48,6 +48,11 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 
 	const [columnPinning, setColumnPinning] = createSignal<ColumnPinningState>({
 		left: [SelectAction],
+
+		// eslint-disable-next-line solid/reactivity
+		right: props.columns
+			.filter((c) => c.isPinned === "right")
+			.map((c) => c.id),
 	})
 
 	const handleSelectAll = (checked: boolean) => {
@@ -79,11 +84,6 @@ const ProTable = <T,>(props: ProTableProps<T>) => {
 	}
 
 	const handleColumnPin = (columnId: string) => {
-		// setColumnPinning((prev) => ({
-		// 	...prev,
-		// 	left: [...prev.left, columnId],
-		// }))
-
 		setColumnPinning((prev) => {
 			if (prev.left.includes(columnId)) {
 				// remove pin

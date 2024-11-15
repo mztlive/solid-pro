@@ -368,24 +368,34 @@ const TableTest = () => {
 								header: "",
 								cell: (props) => (
 									<div class="flex gap-2">
-										<Button variant="link" size="sm">
+										<Button
+											variant="link"
+											size="sm"
+											onClick={(e) => {
+												e.stopPropagation()
+											}}
+										>
 											编辑
 										</Button>
 										<Button
 											variant="link"
 											size="sm"
 											color="destructive"
+											onClick={(e) => {
+												e.stopPropagation()
+											}}
 										>
 											删除
 										</Button>
 									</div>
 								),
 								isSortable: false,
+								isPinned: "right",
 							},
 						]}
 					/>
 				</CardContent>
-				<CardFooter class="flex justify-end flex-none">
+				<CardFooter class="flex justify-end">
 					<Pagination
 						count={10}
 						fixedItems

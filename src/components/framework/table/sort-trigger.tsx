@@ -1,4 +1,4 @@
-import { Show } from "solid-js"
+import { Match, Show, Switch } from "solid-js"
 import { Button } from "../../ui/button"
 import {
 	DropdownMenu,
@@ -13,6 +13,7 @@ import {
 	AiOutlinePushpin,
 	AiOutlineSortAscending,
 	AiOutlineSortDescending,
+	AiOutlineUnlock,
 } from "solid-icons/ai"
 import { flexRender, Header } from "@tanstack/solid-table"
 import { useLocale } from "~/i18n/lib"
@@ -84,8 +85,26 @@ export const HeadTrigger = <T,>(props: HeadTriggerProps<T>) => {
 							<I18nText text={t.view.hide} />
 						</DropdownMenuItem>
 						<DropdownMenuItem onClick={props.onPin}>
-							<AiOutlinePushpin class="mr-2" />
-							<I18nText text={"Pin"} />
+							<Switch>
+								<Match
+									when={
+										props.header.column.getIsPinned() ===
+										false
+									}
+								>
+									<AiOutlinePushpin class="mr-2" />
+									<I18nText text={"Pin"} />
+								</Match>
+								<Match
+									when={
+										props.header.column.getIsPinned() !==
+										false
+									}
+								>
+									<AiOutlineUnlock class="mr-2" />
+									<I18nText text={"Unpin"} />
+								</Match>
+							</Switch>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

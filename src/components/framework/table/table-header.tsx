@@ -1,8 +1,13 @@
 import { For, Show } from "solid-js"
 import { TableHead, TableHeader, TableRow } from "../../ui/table"
-import { Checkbox, CheckboxControl } from "../../ui/checkbox"
 import { HeadTrigger } from "./sort-trigger"
-import { SelectAction, type TableHeaderProps } from "./types"
+import { type TableHeaderProps } from "./types"
+import {
+	calculateLeftOffset,
+	getWidth,
+	getMinWidth,
+	getPinnedClassNames,
+} from "./utils"
 import { cn } from "~/libs/cn"
 
 export const TableHeaderComponent = <T,>(props: TableHeaderProps<T>) => {
@@ -13,51 +18,26 @@ export const TableHeaderComponent = <T,>(props: TableHeaderProps<T>) => {
 					<TableRow>
 						<For each={headerGroup.headers}>
 							{(header) => {
-								const width =
-									header.column.id === SelectAction
-										? "40px"
-										: (props.columns[header.index - 1]
-												?.width ?? "auto")
-
-								let leftOffset = 0
-								if (header.column.getIsPinned() === "left") {
-									headerGroup.headers.forEach((h) => {
-										if (
-											h.column.getIsPinned() === "left" &&
-											h.column.getIndex() <
-												header.column.getIndex()
-										) {
-											leftOffset +=
-												h.column.id === SelectAction
-													? 40
-													: parseInt(
-															props.columns[
-																h.column.getIndex() -
-																	1
-															]?.width || "150",
-														) || 150
-										}
-									})
-								}
+								const width = getWidth(
+									header.column.id,
+									header.index,
+									props.columns,
+								)
+								const leftOffset = calculateLeftOffset(
+									header,
+									headerGroup.headers,
+									props.columns,
+								)
 
 								return (
 									<TableHead
 										class={cn(
-											"font-bold whitespace-nowrap",
-											header.column.getIsPinned() &&
-												"sticky bg-background",
-											header.column.getIsPinned() ===
-												"left" &&
-												"left-0 z-20 after:absolute after:right-0 after:top-0 after:bottom-0 after:w-[0.5px] after:bg-border",
-											header.column.getIsPinned() ===
-												"right" && "right-0 z-20",
+											"font-bold",
+											getPinnedClassNames(header),
 										)}
 										style={{
 											width,
-											"min-width":
-												width === "auto"
-													? "150px"
-													: width,
+											"min-width": getMinWidth(width),
 											left:
 												header.column.getIsPinned() ===
 												"left"
