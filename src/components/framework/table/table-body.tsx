@@ -9,35 +9,35 @@ export const TableBodyComponent = <T,>(props: TableBodyProps<T>) => {
 		<TableBody>
 			<For each={props.rows}>
 				{(row) => {
-					createEffect(() => {
-						console.log(row.getIsSelected())
-					})
+					const isSelected = () =>
+						props.selectedRows.includes(row.original)
 
 					return (
-						<TableRow>
+						<TableRow
+							data-state={isSelected() ? "selected" : undefined}
+							onClick={() => {
+								props.onRowSelect(row.original, !isSelected())
+							}}
+						>
 							<For each={row.getVisibleCells()}>
-								{(cell) => {
-									const width =
-										cell.column.id === "select"
-											? "40px"
-											: (props.columns[
-													cell.column.getIndex() - 1
-												]?.width ?? "auto")
-									return (
-										<TableCell
-											style={{
-												width,
-												"min-width": width,
-												"max-width": width,
-											}}
-										>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
-										</TableCell>
-									)
-								}}
+								{(cell) => (
+									<TableCell
+										style={{
+											width:
+												cell.column.id === "select"
+													? "40px"
+													: (props.columns[
+															cell.column.getIndex() -
+																1
+														]?.width ?? "auto"),
+										}}
+									>
+										{flexRender(
+											cell.column.columnDef.cell,
+											cell.getContext(),
+										)}
+									</TableCell>
+								)}
 							</For>
 						</TableRow>
 					)

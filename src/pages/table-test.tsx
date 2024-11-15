@@ -178,7 +178,6 @@ const TableTest = () => {
 								accessorKey: "name",
 								header: "姓名",
 								cell: ({ row }) => row.original.name,
-								width: "200px",
 								isSortable: false,
 							},
 							{
@@ -186,7 +185,6 @@ const TableTest = () => {
 								accessorKey: "age",
 								header: "年龄",
 								cell: ({ row }) => row.original.age,
-								width: "100px",
 							},
 							{
 								id: "email",
@@ -205,7 +203,6 @@ const TableTest = () => {
 								cell: (props) => (
 									<Badge>{props.row.original.gender}</Badge>
 								),
-								width: "80px",
 							},
 							{
 								id: "registrationDate",
@@ -213,7 +210,6 @@ const TableTest = () => {
 								header: "注册日期",
 								cell: ({ row }) =>
 									row.original.registrationDate,
-								width: "150px",
 							},
 							{
 								id: "status",
@@ -222,7 +218,6 @@ const TableTest = () => {
 								cell: (props) => (
 									<Badge>{props.row.original.status}</Badge>
 								),
-								width: "100px",
 							},
 							{
 								id: "profilePicture",
@@ -235,7 +230,6 @@ const TableTest = () => {
 										class="w-10 h-10 rounded-full"
 									/>
 								),
-								width: "60px",
 							},
 							{
 								id: "actions",
@@ -255,7 +249,7 @@ const TableTest = () => {
 										</Button>
 									</div>
 								),
-								width: "150px",
+								isSortable: false,
 							},
 						]}
 					/>
